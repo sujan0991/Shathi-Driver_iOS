@@ -54,6 +54,8 @@
 @property (weak, nonatomic) IBOutlet UIView *collectMoneyView;
 @property (weak, nonatomic) IBOutlet UIImageView *passengerPhotoIncollectMoneyView;
 @property (weak, nonatomic) IBOutlet UILabel *passengerNameIncollectMoneyView;
+@property (weak, nonatomic) IBOutlet UILabel *totalFareLabel;
+@property (weak, nonatomic) IBOutlet UIButton *collectMoneyButton;
 
 @property (weak, nonatomic) IBOutlet RateView *rateView;
 

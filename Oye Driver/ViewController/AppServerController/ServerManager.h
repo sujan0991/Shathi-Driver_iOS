@@ -58,8 +58,7 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 -(void)patchStartRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
 
 //finish ride
--(void)patchFinishRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
-
+-(void)patchFinishRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 
 @end

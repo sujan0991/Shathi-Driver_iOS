@@ -64,8 +64,7 @@
     
     [UserAccount sharedManager].accessToken = @"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjEwYmE0YzZlOTUyMWY5NDkzN2ZiZGY2OGNlYzI1NTFlZGQzODQ5MzcyNTZmMGE4MDg3MzhhNmIwNzhhZWY4ZjNmNzA5NDc3ZDQwYjliMTFjIn0.eyJhdWQiOiIxIiwianRpIjoiMTBiYTRjNmU5NTIxZjk0OTM3ZmJkZjY4Y2VjMjU1MWVkZDM4NDkzNzI1NmYwYTgwODczOGE2YjA3OGFlZjhmM2Y3MDk0NzdkNDBiOWIxMWMiLCJpYXQiOjE0OTY5MTAxMTgsIm5iZiI6MTQ5NjkxMDExOCwiZXhwIjoxNTI4NDQ2MTE4LCJzdWIiOiIxMyIsInNjb3BlcyI6W119.IsnbumQjzfwCbpnUIIRERUWZNrJ_3TLQx2yZtYULFXGoeHEpOdElwd_Y1VK2G3CCGoLeQNBiHN2IRPVXHSYSjyanUcn92ugn4lkl8lAicgc7CMf2aJ51mzJpLs1U-KXUd7cDygM9Agt69z52KN5b0OPZ8p8kywOj7139XClvokJW9B4KpgpoGYNdMgUzooMHyAnfP7CuHLlfmAV27FtaoEhthpYKcI1EVkVL2y6DwV1zOrxD8wvEbSjPBADlc1W5H13d4LgTEqsRNv4Fb7rvjjS2wwdzX_I_O5Z6LiLV95TiHBHTqJpz7PTUzIRU-IKYzatoQr2nVDlR7V8ck4aD9Ql4B85yTqg5LCnVXRxwPZNV0UKAhC1KH6XFve52_VHZ5_hp8E4AKLjxfppgsa8hfA7Sa8iOBnrOVnF1_L6TP-Pl022NRSAo7JedNDbF0yllACWT_oZ7P5H8Cq9dBQRBasG61pxqZBQ_65hzULk6shWY6HoqMxHWpFSIo12pdC98LcSCxsYwQI1Sxaq0qw3DhxlYOgGqreHY1Pr8T35wdAx_fePbgU5dPCZTfrBKwYL_7eb5lR1EME06OEKHUk5dPXa3h18Vjong-nNd1zPeu7894T7ai_q-ArRnS8MjV4lLwbZO3nr6HP8154etkbjQ3uno9QK_98vl51l4cH4f5iE";
     
-    //temporary
-    [self showStartTripView];
+
 
     
    
@@ -111,12 +110,14 @@
 -(void) firstViewSetUp{
 
     self.rideSuggestionView.hidden = YES;
-    self.startTripView.hidden = NO;
+    self.startTripView.hidden = YES;
     self.finishTripView.hidden = YES;
     self.collectMoneyView.hidden = YES;
     
     self.rideSuggestionView.layer.cornerRadius = 3.0;
     self.startTripView.layer.cornerRadius = 3.0;
+    self.finishTripView.layer.cornerRadius = 3.0;
+    self.collectMoneyView.layer.cornerRadius = 3.0;
 
 
     
@@ -688,56 +689,55 @@
                                     repeats:YES];
     
     
-    //temporary
-    self.finishTripView.hidden = NO;
-    [self showFinishTripView];
+
     
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    //[postData setObject:@"188" forKey:@"ride_id"];
     
-//    [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success){
-//        
-//        
-//        if (success) {
-//            
-//            NSLog(@"start ride");
-//            
-//            
-//            
-//            [UIView animateWithDuration:.5
-//                                  delay:0
-//                                options: UIViewAnimationOptionCurveEaseIn
-//                             animations:^{
-//                                 
-//                                 
-//                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, 0);
-//                                 
-//                                 
-//                             }
-//                             completion:^(BOOL finished){
-//                                 
-//                                 
-//                                 self.startTripView.hidden = YES;
-//                                 
-//                                 [self showFinishTripView];
-//                                 
-//                             }];
-//            
-//            
-//            
-//        }
-//        else{
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//                
-//                
-//            });
-//        }
-//        
-//    }];
+    [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success){
+        
+        
+        if (success) {
+            
+            NSLog(@"start ride");
+            
+            
+            
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 
+                                 self.startTripView.hidden = YES;
+                                 
+                                 [self showFinishTripView];
+                                 
+                             }];
+            
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
+        }
+        
+    }];
     
     
 }
@@ -835,57 +835,62 @@
                                     repeats:YES];
     
     
-    //temporary
-    //[self showCollectMoneyView];
-    
-     self.finishTripView.hidden = YES;
-     [self showStartTripView];
-    
 
+    
+    
+    
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    //[postData setObject:jsonString forKey:@"total_kilometer"];
+    //[postData setObject:@"188" forKey:@"ride_id"];
+    [postData setObject:jsonString forKey:@"waypoints"];
     
-//    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success){
-//        
-//        
-//        if (success) {
-//            
-//            NSLog(@"finish ride");
-//            
-//            [UIView animateWithDuration:.5
-//                                  delay:0
-//                                options: UIViewAnimationOptionCurveEaseIn
-//                             animations:^{
-//                                 
-//                                 
-//                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);
-//                                 
-//                                 
-//                             }
-//                             completion:^(BOOL finished){
-//                                 
-//                                 
-//                                 self.finishTripView.hidden = YES;
-//                                 
-//                                // [self showCollectMoneyView];
-//                                 
-//                             }];
-//            
-//            
-//            
-//        }
-//        else{
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//                
-//                
-//            });
-//        }
-//        
-//    }];
+    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
+        
+        
+        if (success) {
+            
+            NSLog(@"finish ride");
+            
+            NSLog(@"responseObject in finish ride %@",responseObject);
+            
+            self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
+            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
+            
+             NSLog(@"total_payable_fare %@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
+            
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 
+                                 self.finishTripView.hidden = YES;
+                                 
+                                 [self showCollectMoneyView];
+                                 
+                             }];
+            
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
+        }
+        
+    }];
     
 }
 
@@ -918,6 +923,25 @@
 
 
 -(void)showCollectMoneyView{
+    
+    self.collectMoneyView.hidden = NO;
+    self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width,self.collectMoneyView.frame.size.height);
+    
+    [UIView animateWithDuration:.5
+                          delay:0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         
+                         self.collectMoneyView.frame = CGRectMake(20,(self.view.frame.size.height - self.collectMoneyView.frame.size.height-49) ,self.collectMoneyView.frame.size.width,self.collectMoneyView.frame.size.height);
+                         
+                         
+                     }
+     
+                     completion:^(BOOL finished){
+                         
+                         
+                     }];
 
     self.passengerNameIncollectMoneyView.text = self.passengerNameLabel.text;
     
@@ -939,6 +963,29 @@
     totalRating =[NSString stringWithFormat:@"%.2f", rating];
     
     NSLog(@"RATING is :)%@",totalRating);
+    
+}
+
+- (IBAction)collectMoneyButtonAction:(id)sender {
+    
+    [UIView animateWithDuration:.5
+                          delay:0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         
+                         self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, 0);
+                         
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         
+                         self.collectMoneyView.hidden = YES;
+                         
+                         
+                         
+                     }];
     
 }
 

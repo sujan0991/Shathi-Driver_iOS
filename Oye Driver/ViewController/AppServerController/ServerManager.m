@@ -474,7 +474,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
 }
 
--(void) patchFinishRide:(NSDictionary *)dataDic withCompletion:(api_Completion_Handler_Status)completion{
+-(void) patchFinishRide:(NSDictionary *)dataDic withCompletion:(api_Completion_Handler_Data)completion{
     
     
     
@@ -495,13 +495,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
                     
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(TRUE);
+                      completion(TRUE,[responseDictionary mutableCopy]);
                     });
                     
                 }else{
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(FALSE);
+                        completion(FALSE,nil);
                     });
                     
                 }
