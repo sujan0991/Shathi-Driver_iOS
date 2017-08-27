@@ -56,8 +56,15 @@
 		642818FA1F36F525009B5326 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 642818F81F36F525009B5326 /* LocationTracker.m */; };
 		64615ED81F29E13F00984685 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64615ED71F29E13F00984685 /* GoogleService-Info.plist */; };
 		6472B7151F136A1900530F12 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6472B7141F136A1900530F12 /* TabBarViewController.m */; };
+		6479B8F51F4D56FD00CB3275 /* VerifyIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */; };
+		6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6479B8F71F4D61B600CB3275 /* BikePaperCollectionViewCell.m */; };
+		648FE9BB1F45955F0035E618 /* RideHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */; };
+		648FE9BE1F4595830035E618 /* RideHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9BD1F4595830035E618 /* RideHistoryTableViewCell.m */; };
+		648FE9C11F459D410035E618 /* RideHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9C01F459D410035E618 /* RideHistory.m */; };
+		648FE9C41F45B4FA0035E618 /* DetailHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */; };
 		64905FFB1F33447E008A096A /* RateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64905FFA1F33447E008A096A /* RateView.m */; };
-		6491078B1F1B36E20097D093 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6491078A1F1B36E20097D093 /* ProfileViewController.m */; };
+		6492A5581F4EB53800A977AA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A5571F4EB53800A977AA /* ProfileViewController.m */; };
+		6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A55A1F4EB55C00A977AA /* SettingViewController.m */; };
 		D3676E0DA83CBB0BF8ED8AC3 /* libPods-Oye Driver.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 318F2CBD8205F7E979ABD9F4 /* libPods-Oye Driver.a */; };
 /* End PBXBuildFile section */
 
@@ -161,10 +168,24 @@
 		64615ED91F29E55900984685 /* Oye Driver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Oye Driver.entitlements"; sourceTree = "<group>"; };
 		6472B7131F136A1900530F12 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		6472B7141F136A1900530F12 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
+		6479B8F31F4D56FD00CB3275 /* VerifyIdentityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyIdentityViewController.h; sourceTree = "<group>"; };
+		6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyIdentityViewController.m; sourceTree = "<group>"; };
+		6479B8F61F4D61B600CB3275 /* BikePaperCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BikePaperCollectionViewCell.h; sourceTree = "<group>"; };
+		6479B8F71F4D61B600CB3275 /* BikePaperCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BikePaperCollectionViewCell.m; sourceTree = "<group>"; };
+		648FE9B91F45955F0035E618 /* RideHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideHistoryViewController.h; sourceTree = "<group>"; };
+		648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideHistoryViewController.m; sourceTree = "<group>"; };
+		648FE9BC1F4595830035E618 /* RideHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideHistoryTableViewCell.h; sourceTree = "<group>"; };
+		648FE9BD1F4595830035E618 /* RideHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideHistoryTableViewCell.m; sourceTree = "<group>"; };
+		648FE9BF1F459D410035E618 /* RideHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideHistory.h; sourceTree = "<group>"; };
+		648FE9C01F459D410035E618 /* RideHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideHistory.m; sourceTree = "<group>"; };
+		648FE9C21F45B4FA0035E618 /* DetailHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailHistoryViewController.h; path = AppServerController/DetailHistoryViewController.h; sourceTree = "<group>"; };
+		648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailHistoryViewController.m; path = AppServerController/DetailHistoryViewController.m; sourceTree = "<group>"; };
 		64905FF91F33447E008A096A /* RateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateView.h; sourceTree = "<group>"; };
 		64905FFA1F33447E008A096A /* RateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateView.m; sourceTree = "<group>"; };
-		649107891F1B36E20097D093 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
-		6491078A1F1B36E20097D093 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		6492A5561F4EB53800A977AA /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		6492A5571F4EB53800A977AA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		6492A5591F4EB55C00A977AA /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		6492A55A1F4EB55C00A977AA /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		BA538AD9371EEEAB577832EB /* Pods-Oye Driver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oye Driver.release.xcconfig"; path = "Pods/Target Support Files/Pods-Oye Driver/Pods-Oye Driver.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,6 +227,7 @@
 				64615ED91F29E55900984685 /* Oye Driver.entitlements */,
 				6407A7261F0A3B9700C55FC6 /* Model Classes */,
 				6407A6B71F0A30DB00C55FC6 /* Helper Classes */,
+				648FE9B21F4594F60035E618 /* Cell */,
 				6407A6A81F0A2CC500C55FC6 /* ViewController */,
 				6407A6941F0A27A800C55FC6 /* AppDelegate.h */,
 				6407A6951F0A27A800C55FC6 /* AppDelegate.m */,
@@ -230,12 +252,15 @@
 		6407A6A81F0A2CC500C55FC6 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6492A5551F4EB53800A977AA /* ProfileController */,
 				6472B70F1F13698C00530F12 /* CommonViewController */,
 				6407A6B31F0A307100C55FC6 /* AppServerController */,
 				6407A6AB1F0A2CC500C55FC6 /* MapViewController.h */,
 				6407A6AC1F0A2CC500C55FC6 /* MapViewController.m */,
-				649107891F1B36E20097D093 /* ProfileViewController.h */,
-				6491078A1F1B36E20097D093 /* ProfileViewController.m */,
+				648FE9B91F45955F0035E618 /* RideHistoryViewController.h */,
+				648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */,
+				648FE9C21F45B4FA0035E618 /* DetailHistoryViewController.h */,
+				648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -396,6 +421,8 @@
 				642818E51F36EECD009B5326 /* LocationShareModel.m */,
 				6407A7271F0A3B9700C55FC6 /* UserAccount.h */,
 				6407A7281F0A3B9700C55FC6 /* UserAccount.m */,
+				648FE9BF1F459D410035E618 /* RideHistory.h */,
+				648FE9C01F459D410035E618 /* RideHistory.m */,
 			);
 			path = "Model Classes";
 			sourceTree = "<group>";
@@ -418,8 +445,21 @@
 				6407A6AA1F0A2CC500C55FC6 /* LandingViewController.m */,
 				6472B7131F136A1900530F12 /* TabBarViewController.h */,
 				6472B7141F136A1900530F12 /* TabBarViewController.m */,
+				6479B8F31F4D56FD00CB3275 /* VerifyIdentityViewController.h */,
+				6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */,
 			);
 			path = CommonViewController;
+			sourceTree = "<group>";
+		};
+		648FE9B21F4594F60035E618 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				648FE9BC1F4595830035E618 /* RideHistoryTableViewCell.h */,
+				648FE9BD1F4595830035E618 /* RideHistoryTableViewCell.m */,
+				6479B8F61F4D61B600CB3275 /* BikePaperCollectionViewCell.h */,
+				6479B8F71F4D61B600CB3275 /* BikePaperCollectionViewCell.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		64905FF81F33447E008A096A /* RateView */ = {
@@ -429,6 +469,17 @@
 				64905FFA1F33447E008A096A /* RateView.m */,
 			);
 			path = RateView;
+			sourceTree = "<group>";
+		};
+		6492A5551F4EB53800A977AA /* ProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				6492A5561F4EB53800A977AA /* ProfileViewController.h */,
+				6492A5571F4EB53800A977AA /* ProfileViewController.m */,
+				6492A5591F4EB55C00A977AA /* SettingViewController.h */,
+				6492A55A1F4EB55C00A977AA /* SettingViewController.m */,
+			);
+			path = ProfileController;
 			sourceTree = "<group>";
 		};
 		77563A07133E704BB56D9F86 /* Pods */ = {
@@ -587,11 +638,14 @@
 			files = (
 				6407A7221F0A30DB00C55FC6 /* UIImageView+HighlightedWebCache.m in Sources */,
 				6407A71B1F0A30DB00C55FC6 /* UIImage+GIF.m in Sources */,
+				6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */,
+				648FE9BE1F4595830035E618 /* RideHistoryTableViewCell.m in Sources */,
 				6407A6B61F0A307100C55FC6 /* ServerManager.m in Sources */,
 				6407A7121F0A30DB00C55FC6 /* SDImageCache.m in Sources */,
 				6407A7291F0A3B9700C55FC6 /* UserAccount.m in Sources */,
 				642818FA1F36F525009B5326 /* LocationTracker.m in Sources */,
 				6407A7071F0A30DB00C55FC6 /* HexColors.m in Sources */,
+				648FE9C11F459D410035E618 /* RideHistory.m in Sources */,
 				6407A7091F0A30DB00C55FC6 /* NSDate+SameDay.m in Sources */,
 				6407A71D1F0A30DB00C55FC6 /* UIImage+WebP.m in Sources */,
 				6407A70D1F0A30DB00C55FC6 /* FLAnimatedImageView+WebCache.m in Sources */,
@@ -611,22 +665,26 @@
 				6407A70F1F0A30DB00C55FC6 /* MKAnnotationView+WebCache.m in Sources */,
 				6407A7061F0A30DB00C55FC6 /* DDHTimerControl.m in Sources */,
 				6407A7101F0A30DB00C55FC6 /* NSData+ImageContentType.m in Sources */,
+				648FE9C41F45B4FA0035E618 /* DetailHistoryViewController.m in Sources */,
 				6407A7161F0A30DB00C55FC6 /* SDWebImageDownloader.m in Sources */,
 				642818E61F36EECD009B5326 /* LocationShareModel.m in Sources */,
 				6407A7191F0A30DB00C55FC6 /* SDWebImagePrefetcher.m in Sources */,
+				6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */,
 				6407A70A1F0A30DB00C55FC6 /* NSDictionary+NullReplacement.m in Sources */,
 				6407A70C1F0A30DB00C55FC6 /* FLAnimatedImage.m in Sources */,
 				642818F91F36F525009B5326 /* BackgroundTaskManager.m in Sources */,
 				6472B7151F136A1900530F12 /* TabBarViewController.m in Sources */,
 				6407A7171F0A30DB00C55FC6 /* SDWebImageDownloaderOperation.m in Sources */,
 				6407A6AE1F0A2CC500C55FC6 /* MapViewController.m in Sources */,
+				6479B8F51F4D56FD00CB3275 /* VerifyIdentityViewController.m in Sources */,
 				6407A6AD1F0A2CC500C55FC6 /* LandingViewController.m in Sources */,
 				6407A71C1F0A30DB00C55FC6 /* UIImage+MultiFormat.m in Sources */,
 				6407A71E1F0A30DB00C55FC6 /* SDNetworkActivityIndicator.m in Sources */,
-				6491078B1F1B36E20097D093 /* ProfileViewController.m in Sources */,
+				6492A5581F4EB53800A977AA /* ProfileViewController.m in Sources */,
 				6407A7141F0A30DB00C55FC6 /* SDWebImageCompat.m in Sources */,
 				6407A7231F0A30DB00C55FC6 /* UIImageView+WebCache.m in Sources */,
 				6407A7251F0A30DB00C55FC6 /* UIView+WebCacheOperation.m in Sources */,
+				648FE9BB1F45955F0035E618 /* RideHistoryViewController.m in Sources */,
 				6407A7131F0A30DB00C55FC6 /* SDImageCacheConfig.m in Sources */,
 				6407A6931F0A27A800C55FC6 /* main.m in Sources */,
 			);

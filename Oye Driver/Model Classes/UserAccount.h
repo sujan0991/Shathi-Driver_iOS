@@ -24,6 +24,8 @@
 @property (nonatomic,strong) NSString *userTypeId;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic) int riderStatus;
+@property (nonatomic) int riderIsApproved;
+@property (nonatomic) int riderIsBlocked;
 
 @property (nonatomic, strong) NSString *accessToken;
 

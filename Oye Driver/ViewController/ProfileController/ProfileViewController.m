@@ -11,7 +11,10 @@
 #import "LandingViewController.h"
 #import "UserAccount.h"
 #import "ServerManager.h"
-
+#import "NSDictionary+NullReplacement.h"
+#import "Constants.h"
+#import "RideHistoryViewController.h"
+#import "SettingViewController.h"
 
 @interface ProfileViewController (){
     
@@ -20,7 +23,8 @@
     NSArray *settingList;
     NSArray *imageArray;
     
-    
+    NSMutableDictionary *userInfo;
+
 }
 
 
@@ -37,6 +41,9 @@
     }
     [self setUpView];
     [self drawShadow:self.navView];
+    
+    [self getUserInfo];
+    
     
 
 }
@@ -81,30 +88,32 @@
     self.settingTableView.dataSource = self;
     
     
-    settingList = [[NSArray alloc] initWithObjects:@"Gift Box",@"Payment",@"Promotions",@"Language",@"Support",@"History",@"About",@"Logout", nil];
+    settingList = [[NSArray alloc] initWithObjects:@"Support",@"History",@"Settings",@"About", nil];
     
-    UIImage *image1 = [UIImage imageNamed:@"gift_icon"];
-    UIImage *image2 = [UIImage imageNamed:@"Payment"];
-    UIImage *image3 = [UIImage imageNamed:@"Promotions"];
-    UIImage *image4 = [UIImage imageNamed:@"Language"];
-    UIImage *image5 = [UIImage imageNamed:@"Support"];
-    UIImage *image6 = [UIImage imageNamed:@"History"];
-    UIImage *image7 = [UIImage imageNamed:@"about"];
-    UIImage *image8 = [UIImage imageNamed:@"logout"];
+    //UIImage *image1 = [UIImage imageNamed:@"gift_icon"];
+    UIImage *image2 = [UIImage imageNamed:@"Support"];
+    UIImage *image3 = [UIImage imageNamed:@"History"];
+    UIImage *image4 = [UIImage imageNamed:@"Settings_black"];
+    UIImage *image5 = [UIImage imageNamed:@"about"];
     
-    imageArray = [[NSArray alloc] initWithObjects:image1,image2,image3,image4,image5,image6,image7,image8, nil];
+    
+    imageArray = [[NSArray alloc] initWithObjects:image2,image3,image4,image5, nil];
     
     NSLog(@"status  in profile %d",[UserAccount sharedManager].riderStatus);
     
     if ([UserAccount sharedManager].riderStatus == 2) {
         
         [self.driverStatusSwitch setOn:YES];
+        self.statusLabel.text = @"Online";
         
     }else{
         
         [self.driverStatusSwitch setOn:NO];
+        self.statusLabel.text = @"Offline";
         
     }
+    
+    self.settingTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.settingTableView.frame.size.width, 1)];
     
    [self.driverStatusSwitch addTarget:self
                           action:@selector(stateChanged:) forControlEvents:UIControlEventValueChanged];
@@ -137,7 +146,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"SettingfCell";
+    static NSString *CellIdentifier = @"profileCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -169,27 +178,54 @@
     {
         
         
+    }else if (indexPath.row ==1)
+    {
+        RideHistoryViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RideHistoryViewController"];
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }else if (indexPath.row ==2)
     {
-//        PromotionsViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PromotionsViewController"];
-//        
-//        [self presentViewController:vc animated:YES completion:nil];
+        SettingViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
         
-    }else if (indexPath.row ==7)
-    {
-        
-        [accountKit logOut];
-        
-        
-        [UserAccount sharedManager].accessToken= @"" ;
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        //        LandingViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"LandingViewController"];
-        //
-        //        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:vc animated:YES];
         
     }
+    
+}
+
+-(void) getUserInfo{
+    
+    
+    [[ServerManager sharedManager] getUserInfoWithCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
+        
+        
+        if ( responseObject!=nil) {
+            
+            
+            
+            userInfo= [[NSMutableDictionary alloc] initWithDictionary:[responseObject dictionaryByReplacingNullsWithBlanks]];
+            
+            NSLog(@"user info %@",userInfo);
+            
+            [self.profilePicture sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",BASE_API_URL,[userInfo objectForKey:@"profile_picture"]]]];
+            self.userNameLabel.text = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"name"]];
+            self.phoneNoLabel.text = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"phone"]];
+           
+            
+            
+        }else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSLog(@"no user info");
+                
+                
+            });
+            
+        }
+    }];
+    
     
 }
 
@@ -198,6 +234,7 @@
     if ([switchState isOn]) {
 
         NSLog(@"ON");
+        self.statusLabel.text = @"Online";
         
         [[ServerManager sharedManager] patchRiderStatus:@"2" withCompletion:^(BOOL success) {
             
@@ -258,6 +295,8 @@
     }else{
  
        NSLog(@"OFF");
+        
+        self.statusLabel.text = @"Offline";
         
         [[ServerManager sharedManager] patchRiderStatus:@"1" withCompletion:^(BOOL success) {
             

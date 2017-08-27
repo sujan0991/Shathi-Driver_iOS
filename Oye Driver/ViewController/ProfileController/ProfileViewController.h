@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LocationTracker.h"
+#import "UIImageView+WebCache.h"
 
-@interface ProfileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ProfileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SDWebImageManagerDelegate>
 
 
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *editProfileButton;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 

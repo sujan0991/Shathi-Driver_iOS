@@ -13,7 +13,7 @@
 #import "DDHTimerControl.h"
 #import "ServerManager.h"
 #import "LocationShareModel.h"
-
+#import "VerifyIdentityViewController.h"
 @import Firebase;
 
 @interface MapViewController (){
@@ -29,7 +29,7 @@
     CLLocationCoordinate2D googleSearchLocation;
     
     
-    CLLocation *picupPoint ;
+    CLLocation *pickUpPoint ;
     CLLocation *destinationPoint;
     
     
@@ -42,6 +42,10 @@
     int rideId;
     
     NSString* totalRating;
+    
+    
+    GMSMarker *pickUpMarker;
+    GMSMarker *destinationMarker;
     
 }
 
@@ -60,13 +64,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    //demo access token
-    
-    [UserAccount sharedManager].accessToken = @"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjEwYmE0YzZlOTUyMWY5NDkzN2ZiZGY2OGNlYzI1NTFlZGQzODQ5MzcyNTZmMGE4MDg3MzhhNmIwNzhhZWY4ZjNmNzA5NDc3ZDQwYjliMTFjIn0.eyJhdWQiOiIxIiwianRpIjoiMTBiYTRjNmU5NTIxZjk0OTM3ZmJkZjY4Y2VjMjU1MWVkZDM4NDkzNzI1NmYwYTgwODczOGE2YjA3OGFlZjhmM2Y3MDk0NzdkNDBiOWIxMWMiLCJpYXQiOjE0OTY5MTAxMTgsIm5iZiI6MTQ5NjkxMDExOCwiZXhwIjoxNTI4NDQ2MTE4LCJzdWIiOiIxMyIsInNjb3BlcyI6W119.IsnbumQjzfwCbpnUIIRERUWZNrJ_3TLQx2yZtYULFXGoeHEpOdElwd_Y1VK2G3CCGoLeQNBiHN2IRPVXHSYSjyanUcn92ugn4lkl8lAicgc7CMf2aJ51mzJpLs1U-KXUd7cDygM9Agt69z52KN5b0OPZ8p8kywOj7139XClvokJW9B4KpgpoGYNdMgUzooMHyAnfP7CuHLlfmAV27FtaoEhthpYKcI1EVkVL2y6DwV1zOrxD8wvEbSjPBADlc1W5H13d4LgTEqsRNv4Fb7rvjjS2wwdzX_I_O5Z6LiLV95TiHBHTqJpz7PTUzIRU-IKYzatoQr2nVDlR7V8ck4aD9Ql4B85yTqg5LCnVXRxwPZNV0UKAhC1KH6XFve52_VHZ5_hp8E4AKLjxfppgsa8hfA7Sa8iOBnrOVnF1_L6TP-Pl022NRSAo7JedNDbF0yllACWT_oZ7P5H8Cq9dBQRBasG61pxqZBQ_65hzULk6shWY6HoqMxHWpFSIo12pdC98LcSCxsYwQI1Sxaq0qw3DhxlYOgGqreHY1Pr8T35wdAx_fePbgU5dPCZTfrBKwYL_7eb5lR1EME06OEKHUk5dPXa3h18Vjong-nNd1zPeu7894T7ai_q-ArRnS8MjV4lLwbZO3nr6HP8154etkbjQ3uno9QK_98vl51l4cH4f5iE";
-    
 
 
-    
    
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(rideInfo:) name:@"rideNotification" object:nil];
     
@@ -77,12 +76,26 @@
    
     [self setMap];
     
-    
-    
-    
+
     homeWorkArray = [[NSMutableArray alloc]init];
     
+    NSLog(@"UserAccount sharedManager].riderIsApproved  %d",[UserAccount sharedManager].riderIsApproved);
+    
+//    if ([UserAccount sharedManager].riderIsApproved == 1) {
+//        
+//        NSLog(@"approved");
+//        
+//    }else{
+    
+        VerifyIdentityViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VerifyIdentityViewController"];
+        
+        vc.crossButton.hidden = YES;
+    
+        [self presentViewController:vc animated:YES completion:nil];
+
+   // }
 }
+
 -(void)dealloc{
     
     
@@ -126,6 +139,11 @@
     [self circurelPhoto:self.passengerPhotoInFinishTripView];
     [self circurelPhoto:self.passengerPhotoIncollectMoneyView];
     
+    [self circurelLabel:self.ratingLabelInRideSuggestionView];
+    [self circurelLabel:self.ratingLabelInStartTripView];
+    [self circurelLabel:self.ratingLabelInFinishTripView];
+    [self circurelLabel:self.ratingLabelInCollectMoneyView];
+    
 
     [UserAccount sharedManager].isOnRide = 0;
     
@@ -142,6 +160,11 @@
     imageView.layer.borderColor = [[UIColor hx_colorWithHexString:@"#E9E9E9"]CGColor];
     
     
+}
+-(void) circurelLabel:(UILabel *)label{
+    
+    label.layer.cornerRadius = self.ratingLabelInRideSuggestionView.frame.size.width/2;
+    label.layer.masksToBounds = YES;
 }
 
 
@@ -163,6 +186,8 @@
     locationManager.distanceFilter = kCLDistanceFilterNone;
   
     [locationManager startUpdatingLocation];
+    
+    self.googleMapView.myLocationEnabled = YES;
     
 //    [locationManager requestWhenInUseAuthorization];
     
@@ -308,26 +333,74 @@
     
     NSLog(@"ride info %@",rideInfo);
     
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+//                                                    message:[NSString stringWithFormat:@"%@",rideInfo]
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"OK"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+    
     NSData *webData = [[rideInfo objectForKey:@"gcm.notification.data" ] dataUsingEncoding:NSUTF8StringEncoding];
     
     NSError *error;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
     NSLog(@"JSON DIct: %@", jsonDict);
     
-    self.picupLabel.text = [jsonDict objectForKey:@"pickup_address"];
-    self.destinationLabel.text = [jsonDict objectForKey:@"destination_address"];
-    self.passengerNameLabel.text = [[jsonDict objectForKey:@"user"] objectForKey:@"name"];
+    int notificationType = [[jsonDict objectForKey:@"notification_type"]intValue];
     
-    picupPoint = [[CLLocation alloc] initWithLatitude:[[jsonDict objectForKey:@"pickup_latitude"] floatValue] longitude:[[jsonDict objectForKey:@"pickup_longitude"] floatValue]];
-    destinationPoint = [[CLLocation alloc] initWithLatitude:[[jsonDict objectForKey:@"destination_latitude"] floatValue] longitude:[[jsonDict objectForKey:@"destination_longitude"] floatValue]];
-    
-    
-    [self drawpoliline:picupPoint destination:destinationPoint];
-    
-    rideId =[[jsonDict objectForKey:@"id"]intValue];
-    
-    [self showRideSuggestionView];
-    
+    if (notificationType == 1) {
+        //ride request
+        
+        self.picupLabel.text = [[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_address"];
+        self.destinationLabel.text = [[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_address"];
+        self.passengerNameLabel.text = [[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"user"] objectForKey:@"name"];
+        
+        pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_latitude"] floatValue] longitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_longitude"] floatValue]];
+        destinationPoint = [[CLLocation alloc] initWithLatitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_latitude"] floatValue] longitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_longitude"] floatValue]];
+        
+        NSLog(@"pick up point %@",pickUpPoint);
+        NSLog(@"destination point %@",destinationPoint);
+        
+        //set picup marker
+        
+        if (pickUpMarker) {
+            
+            pickUpMarker.map = nil;
+        }
+        pickUpMarker = [[GMSMarker alloc] init];
+        
+        pickUpMarker.position = CLLocationCoordinate2DMake(pickUpPoint.coordinate.latitude, pickUpPoint.coordinate.longitude);
+        
+        pickUpMarker.title = [NSString stringWithFormat:@"%@",[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_address"]];
+        
+        pickUpMarker.icon = [UIImage imageNamed:@"Pickup.png"];
+        
+        pickUpMarker.map = self.googleMapView;
+        
+        // set destination pin
+        if (destinationMarker) {
+            
+            destinationMarker.map = nil;
+        }
+        
+        destinationMarker= [[GMSMarker alloc] init];
+        
+        destinationMarker.position = CLLocationCoordinate2DMake(destinationPoint.coordinate.latitude, destinationPoint.coordinate.longitude);
+        
+        destinationMarker.title = [NSString stringWithFormat:@"%@",[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_address"]];
+        
+        destinationMarker.icon = [UIImage imageNamed:@"Destination.png"];
+        
+        destinationMarker.map = self.googleMapView;
+        
+        
+        [self drawpoliline:pickUpPoint destination:destinationPoint];
+        
+        rideId =[[[jsonDict objectForKey:@"ride_info"] objectForKey:@"id"]intValue];
+        
+        
+        [self performSelector:@selector(showRideSuggestionView) withObject:self afterDelay:1.0 ];
+    }
 }
 
 
@@ -468,7 +541,7 @@
 //            NSLog(@"reverse geocoding firstaddressObj: %@",firstaddressObj.thoroughfare);
 //        }];
 //        
-//        picupPoint = [[CLLocation alloc] initWithLatitude:currentLocation.latitude longitude:currentLocation.longitude];
+//        pickUpPoint = [[CLLocation alloc] initWithLatitude:currentLocation.latitude longitude:currentLocation.longitude];
 //        destinationPoint = [[CLLocation alloc] initWithLatitude:position.target.latitude longitude:position.target.longitude];
 //        
 //        
@@ -586,7 +659,7 @@
 
 -(void) showRideSuggestionView{
 
-    
+    NSLog(@"ride id in ride suggestion view %d",rideId);
     
     self.rideSuggestionView.hidden = NO;
     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width,self.rideSuggestionView.frame.size.height);
@@ -960,7 +1033,7 @@
     
     
     
-    totalRating =[NSString stringWithFormat:@"%.2f", rating];
+    totalRating =[NSString stringWithFormat:@"%.1f", rating];
     
     NSLog(@"RATING is :)%@",totalRating);
     

@@ -155,7 +155,7 @@
                 
             AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
             
-              [appDelegateTemp askForNotificationPermission];
+              //[appDelegateTemp askForNotificationPermission];
             
             TabBarViewController *viewController=[self.storyboard instantiateViewControllerWithIdentifier:@"TabBarViewController"];
             appDelegateTemp.window.rootViewController = viewController;

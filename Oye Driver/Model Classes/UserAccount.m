@@ -91,6 +91,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
     [self.userDefaults synchronize];
 }
 
+-(int) riderIsApproved
+{
+    return [[self.userDefaults objectForKey:@"riderIsApproved"]intValue];
+}
+
+- (void)setRiderIsApproved:(int)value
+{
+    [self.userDefaults setInteger:value forKey:@"riderIsApproved"];
+    [self.userDefaults synchronize];
+}
+
+-(int) riderIsBlocked
+{
+    return [[self.userDefaults objectForKey:@"riderIsBlocked"]intValue];
+}
+
+- (void)setRiderIsBlocked:(int)value
+{
+    [self.userDefaults setInteger:value forKey:@"riderIsBlocked"];
+    [self.userDefaults synchronize];
+}
+
 -(NSString*)phoneNumber
 {
     return [self.userDefaults objectForKey:@"phoneNumber"];

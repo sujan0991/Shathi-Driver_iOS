@@ -38,6 +38,9 @@
     // Use Firebase library to configure APIs
     [FIRApp configure];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:) name:kFIRInstanceIDTokenRefreshNotification object:nil];
+    
+    
     // Register for remote notifications. This shows a permission dialog on first run, to
     // show the dialog at a more appropriate time move this registration accordingly.
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
@@ -153,19 +156,19 @@
 }
 
 
--(void) askForNotificationPermission
-{
-    UIUserNotificationType allNotificationTypes =
-    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-    UIUserNotificationSettings *settings =
-    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:) name:kFIRInstanceIDTokenRefreshNotification object:nil];
-    
-    
-    
-}
+//-(void) askForNotificationPermission
+//{
+//    UIUserNotificationType allNotificationTypes =
+//    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+//    UIUserNotificationSettings *settings =
+//    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:) name:kFIRInstanceIDTokenRefreshNotification object:nil];
+//    
+//    
+//    
+//}
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -189,6 +192,19 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     [UserAccount sharedManager].gcmRegKey=refreshedToken;
     
+    //temporary
+    
+//    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+//    
+//    [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
+//    
+//    
+//    [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+//        
+//        
+//    }];
+    
+    
     
 }
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
@@ -203,6 +219,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 {
     NSLog(@"userInfo %@",userInfo);
     
+
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"rideNotification" object:self userInfo:userInfo];
 
     completionHandler(UIBackgroundFetchResultNoData);
@@ -215,14 +233,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
     NSLog(@"InstanceID token: %@", refreshedToken);
     
-    
-    [UserAccount sharedManager].gcmRegKey=refreshedToken;
-    
-    
+
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
     
     // TODO: If necessary send token to application server.
+    
+        [UserAccount sharedManager].gcmRegKey=refreshedToken;
+    
+        NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+        [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
+    
+    
+        [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+    
+            
+        }];
 }
 
 - (void)connectToFcm {
