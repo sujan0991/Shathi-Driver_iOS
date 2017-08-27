@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "VerifyIdentityViewController.h"
 
 @interface SettingViewController (){
 
@@ -70,11 +71,13 @@
         
     }else if (indexPath.row ==2)
     {
-//        RideHistoryViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RideHistoryViewController"];
-//        
-//        [self.navigationController pushViewController:vc animated:YES];
+        VerifyIdentityViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VerifyIdentityViewController"];
         
-    }else if (indexPath.row ==4)
+        vc.isCrossHidden =NO;
+        
+        [self presentViewController:vc animated:YES completion:nil];
+        
+    }else if (indexPath.row == 4)
     {
         
 //        [accountKit logOut];

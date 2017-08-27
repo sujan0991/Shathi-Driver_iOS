@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *historyTableView;
 
 
+@property (weak, nonatomic) IBOutlet UILabel *noHistoryLabel;
+
 @end

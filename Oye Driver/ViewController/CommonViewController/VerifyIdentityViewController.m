@@ -44,6 +44,17 @@
     
     
     self.collectionViewHeight.constant = ([UIScreen mainScreen].bounds.size.width-50)/2 *0.62;
+    
+    
+    if (self.isCrossHidden) {
+        
+        self.crossButton.hidden=YES;
+        
+    } else {
+        
+        self.crossButton.hidden =NO;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -28,6 +28,8 @@
     self.historyTableView.delegate = self;
     self.historyTableView.dataSource = self;
     
+    self.noHistoryLabel.hidden = YES;
+    
     [self apiCallForHistory];
 }
 
@@ -53,9 +55,16 @@
             
             historyArray = [userInfo objectForKey:@"data"];
             
-            [self callStaticMapApi];
+            if (historyArray.count == 0) {
+                
+                self.noHistoryLabel.hidden = NO;
+            }else{
             
-            [self.historyTableView reloadData];
+                [self callStaticMapApi];
+            
+                [self.historyTableView reloadData];
+                
+            }
             
         }else{
             

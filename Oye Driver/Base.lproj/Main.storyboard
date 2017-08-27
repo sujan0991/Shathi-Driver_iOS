@@ -1448,12 +1448,20 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No ride history yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQc-RC-Z3X">
+                                <rect key="frame" x="115.5" y="323.5" width="144" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="9Xg-RU-6Jq" firstAttribute="top" secondItem="gtt-ER-yM2" secondAttribute="top" id="0j0-Af-DuE"/>
                             <constraint firstAttribute="trailing" secondItem="ufe-Ze-YLJ" secondAttribute="trailing" constant="15" id="1mt-Mq-KDs"/>
                             <constraint firstItem="ufe-Ze-YLJ" firstAttribute="leading" secondItem="gtt-ER-yM2" secondAttribute="leading" constant="15" id="7bu-jp-jsa"/>
+                            <constraint firstItem="VQc-RC-Z3X" firstAttribute="centerX" secondItem="gtt-ER-yM2" secondAttribute="centerX" id="7rb-Kr-HXC"/>
+                            <constraint firstItem="VQc-RC-Z3X" firstAttribute="centerY" secondItem="gtt-ER-yM2" secondAttribute="centerY" id="Kvf-lD-WGW"/>
                             <constraint firstAttribute="trailing" secondItem="9Xg-RU-6Jq" secondAttribute="trailing" id="Ujt-Ri-Nc4"/>
                             <constraint firstItem="ufe-Ze-YLJ" firstAttribute="top" secondItem="9Xg-RU-6Jq" secondAttribute="bottom" id="prB-Mr-6Iz"/>
                             <constraint firstItem="PnS-wb-Dfk" firstAttribute="top" secondItem="ufe-Ze-YLJ" secondAttribute="bottom" constant="15" id="uJP-GF-BIP"/>
@@ -1463,6 +1471,7 @@
                     <connections>
                         <outlet property="historyTableView" destination="ufe-Ze-YLJ" id="D2R-a1-0wG"/>
                         <outlet property="navTitileLabel" destination="Vhm-EV-LhI" id="Eys-Vj-vhV"/>
+                        <outlet property="noHistoryLabel" destination="VQc-RC-Z3X" id="zTZ-lC-atB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5v1-WI-x33" userLabel="First Responder" sceneMemberID="firstResponder"/>

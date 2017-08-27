@@ -23,5 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
 
+@property BOOL isCrossHidden;
 
 @end

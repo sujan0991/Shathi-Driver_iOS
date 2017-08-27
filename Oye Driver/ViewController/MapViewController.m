@@ -81,19 +81,19 @@
     
     NSLog(@"UserAccount sharedManager].riderIsApproved  %d",[UserAccount sharedManager].riderIsApproved);
     
-//    if ([UserAccount sharedManager].riderIsApproved == 1) {
-//        
-//        NSLog(@"approved");
-//        
-//    }else{
+    if ([UserAccount sharedManager].riderIsApproved == 1) {
+        
+        NSLog(@"approved");
+        
+    }else{
     
         VerifyIdentityViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VerifyIdentityViewController"];
         
-        vc.crossButton.hidden = YES;
+        vc.isCrossHidden =YES;
     
         [self presentViewController:vc animated:YES completion:nil];
 
-   // }
+    }
 }
 
 -(void)dealloc{
