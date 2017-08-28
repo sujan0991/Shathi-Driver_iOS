@@ -114,6 +114,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
 - (IBAction)LoginWithMobileButtonAction:(id)sender {
     
 }
@@ -125,6 +127,8 @@
     
     NSLog(@"complete with access token: %@",accessToken.tokenString);
     
+    
+    
     [UserAccount sharedManager].accessToken =accessToken.tokenString;
     
     [self userLogin:accessToken.tokenString];
@@ -134,6 +138,41 @@
 - (void)viewController:(UIViewController<AKFViewController> *)viewController didFailWithError:(NSError *)error
 {
     NSLog(@"%@ did fail with error: %@", viewController, error);
+}
+
+-(void)checkRiderStatus{
+    
+    
+    [[ServerManager sharedManager] getRiderStatusWithCompletion:^(BOOL success){
+        
+        
+        if (success) {
+            
+            NSLog(@"got rider status");
+            NSLog(@"status  %d",[UserAccount sharedManager].riderStatus);
+            
+            AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+            
+            //[appDelegateTemp askForNotificationPermission];
+            
+            TabBarViewController *viewController=[self.storyboard instantiateViewControllerWithIdentifier:@"TabBarViewController"];
+            appDelegateTemp.window.rootViewController = viewController;
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
+        }
+        
+    }];
+    
+    
+    
 }
 
 
@@ -152,18 +191,13 @@
             
             
         [[ServerManager sharedManager] postLoginWithPhone:[account.phoneNumber stringRepresentation] accessToken:accessToken completion:^(BOOL success) {
-                
-            AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
-            
-              //[appDelegateTemp askForNotificationPermission];
-            
-            TabBarViewController *viewController=[self.storyboard instantiateViewControllerWithIdentifier:@"TabBarViewController"];
-            appDelegateTemp.window.rootViewController = viewController;
             
             
-                
-               // NSLog(@"access token from api %@",[[UserAccount sharedManager]accessToken]);
-                
+            
+            
+             [self checkRiderStatus];
+            
+ 
 
         }];
             
@@ -178,6 +212,9 @@
                  [UserAccount sharedManager].phoneNumber = [account.phoneNumber stringRepresentation];
             }
         }
+        
+       
+        
     }];
 
 

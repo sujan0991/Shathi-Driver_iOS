@@ -58,6 +58,8 @@
 		6472B7151F136A1900530F12 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6472B7141F136A1900530F12 /* TabBarViewController.m */; };
 		6479B8F51F4D56FD00CB3275 /* VerifyIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */; };
 		6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6479B8F71F4D61B600CB3275 /* BikePaperCollectionViewCell.m */; };
+		648677361F53E9890006CF86 /* EditPrifileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648677351F53E9890006CF86 /* EditPrifileViewController.m */; };
+		648677391F53EA4E0006CF86 /* EditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648677381F53EA4E0006CF86 /* EditProfileTableViewCell.m */; };
 		648FE9BB1F45955F0035E618 /* RideHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */; };
 		648FE9BE1F4595830035E618 /* RideHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9BD1F4595830035E618 /* RideHistoryTableViewCell.m */; };
 		648FE9C11F459D410035E618 /* RideHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9C01F459D410035E618 /* RideHistory.m */; };
@@ -172,6 +174,10 @@
 		6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyIdentityViewController.m; sourceTree = "<group>"; };
 		6479B8F61F4D61B600CB3275 /* BikePaperCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BikePaperCollectionViewCell.h; sourceTree = "<group>"; };
 		6479B8F71F4D61B600CB3275 /* BikePaperCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BikePaperCollectionViewCell.m; sourceTree = "<group>"; };
+		648677341F53E9890006CF86 /* EditPrifileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPrifileViewController.h; sourceTree = "<group>"; };
+		648677351F53E9890006CF86 /* EditPrifileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPrifileViewController.m; sourceTree = "<group>"; };
+		648677371F53EA4E0006CF86 /* EditProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewCell.h; sourceTree = "<group>"; };
+		648677381F53EA4E0006CF86 /* EditProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewCell.m; sourceTree = "<group>"; };
 		648FE9B91F45955F0035E618 /* RideHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideHistoryViewController.h; sourceTree = "<group>"; };
 		648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideHistoryViewController.m; sourceTree = "<group>"; };
 		648FE9BC1F4595830035E618 /* RideHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideHistoryTableViewCell.h; sourceTree = "<group>"; };
@@ -454,6 +460,8 @@
 		648FE9B21F4594F60035E618 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				648677371F53EA4E0006CF86 /* EditProfileTableViewCell.h */,
+				648677381F53EA4E0006CF86 /* EditProfileTableViewCell.m */,
 				648FE9BC1F4595830035E618 /* RideHistoryTableViewCell.h */,
 				648FE9BD1F4595830035E618 /* RideHistoryTableViewCell.m */,
 				6479B8F61F4D61B600CB3275 /* BikePaperCollectionViewCell.h */,
@@ -474,6 +482,8 @@
 		6492A5551F4EB53800A977AA /* ProfileController */ = {
 			isa = PBXGroup;
 			children = (
+				648677341F53E9890006CF86 /* EditPrifileViewController.h */,
+				648677351F53E9890006CF86 /* EditPrifileViewController.m */,
 				6492A5561F4EB53800A977AA /* ProfileViewController.h */,
 				6492A5571F4EB53800A977AA /* ProfileViewController.m */,
 				6492A5591F4EB55C00A977AA /* SettingViewController.h */,
@@ -636,6 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				648677391F53EA4E0006CF86 /* EditProfileTableViewCell.m in Sources */,
 				6407A7221F0A30DB00C55FC6 /* UIImageView+HighlightedWebCache.m in Sources */,
 				6407A71B1F0A30DB00C55FC6 /* UIImage+GIF.m in Sources */,
 				6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */,
@@ -670,6 +681,7 @@
 				642818E61F36EECD009B5326 /* LocationShareModel.m in Sources */,
 				6407A7191F0A30DB00C55FC6 /* SDWebImagePrefetcher.m in Sources */,
 				6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */,
+				648677361F53E9890006CF86 /* EditPrifileViewController.m in Sources */,
 				6407A70A1F0A30DB00C55FC6 /* NSDictionary+NullReplacement.m in Sources */,
 				6407A70C1F0A30DB00C55FC6 /* FLAnimatedImage.m in Sources */,
 				642818F91F36F525009B5326 /* BackgroundTaskManager.m in Sources */,

@@ -30,9 +30,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [self checkRiderStatus];
-    
-    
+
     [GMSServices provideAPIKey:@"AIzaSyDh0V-13fNhKpvJaMF-kvfTFEE-tpOZJJk"];
     
     // Use Firebase library to configure APIs
@@ -188,23 +186,26 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"deviceToken %@",deviceTokenString);
     NSLog(@"refreshedToken %@",refreshedToken);
     
+    if ([refreshedToken isEqualToString:@"<null>"] || [refreshedToken isEqualToString:@"(null)"] || [refreshedToken isEqual:[NSNull null]] || refreshedToken==nil ) {
+        
+        NSLog(@"refreshedToken is null");
+    }else{
     
+        [UserAccount sharedManager].gcmRegKey=refreshedToken;
+        
+        NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+        
+        [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
+        
+        
+        [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+            
+            
+            NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken method");
+            
+        }];
     
-    [UserAccount sharedManager].gcmRegKey=refreshedToken;
-    
-    //temporary
-    
-//    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-//    
-//    [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
-//    
-//    
-//    [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
-//        
-//        
-//    }];
-    
-    
+    }
     
 }
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
@@ -239,17 +240,29 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     // TODO: If necessary send token to application server.
     
+    
+    if ([refreshedToken isEqualToString:@"<null>"] || [refreshedToken isEqualToString:@"(null)"] || [refreshedToken isEqual:[NSNull null]] || refreshedToken==nil ) {
+        
+        NSLog(@"refreshedToken is null");
+        
+    }else{
+        
         [UserAccount sharedManager].gcmRegKey=refreshedToken;
-    
+        
         NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-    
+        
         [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
-    
-    
+        
+        
         [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
-    
+            
+            
+            NSLog(@"tokenRefreshNotification method");
             
         }];
+        
+    }
+    
 }
 
 - (void)connectToFcm {
@@ -263,32 +276,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 }
 
 
--(void)checkRiderStatus{
-    
-    
-    [[ServerManager sharedManager] getRiderStatusWithCompletion:^(BOOL success){
-        
-        
-        if (success) {
-            
-            NSLog(@"got rider status");
-            NSLog(@"status  %d",[UserAccount sharedManager].riderStatus);
-            
-        }
-        else{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
-                
-            });
-        }
-        
-    }];
-    
-    
-    
-}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

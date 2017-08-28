@@ -15,6 +15,7 @@
 #import "Constants.h"
 #import "RideHistoryViewController.h"
 #import "SettingViewController.h"
+#import "EditPrifileViewController.h"
 
 @interface ProfileViewController (){
     
@@ -342,9 +343,11 @@
 - (IBAction)editProfileAction:(id)sender {
     
     
-//    EditPrifileViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditPrifileViewController"];
-//    
-//    [self.navigationController pushViewController:vc animated:YES];
+    EditPrifileViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditPrifileViewController"];
+    
+    vc.userInfo = userInfo;
+    
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
