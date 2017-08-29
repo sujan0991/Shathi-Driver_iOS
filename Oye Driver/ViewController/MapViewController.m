@@ -641,6 +641,29 @@
             
             NSLog(@"cancel ride");
             
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 
+                                 self.rideSuggestionView.hidden = YES;
+                                 
+                                 [self.googleMapView clear];
+                                 
+                                 GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+                                 
+                                 [self.googleMapView animateToCameraPosition:camera];
+                                 
+                                 
+                             }];
         }
         else{
             
