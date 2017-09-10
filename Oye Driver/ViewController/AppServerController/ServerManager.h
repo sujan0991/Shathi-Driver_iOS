@@ -66,6 +66,8 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 //get history info
 - (void)getHistoryInfoWithCompletion:(api_Completion_Handler_Data)completion;
 
+//patch rating
 
+-(void)patchRating:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 @end

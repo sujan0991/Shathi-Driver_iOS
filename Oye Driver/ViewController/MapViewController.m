@@ -47,6 +47,7 @@
     GMSMarker *pickUpMarker;
     GMSMarker *destinationMarker;
     
+    NSString *phoneNo;
 }
 
 @property (nonatomic, strong) DDHTimerControl *timerControl;
@@ -351,9 +352,11 @@
     if (notificationType == 1) {
         //ride request
         
+        phoneNo =[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"user"] objectForKey:@"phone"];
+        self.passengerNameLabel.text = [[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"user"] objectForKey:@"name"];
+        
         self.picupLabel.text = [[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_address"];
         self.destinationLabel.text = [[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_address"];
-        self.passengerNameLabel.text = [[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"user"] objectForKey:@"name"];
         
         pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_latitude"] floatValue] longitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"pickup_longitude"] floatValue]];
         destinationPoint = [[CLLocation alloc] initWithLatitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_latitude"] floatValue] longitude:[[[jsonDict objectForKey:@"ride_info" ] objectForKey:@"destination_longitude"] floatValue]];
@@ -1064,36 +1067,95 @@
 
 - (IBAction)collectMoneyButtonAction:(id)sender {
     
-    [UIView animateWithDuration:.5
-                          delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                         
-                         
-                         self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, 0);
-                         
-                         
-                     }
-                     completion:^(BOOL finished){
-                         
-                         
-                         self.collectMoneyView.hidden = YES;
-                         
-                         
-                         
-                     }];
+    
+    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%@",totalRating] forKey:@"rating"];
+    
+    [[ServerManager sharedManager] patchRating:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+        
+        if ( resultDataDictionary!=nil) {
+            
+            NSLog(@"  info  %@",resultDataDictionary);
+            
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 
+                                 self.collectMoneyView.hidden = YES;
+                                 
+                                 
+                                 
+                             }];
+                                 
+                                 
+                                 
+            
+            
+            
+        }else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSLog(@"no  info");
+                
+                
+            });
+            
+        }
+        
+        
+        
+    }];
+
+    
     
 }
 
 
 - (IBAction)phoneButtonAction:(id)sender {
     
+    if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", phoneNo]] options:@{} completionHandler:^(BOOL success) {
+            if (success) {
+                
+                NSLog(@"Opened url");
+            }
+        }];
+    }else{
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", phoneNo]]];
+        
+    }
     
 }
 
 - (IBAction)messageButtonAction:(id)sender {
     
-    
+    if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", phoneNo]] options:@{} completionHandler:^(BOOL success) {
+            if (success) {
+                
+                NSLog(@"Opened url");
+            }
+        }];
+    }else{
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", phoneNo]]];
+        
+    }
 }
 
 

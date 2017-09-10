@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="A6s-ay-U7a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="A6s-ay-U7a">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -367,8 +367,8 @@
                                     <constraint firstItem="tYa-8P-efe" firstAttribute="leading" secondItem="391-zY-W50" secondAttribute="leading" id="xwa-Xb-5rt"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IZ5-3y-jDg">
-                                <rect key="frame" x="1020" y="398" width="335" height="220"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZ5-3y-jDg">
+                                <rect key="frame" x="20" y="398" width="335" height="220"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoL-pk-UxO">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="150"/>
@@ -535,8 +535,8 @@
                                     <constraint firstAttribute="bottom" secondItem="Ecr-pp-d2f" secondAttribute="bottom" id="yIH-Es-dEY"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pkE-Dk-YBL">
-                                <rect key="frame" x="20" y="418" width="335" height="200"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkE-Dk-YBL">
+                                <rect key="frame" x="1020" y="418" width="335" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hafiz" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3x-Vf-JaV">
                                         <rect key="frame" x="151" y="40" width="34" height="17.5"/>
@@ -981,7 +981,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="GwN-Y9-ZZE" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="LeaderBoard" image="leaderBoard" id="Tgl-TQ-em3"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pY7-uL-2gp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pY7-uL-2gp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1016,7 +1016,7 @@
         <scene sceneID="2yf-vj-VDf">
             <objects>
                 <navigationController navigationBarHidden="YES" id="A6s-ay-U7a" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="hS5-sh-lh5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hS5-sh-lh5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1085,7 +1085,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="2P4-qV-4rL" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="W3A-Qr-loR"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="IJw-S3-UM5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IJw-S3-UM5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1102,7 +1102,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="REP-Gy-YIv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Referral" image="referral" id="dlC-Yb-GJ2"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="NLe-MQ-aYn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NLe-MQ-aYn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1138,7 +1138,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="RDF-4X-Gem" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" id="UEV-vJ-750"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="u44-qA-elB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="u44-qA-elB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1155,7 +1155,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="lBp-Tl-L37" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Earning" image="earning" id="CXN-Gh-qbY"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="hbz-hY-j9Y">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hbz-hY-j9Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
