@@ -32,8 +32,8 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 
 - (void)postProfilePicture:(UIImage*)image completion:(api_Completion_Handler_Status)completion;
 
-//get current user info
-- (void)getUserInfoWithCompletion:(api_Completion_Handler_Data)completion;
+//get current rider info
+- (void)getRiderInfoWithCompletion:(api_Completion_Handler_Data)completion;
 
 //get rider status
 - (void)getRiderStatusWithCompletion:(api_Completion_Handler_Status)completion;

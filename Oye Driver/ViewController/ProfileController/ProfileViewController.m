@@ -198,7 +198,7 @@
 -(void) getUserInfo{
     
     
-    [[ServerManager sharedManager] getUserInfoWithCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
+    [[ServerManager sharedManager] getRiderInfoWithCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
         
         
         if ( responseObject!=nil) {

@@ -137,12 +137,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
 }
 
-- (void)getUserInfoWithCompletion:(api_Completion_Handler_Data)completion{
+- (void)getRiderInfoWithCompletion:(api_Completion_Handler_Data)completion{
     
     if ([self checkForNetworkAvailability]) {
         
         
-        NSString *httpUrl=[NSString stringWithFormat:@"%@/api/user",BASE_API_URL];
+        NSString *httpUrl=[NSString stringWithFormat:@"%@/api/rider",BASE_API_URL];
         
         dispatch_queue_t backgroundQueue = dispatch_queue_create("Background Queue", NULL);
         dispatch_async(backgroundQueue, ^{
