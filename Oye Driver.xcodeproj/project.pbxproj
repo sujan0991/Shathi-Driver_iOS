@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C4DBB2B1F67C69B00441B3A /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */; };
 		6407A6931F0A27A800C55FC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6407A6921F0A27A800C55FC6 /* main.m */; };
 		6407A6961F0A27A800C55FC6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6407A6951F0A27A800C55FC6 /* AppDelegate.m */; };
 		6407A69C1F0A27A800C55FC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6407A69A1F0A27A800C55FC6 /* Main.storyboard */; };
@@ -71,6 +72,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C4DBB291F67C69B00441B3A /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
+		0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		2C7779D6461A54F8729253E2 /* Pods-Oye Driver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oye Driver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Oye Driver/Pods-Oye Driver.debug.xcconfig"; sourceTree = "<group>"; };
 		318F2CBD8205F7E979ABD9F4 /* libPods-Oye Driver.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Oye Driver.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6407A68E1F0A27A800C55FC6 /* Oye Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Oye Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +270,8 @@
 				648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */,
 				648FE9C21F45B4FA0035E618 /* DetailHistoryViewController.h */,
 				648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */,
+				0C4DBB291F67C69B00441B3A /* DashboardViewController.h */,
+				0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 				6407A7171F0A30DB00C55FC6 /* SDWebImageDownloaderOperation.m in Sources */,
 				6407A6AE1F0A2CC500C55FC6 /* MapViewController.m in Sources */,
 				6479B8F51F4D56FD00CB3275 /* VerifyIdentityViewController.m in Sources */,
+				0C4DBB2B1F67C69B00441B3A /* DashboardViewController.m in Sources */,
 				6407A6AD1F0A2CC500C55FC6 /* LandingViewController.m in Sources */,
 				6407A71C1F0A30DB00C55FC6 /* UIImage+MultiFormat.m in Sources */,
 				6407A71E1F0A30DB00C55FC6 /* SDNetworkActivityIndicator.m in Sources */,

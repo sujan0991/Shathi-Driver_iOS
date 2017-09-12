@@ -32,6 +32,11 @@
 @property (nonatomic, strong) NSString *deviceToken;
 @property (nonatomic, strong) NSString *gcmRegKey;
 
+@property (nonatomic) float commissionRate;
+@property (nonatomic) int missedRide;
+@property (nonatomic) float rating;
+@property (nonatomic) float due;
+
 @property int isOnRide;
 
 + (UserAccount *)sharedManager;

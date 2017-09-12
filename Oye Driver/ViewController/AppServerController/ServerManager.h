@@ -37,6 +37,8 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 
 //get rider status
 - (void)getRiderStatusWithCompletion:(api_Completion_Handler_Status)completion;
+//get rider statistics
+- (void)getRiderStatWithCompletion:(api_Completion_Handler_Data)completion;
 
 //update userInfo
 

@@ -203,8 +203,6 @@
         
         if ( responseObject!=nil) {
             
-            
-            
             userInfo= [[NSMutableDictionary alloc] initWithDictionary:[responseObject dictionaryByReplacingNullsWithBlanks]];
             
             NSLog(@"user info %@",userInfo);

@@ -33,12 +33,6 @@
     [super viewDidLoad];
     
 
-    
-    
-    
-
-    
-
 }
 
 
@@ -50,8 +44,11 @@
     
     NSLog(@"[[UserAccount sharedManager]accesstoken]  %@",[UserAccount sharedManager].accessToken);
     
+    
+    
     if ([[UserAccount sharedManager]accessToken].length) {
         
+        [self checkRiderStatus];
         
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
         
@@ -180,36 +177,25 @@
 
 
     [_accountKit requestAccount:^(id<AKFAccount> account, NSError *error) {
-        
-
+      
         if (error != nil) {
             
             NSLog(@"error error %@",[error description]);
             
         }
         else if (account.accountID !=nil){
+        
+            [[ServerManager sharedManager] postLoginWithPhone:[account.phoneNumber stringRepresentation] accessToken:accessToken completion:^(BOOL success) {
             
-            
-        [[ServerManager sharedManager] postLoginWithPhone:[account.phoneNumber stringRepresentation] accessToken:accessToken completion:^(BOOL success) {
-            
-            
-            
-            
-             [self checkRiderStatus];
-            
- 
-
-        }];
+                //      [self checkRiderStatus];
+           
+            }];
             
             NSLog(@"account.accountID  %@", account.accountID);
-            
-            
-            
             if ([account phoneNumber] != nil) {
                 
                 NSLog(@"account.phone  %@",[account.phoneNumber stringRepresentation]);
-                
-                 [UserAccount sharedManager].phoneNumber = [account.phoneNumber stringRepresentation];
+                [UserAccount sharedManager].phoneNumber = [account.phoneNumber stringRepresentation];
             }
         }
         

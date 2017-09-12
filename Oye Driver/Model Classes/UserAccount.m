@@ -29,6 +29,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
     if (self = [super init]){
         
         self.userDefaults = [NSUserDefaults standardUserDefaults];
+        
         [self.userDefaults synchronize];
     }
     return self;
@@ -213,6 +214,47 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
 }
 
 
+-(float)commissionRate
+{
+    return [[self.userDefaults valueForKey:@"commissionRate"]intValue];
+}
+
+- (void)setCommissionRate:(float)value
+{
+    [self.userDefaults setFloat:value  forKey:@"commissionRate"];
+    [self.userDefaults synchronize];
+}
+-(int)missedRide
+{
+    return [[self.userDefaults valueForKey:@"missedRide"]intValue];
+}
+
+- (void)setMissedRide:(int)value
+{
+    [self.userDefaults setInteger:value forKey:@"missedRide"];
+    [self.userDefaults synchronize];
+}
+
+-(float)rating
+{
+    return [[self.userDefaults valueForKey:@"userRating"]intValue];
+}
+
+- (void)setRating:(float)value
+{
+    [self.userDefaults setFloat:value  forKey:@"userRating"];
+    [self.userDefaults synchronize];
+}
+-(float)due
+{
+    return [[self.userDefaults valueForKey:@"dueToOffice"]intValue];
+}
+
+- (void)setDue:(float)value
+{
+    [self.userDefaults setFloat:value  forKey:@"dueToOffice"];
+    [self.userDefaults synchronize];
+}
 
 - (NSMutableDictionary *)toNSDictionary
 {
@@ -223,8 +265,5 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
     return dictionary;
 
 }
-
-
-
 
 @end
