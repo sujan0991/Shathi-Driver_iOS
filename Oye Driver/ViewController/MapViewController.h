@@ -37,6 +37,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *destinationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabelInRideSuggestionView;
 
+@property (weak, nonatomic) IBOutlet UIView *arriveView;
+@property (weak, nonatomic) IBOutlet UIImageView *passengerPhotoInArriveView;
+@property (weak, nonatomic) IBOutlet UILabel *passengerNameInArriveView;
+@property (weak, nonatomic) IBOutlet UILabel *pickupLabelInArriveView;
+@property (weak, nonatomic) IBOutlet UIView *destinationLabelInArriveView;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabelInArriveView;
+@property (weak, nonatomic) IBOutlet UIButton *arriveButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButtonInArriveView;
 
 @property (weak, nonatomic) IBOutlet UIView *startTripView;
 @property (weak, nonatomic) IBOutlet UIImageView *passengerPhotoInStartTripView;

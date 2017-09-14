@@ -403,6 +403,47 @@
         
         
         [self performSelector:@selector(showRideSuggestionView) withObject:self afterDelay:1.0 ];
+        
+    }else if (notificationType == 4){
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:@"User cancel the request"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+        
+        NSLog(@"Rider cancel the request");
+        
+        [UIView animateWithDuration:.5
+                              delay:0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             
+                             
+                             self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                             
+                             
+                         }
+                         completion:^(BOOL finished){
+                             
+                             
+                             self.rideSuggestionView.hidden = YES;
+                             
+                             
+                         }];
+        
+    }else if (notificationType == 10){
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:@"generic"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+        
+        NSLog(@"generic");
+        
     }
 }
 
@@ -708,6 +749,7 @@
 
 
 }
+
 
 -(void) showStartTripView{
     
