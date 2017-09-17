@@ -418,6 +418,47 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
 }
 
+-(void)patchArrive:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion
+{
+    
+    
+    
+    if ([self checkForNetworkAvailability]) {
+        
+        
+        NSString *urlString=[NSString stringWithFormat:@"%@/api/is-arrived",BASE_API_URL];
+        
+        
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("Background Queue", NULL);
+        
+        dispatch_async(backgroundQueue, ^{
+            
+            [self patchServerRequestWithParams:dataDic forUrl:urlString withResponseCallback:^(NSDictionary *responseDictionary) {
+                
+                if ( responseDictionary!=nil) {
+                    //Valid Data From Server
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(TRUE);
+                    });
+                    
+                }else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(FALSE);
+                    });
+                    
+                }
+            }];
+            
+        });
+    }else{
+        [self showAlertForNoInternet];
+    }
+    
+    
+}
 -(void)patchCancelRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion
 {
     

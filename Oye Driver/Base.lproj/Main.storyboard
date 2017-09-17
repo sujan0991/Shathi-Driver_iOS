@@ -209,8 +209,8 @@
                                     <constraint firstItem="Qgh-I9-F0D" firstAttribute="top" secondItem="dEr-eb-aYY" secondAttribute="top" id="yVp-4D-zDu"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-mC-8cc">
-                                <rect key="frame" x="1020" y="398" width="335" height="220"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-mC-8cc">
+                                <rect key="frame" x="20" y="398" width="335" height="220"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bjQ-Io-Q0t">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="150"/>
@@ -346,6 +346,9 @@
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="cancelRideButtonAction:" destination="Fno-aK-HmG" eventType="touchUpInside" id="LpD-yq-TUc"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T0K-l2-DZg">
                                                 <rect key="frame" x="172.5" y="10" width="142.5" height="40"/>
@@ -360,6 +363,9 @@
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="arriveButtonAction:" destination="Fno-aK-HmG" eventType="touchUpInside" id="7E6-NG-0pR"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -392,8 +398,8 @@
                                     <constraint firstAttribute="height" constant="220" id="ztT-Ff-Exa"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="391-zY-W50">
-                                <rect key="frame" x="20" y="398" width="335" height="220"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="391-zY-W50">
+                                <rect key="frame" x="1020" y="398" width="335" height="220"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tYa-8P-efe">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="150"/>
@@ -868,7 +874,7 @@
                         <outlet property="collectMoneyButton" destination="90i-7C-Cp7" id="kca-L8-Wdg"/>
                         <outlet property="collectMoneyView" destination="pkE-Dk-YBL" id="CUU-Og-Ctf"/>
                         <outlet property="destinationLabel" destination="uBS-KX-Yf4" id="Vur-9W-eTb"/>
-                        <outlet property="destinationLabelInArriveView" destination="QAr-9h-AZ8" id="11u-Pn-tME"/>
+                        <outlet property="destinationLabelInArriveView" destination="QAr-9h-AZ8" id="93s-hs-uea"/>
                         <outlet property="destinationLabelInFinishTripView" destination="x9d-tT-xTL" id="EMv-52-VxE"/>
                         <outlet property="destinationLabelInStartTripView" destination="jFh-rG-96e" id="4WX-oD-p17"/>
                         <outlet property="finishTripButton" destination="X10-Ri-7fz" id="x2n-mf-93x"/>

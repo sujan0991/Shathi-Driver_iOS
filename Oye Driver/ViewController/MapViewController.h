@@ -41,7 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *passengerPhotoInArriveView;
 @property (weak, nonatomic) IBOutlet UILabel *passengerNameInArriveView;
 @property (weak, nonatomic) IBOutlet UILabel *pickupLabelInArriveView;
-@property (weak, nonatomic) IBOutlet UIView *destinationLabelInArriveView;
+@property (weak, nonatomic) IBOutlet UILabel *destinationLabelInArriveView;
+
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabelInArriveView;
 @property (weak, nonatomic) IBOutlet UIButton *arriveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButtonInArriveView;
