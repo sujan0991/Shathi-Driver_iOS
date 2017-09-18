@@ -1072,9 +1072,9 @@
             
             
             self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
-            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
+            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
             
-             NSLog(@"total_payable_fare %@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
+             NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
             
 
         }
