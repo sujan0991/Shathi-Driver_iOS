@@ -12,6 +12,7 @@
 #import "UserAccount.h"
 #import "ServerManager.h"
 
+
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 @import UserNotifications;
 #endif
@@ -30,6 +31,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    NSLog(@"tripLocationArray in appdelegate %@",self.locationShareModel.tripLocationArray);
 
     [GMSServices provideAPIKey:@"AIzaSyDh0V-13fNhKpvJaMF-kvfTFEE-tpOZJJk"];
     
@@ -298,6 +300,38 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    
+    NSLog(@"app become active applicationDidBecomeActive ");
+    
+    [[ServerManager sharedManager] getBackgroundScenarioWithCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
+        
+        
+        if ( responseObject!=nil) {
+            
+            
+            NSLog(@"user info %@",responseObject);
+            
+            int status = [[responseObject objectForKey:@"status"]intValue];
+            
+            NSLog(@"status %d",status);
+            
+            if (status != 1) {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"becomeActiveNotification" object:self userInfo:responseObject];
+            }
+            
+        }else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSLog(@"no user info");
+                
+                
+            });
+            
+        }
+    }];
 }
 
 

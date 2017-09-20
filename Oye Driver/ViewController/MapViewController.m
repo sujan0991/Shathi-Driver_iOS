@@ -69,6 +69,7 @@
 
    
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(rideInfo:) name:@"rideNotification" object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(appBecomeActive:) name:@"becomeActiveNotification" object:nil];
     
     
     [self firstViewSetUp];
@@ -1065,6 +1066,8 @@
 //
 //                             }];
             
+            [self showCollectMoneyView];
+            
             NSLog(@"finish ride");
             
             NSLog(@"responseObject in finish ride %@",responseObject);
@@ -1295,6 +1298,135 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", phoneNo]]];
         
     }
+}
+
+-(void)appBecomeActive: (NSNotification *)notification
+{
+    
+    NSDictionary* info = [notification userInfo];
+    
+    NSLog(@"ride info in appbecome active %@",info);
+    
+    NSLog(@"app become active");
+    int status = [[info objectForKey:@"status"]intValue];
+    
+    if (status == 2) {
+        
+         NSLog(@"rider going to pickup");
+        
+        [self reSetViewWhenActive:info];
+
+        self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
+        self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+        self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        
+        phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+
+
+        if (self.arriveView.isHidden) {
+
+            [self performSelector:@selector(showArrivedView) withObject:self afterDelay:1.0 ];
+
+        }
+    }else if (status == 3){
+        
+         NSLog(@"rider on ride");
+        
+        
+       // [self reSetViewWhenActive:info];
+        
+        NSLog(@"[[[info objectForKey:objectForKey:objectForKey:] %@",[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"]);
+        
+        self.passengerNameInFinishTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
+        self.pickupLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+        self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        
+        phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+        
+        
+        if (self.finishTripView.isHidden) {
+            
+            [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
+            
+            
+        }
+        
+        
+    }else if (status == 4){
+        
+        if (self.collectMoneyView.isHidden) {
+            
+            [self performSelector:@selector(showCollectMoneyView) withObject:self afterDelay:1.0 ];
+            
+            
+        }
+            
+            
+        }
+        
+        
+        
+}
+    
+
+-(void)reSetViewWhenActive:(NSDictionary*)info{
+    
+    
+   
+
+    rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+
+   
+
+
+
+
+    pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_latitude"] floatValue] longitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_longitude"] floatValue]];
+    
+    destinationPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"] objectForKey:@"destination_latitude"] floatValue] longitude:[[[info objectForKey:@"data"] objectForKey:@"destination_longitude"] floatValue]];
+
+    NSLog(@"pickupPoint in reSetViewWhenActive %@",pickUpPoint);
+
+    //set picup marker
+
+    if (pickUpMarker) {
+
+        pickUpMarker.map = nil;
+    }
+    pickUpMarker = [[GMSMarker alloc] init];
+
+    pickUpMarker.position = CLLocationCoordinate2DMake(pickUpPoint.coordinate.latitude, pickUpPoint.coordinate.longitude);
+
+    pickUpMarker.title = [NSString stringWithFormat:@"%@",[[info objectForKey:@"data"] objectForKey:@"pickup_address"]];
+
+    pickUpMarker.icon = [UIImage imageNamed:@"Pickup.png"];
+
+    pickUpMarker.map = self.googleMapView;
+
+    // set destination pin
+    if (destinationMarker) {
+
+        destinationMarker.map = nil;
+    }
+
+    destinationMarker= [[GMSMarker alloc] init];
+
+    destinationMarker.position = CLLocationCoordinate2DMake(destinationPoint.coordinate.latitude, destinationPoint.coordinate.longitude);
+
+    destinationMarker.title = [NSString stringWithFormat:@"%@",[[info objectForKey:@"data"] objectForKey:@"destination_address"]];
+
+    destinationMarker.icon = [UIImage imageNamed:@"Destination.png"];
+
+    destinationMarker.map = self.googleMapView;
+
+
+
+    [self drawpoliline:pickUpPoint destination:destinationPoint];
+
+
+    
 }
 
 
