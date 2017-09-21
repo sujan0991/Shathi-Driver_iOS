@@ -15,6 +15,7 @@
 {
     
     NSMutableDictionary *totalEarningData, *totalRideData;
+    NSMutableArray *weeklyDataArray;
 }
 
 @end
@@ -34,6 +35,7 @@
     totalRideData=[[NSMutableDictionary alloc] init];
     
     [self configureViewLayers];
+    [self configureGraph];
     [self loadData];
   
     self.tripsCollectionView.delegate=self;
@@ -44,15 +46,66 @@
     
 }
 
+-(void)configureGraph
+{
+    
+    /* This is commented out because the graph is created in the interface with this sample app. However, the code remains as an example for creating the graph using code.
+     BEMSimpleLineGraphView *myGraph = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 60, 320, 250)];
+     myGraph.delegate = self;
+     myGraph.dataSource = self;
+     [self.view addSubview:myGraph]; */
+    
+    // Create a gradient to apply to the bottom portion of the graph
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat components[8] = {
+        1.0, 1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0, 0.0
+    };
+    
+    // Apply the gradient to the bottom portion of the graph
+    self.lineGraphView.gradientBottom = CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    
+    // Enable and disable various graph properties and axis displays
+    self.lineGraphView.enableTouchReport = YES;
+    self.lineGraphView.enablePopUpReport = YES;
+    self.lineGraphView.enableYAxisLabel = YES;
+    self.lineGraphView.autoScaleYAxis = YES;
+    self.lineGraphView.alwaysDisplayDots = YES;
+    self.lineGraphView.enableReferenceXAxisLines = YES;
+    self.lineGraphView.enableReferenceYAxisLines = YES;
+    self.lineGraphView.enableReferenceAxisFrame = YES;
+    
+    // Draw an average line
+    self.lineGraphView.averageLine.enableAverageLine = YES;
+    self.lineGraphView.averageLine.alpha = 0.6;
+    self.lineGraphView.averageLine.color = [UIColor lightGrayColor];
+    self.lineGraphView.averageLine.width = 2.5;
+    self.lineGraphView.averageLine.dashPattern = @[@(2),@(2)];
+    
+    // Set the graph's animation style to draw, fade, or none
+    self.lineGraphView.animationGraphStyle = BEMLineAnimationDraw;
+    
+    // Dash the y reference lines
+    self.lineGraphView.lineDashPatternForReferenceYAxisLines = @[@(2),@(2)];
+    
+    // Show the y axis values with this format string
+    self.lineGraphView.formatStringForValues = @"%.1f";
+    
+    self.lineGraphView.dataSource = self;
+    self.lineGraphView.delegate = self;
+}
+
 -(void)configureViewLayers
 {
     self.view.layer.backgroundColor=[UIColor colorWithRed:.2 green:.23 blue:.38 alpha:1.0f].CGColor;
     
-    self.graphView.layer.backgroundColor=[UIColor colorWithRed:.2 green:.23 blue:.38 alpha:1.0f].CGColor;
-    self.graphView.layer.shadowOffset=CGSizeZero;
-    self.graphView.layer.shadowColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f].CGColor;
-    self.graphView.layer.shadowOpacity=1;
-    self.graphView.layer.shadowRadius=5;
+    self.lineGraphView.layer.backgroundColor=[UIColor colorWithRed:.2 green:.23 blue:.38 alpha:1.0f].CGColor;
+    self.lineGraphView.layer.shadowOffset=CGSizeZero;
+    self.lineGraphView.layer.shadowColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f].CGColor;
+    self.lineGraphView.layer.shadowOpacity=1;
+    self.lineGraphView.layer.shadowRadius=5;
     
     self.tripsView.layer.masksToBounds=YES;
     self.tripsView.layer.cornerRadius=3.0f;
@@ -131,6 +184,15 @@
             
             [self.tripsCollectionView reloadData];
             [self.earnsCollectionView reloadData];
+            
+            if (!weeklyDataArray) weeklyDataArray = [[NSMutableArray alloc] init];
+            [weeklyDataArray removeAllObjects];
+            
+            
+            weeklyDataArray=[userInfo objectForKey:@"weeklyData"];
+            
+            self.lineGraphView.animationGraphStyle = BEMLineAnimationFade;
+            [self.lineGraphView reloadGraph];
             
         }else{
             
@@ -277,6 +339,125 @@
 }
 
 
+#pragma mark - SimpleLineGraph Data Source
+
+- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
+    return (int)[weeklyDataArray count];
+}
+
+- (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
+    return [[[weeklyDataArray objectAtIndex:index]objectForKey:@"total_earning"] floatValue];
+}
+
+#pragma mark - SimpleLineGraph Delegate
+
+- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
+    return 2;
+}
+
+- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
+    //[[weeklyDataArray objectAtIndex:index] objectForKey:@"week_day"]
+    return @"H";
+}
+
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
+//    self.labelValues.text = [NSString stringWithFormat:@"%@", [self.arrayOfValues objectAtIndex:index]];
+//    self.labelDates.text = [NSString stringWithFormat:@"in %@", [self labelForDateAtIndex:index]];
+}
+
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
+//    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+////        self.labelValues.alpha = 0.0;
+////        self.labelDates.alpha = 0.0;
+//    } completion:^(BOOL finished) {
+//        self.labelValues.text = [NSString stringWithFormat:@"%i", [[self.myGraph calculatePointValueSum] intValue]];
+//        self.labelDates.text = [NSString stringWithFormat:@"between %@ and %@", [self labelForDateAtIndex:0], [self labelForDateAtIndex:self.arrayOfDates.count - 1]];
+//
+//        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            self.labelValues.alpha = 1.0;
+//            self.labelDates.alpha = 1.0;
+//        } completion:nil];
+//    }];
+}
+
+- (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
+//    self.labelValues.text = [NSString stringWithFormat:@"%i", [[self.myGraph calculatePointValueSum] intValue]];
+//    self.labelDates.text = [NSString stringWithFormat:@"between %@ and %@", [self labelForDateAtIndex:0], [self labelForDateAtIndex:self.arrayOfDates.count - 1]];
+}
+
+/* - (void)lineGraphDidFinishDrawing:(BEMSimpleLineGraphView *)graph {
+ // Use this method for tasks after the graph has finished drawing
+ } */
+
+- (NSString *)popUpSuffixForlineGraph:(BEMSimpleLineGraphView *)graph {
+    return @" ৳";
+}
+
+//- (NSString *)popUpPrefixForlineGraph:(BEMSimpleLineGraphView *)graph {
+//    return @"$ ";
+//}
+
+#pragma mark - Optional Datasource Customizations
+/*
+ This section holds a bunch of graph customizations that can be made.  They are commented out because they aren't required.  If you choose to uncomment some, they will override some of the other delegate and datasource methods above.
+ 
+ */
+
+//- (NSInteger)baseIndexForXAxisOnLineGraph:(BEMSimpleLineGraphView *)graph {
+//    return 0;
+//}
+//
+//- (NSInteger)incrementIndexForXAxisOnLineGraph:(BEMSimpleLineGraphView *)graph {
+//    return 2;
+//}
+
+//- (NSArray *)incrementPositionsForXAxisOnLineGraph:(BEMSimpleLineGraphView *)graph {
+//    NSMutableArray *positions = [NSMutableArray array];
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSInteger previousDay = -1;
+//    for(int i = 0; i < self.arrayOfDates.count; i++) {
+//        NSDate *date = self.arrayOfDates[i];
+//        NSDateComponents * components = [calendar components:NSCalendarUnitDay fromDate:date];
+//        NSInteger day = components.day;
+//        if(day != previousDay) {
+//            [positions addObject:@(i)];
+//            previousDay = day;
+//        }
+//    }
+//    return positions;
+//
+//}
+//
+//- (CGFloat)baseValueForYAxisOnLineGraph:(BEMSimpleLineGraphView *)graph {
+//    NSNumber *minValue = [graph calculateMinimumPointValue];
+//    //Let's round our value down to the nearest 100
+//    double min = minValue.doubleValue;
+//    double roundPrecision = 100;
+//    double offset = roundPrecision / 2;
+//    double roundedVal = round((min - offset) / roundPrecision) * roundPrecision;
+//    return roundedVal;
+//}
+//
+//- (CGFloat)incrementValueForYAxisOnLineGraph:(BEMSimpleLineGraphView *)graph {
+//    NSNumber *minValue = [graph calculateMinimumPointValue];
+//    NSNumber *maxValue = [graph calculateMaximumPointValue];
+//    double range = maxValue.doubleValue - minValue.doubleValue;
+//    float increment = 1.0;
+//    if (range <  10) {
+//        increment = 2;
+//    } else if (range < 100) {
+//        increment = 10;
+//    } else if (range < 500) {
+//        increment = 50;
+//    } else if (range < 1000) {
+//        increment = 100;
+//    } else if (range < 5000) {
+//        increment = 500;
+//    } else {
+//        increment = 1000;
+//    }
+//    return increment;
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

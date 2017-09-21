@@ -9,4 +9,5 @@ target 'Oye Driver' do
   pod 'AFNetworking', '~> 3.0'
   pod 'Firebase/Messaging'
   pod 'Firebase/Core'
+  pod 'BEMSimpleLineGraph'
 end
