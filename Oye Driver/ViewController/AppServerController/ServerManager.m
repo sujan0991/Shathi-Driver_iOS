@@ -921,7 +921,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
         
         [formData appendPartWithFileData:imageData
                                     name:keyName
-                                fileName:[NSString stringWithFormat:@"%@.jpg,",keyName ] mimeType:@"image/jpeg"];
+                                fileName:[NSString stringWithFormat:@"%@.jpg",keyName ] mimeType:@"image/jpeg"];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         

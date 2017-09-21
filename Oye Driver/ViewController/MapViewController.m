@@ -814,27 +814,31 @@
 }
 -(void) showArrivedView{
     
+    if (self.passengerNameInArriveView.text.length == 0 ) {
+    
     self.pickupLabelInArriveView.text = self.picupLabel.text;
     self.destinationLabelInArriveView.text = self.destinationLabel.text;
     self.passengerNameInArriveView.text = self.passengerNameLabel.text;
-    
+        
+    }
     self.arriveView.hidden = NO;
-    self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+    NSLog(@"self.arriveView.frame %@",[self.view subviews]);
     
+    self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+   
+  
     [UIView animateWithDuration:.5
                           delay:0
                         options: UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         
-                         
-                         self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-49) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
-                         
-                         
+                        self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-49) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+                    
+
                      }
-     
+
                      completion:^(BOOL finished){
-                         
-                         
+
+               
                      }];
     
     
@@ -879,18 +883,16 @@
     [UserAccount sharedManager].isOnRide = 1;
     
    
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.latitude] forKey:@"latitude"];
-    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
+//    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.latitude] forKey:@"latitude"];
+//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
     //[dict setObject:@"start" forKey:@"start or stop"];
     
     self.locationShareModel.tripLocationArray = [[NSMutableArray alloc]init];
-    
-    [self.locationShareModel.tripLocationArray addObject:dict];
-    
-    
-    
-    //
+//
+//    [self.locationShareModel.tripLocationArray addObject:dict];
+//
+
     if (self.locationShareModel.timer) {
         
         [self.locationShareModel.timer invalidate];
@@ -928,7 +930,7 @@
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    //[postData setObject:@"188" forKey:@"ride_id"];
+    
     
     [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success){
         
@@ -979,11 +981,13 @@
 
 -(void)showFinishTripView{
 
+    if (self.passengerNameInFinishTripView.text.length == 0) {
+        
+        self.pickupLabelInFinishTripView.text = self.picupLabel.text;
+        self.destinationLabelInFinishTripView.text = self.destinationLabel.text;
+        self.passengerNameInFinishTripView.text = self.passengerNameLabel.text;
 
-    self.pickupLabelInFinishTripView.text = self.picupLabel.text;
-    self.destinationLabelInFinishTripView.text = self.destinationLabel.text;
-    self.passengerNameInFinishTripView.text = self.passengerNameLabel.text;
-    
+    }
     self.finishTripView.hidden = NO;
     self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width,self.finishTripView.frame.size.height);
     
@@ -1011,13 +1015,13 @@
     
     [UserAccount sharedManager].isOnRide = 0;
     
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.latitude] forKey:@"latitude"];
-    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
-   // [dict setObject:@"stop" forKey:@"start or stop"];
-    
-    [self.locationShareModel.tripLocationArray addObject:dict];
-    
+//    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.latitude] forKey:@"latitude"];
+//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
+//   // [dict setObject:@"stop" forKey:@"start or stop"];
+//    
+//    [self.locationShareModel.tripLocationArray addObject:dict];
+//    
     NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
     
@@ -1316,18 +1320,21 @@
         
         [self reSetViewWhenActive:info];
 
-        self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
-        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
-        self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
-        self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
         
-        phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
 
-
+        NSLog(@"arriveview %d",_arriveView.isHidden);
         if (self.arriveView.isHidden) {
 
+            self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+             self.ratingLabelInArriveView.text = [NSString stringWithFormat:@"%@",[[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"metadata"] objectForKey:@"rating_avg"]];;
+            self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+            self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+            
+            phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+            
             [self performSelector:@selector(showArrivedView) withObject:self afterDelay:1.0 ];
 
+            NSLog(@"bhdfhjnfgkmfhld");
         }
     }else if (status == 3){
         
@@ -1338,15 +1345,17 @@
         
         NSLog(@"[[[info objectForKey:objectForKey:objectForKey:] %@",[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"]);
         
-        self.passengerNameInFinishTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
-        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
-        self.pickupLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
-        self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        
         
         phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
         
         
         if (self.finishTripView.isHidden) {
+            
+            self.passengerNameInFinishTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+            // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
+            self.pickupLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+            self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
             
             [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
             
@@ -1356,7 +1365,10 @@
         
     }else if (status == 4){
         
+        rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+        
         if (self.collectMoneyView.isHidden) {
+            
             
             [self performSelector:@selector(showCollectMoneyView) withObject:self afterDelay:1.0 ];
             
@@ -1379,10 +1391,6 @@
     rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
 
    
-
-
-
-
     pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_latitude"] floatValue] longitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_longitude"] floatValue]];
     
     destinationPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"] objectForKey:@"destination_latitude"] floatValue] longitude:[[[info objectForKey:@"data"] objectForKey:@"destination_longitude"] floatValue]];
@@ -1404,7 +1412,8 @@
     pickUpMarker.icon = [UIImage imageNamed:@"Pickup.png"];
 
     pickUpMarker.map = self.googleMapView;
-
+    NSLog(@"self.googleMapView %@",pickUpMarker.map);
+    
     // set destination pin
     if (destinationMarker) {
 

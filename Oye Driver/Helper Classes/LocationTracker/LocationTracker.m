@@ -41,6 +41,7 @@
         //Get the share model and also initialize myLocationArray
         self.shareModel = [LocationShareModel sharedModel];
         self.shareModel.myLocationArray = [[NSMutableArray alloc]init];
+        self.shareModel.myLocationArray = [[NSMutableArray alloc]init];
         
         
         //self.isStopUpdateLocation = 0;
@@ -91,17 +92,17 @@
     
     NSLog(@"startLocationTracking");
 
-	if ([CLLocationManager locationServicesEnabled] == NO) {
-        NSLog(@"locationServicesEnabled false");
-		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[servicesDisabledAlert show];
-	} else {
-        CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
-        
-        if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
-            NSLog(@"authorizationStatus failed");
-        } else {
-            
+//    if ([CLLocationManager locationServicesEnabled] == NO) {
+//        NSLog(@"locationServicesEnabled false");
+//        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [servicesDisabledAlert show];
+//    } else {
+//        CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
+//
+//        if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
+//            NSLog(@"authorizationStatus failed");
+//        } else {
+    
             NSLog(@"authorizationStatus authorized");
             CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
             locationManager.delegate = self;
@@ -112,8 +113,8 @@
               [locationManager requestAlwaysAuthorization];
             }
             [locationManager startUpdatingLocation];
-        }
-	}
+//        }
+//    }
 }
 
 
@@ -183,7 +184,7 @@
         self.shareModel.bgTask = [BackgroundTaskManager sharedBackgroundTaskManager];
         [self.shareModel.bgTask beginNewBackgroundTask];
         
-         //Restart the locationMaanger after 1 minute
+         //Restart the locationMaanger after xx minute
         
         if ([UserAccount sharedManager].isOnRide == 1) {
             
@@ -318,7 +319,7 @@
           [self.shareModel.tripLocationArray addObject:dict];
         
         NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
-    
+        NSLog(@"self.shareModel.tripLocationArray  %@",self.shareModel.tripLocationArray);
     
     if ([UserAccount sharedManager].isOnRide == 0) {
         
