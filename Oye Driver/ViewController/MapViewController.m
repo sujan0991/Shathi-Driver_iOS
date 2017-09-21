@@ -69,6 +69,7 @@
 
    
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(rideInfo:) name:@"rideNotification" object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(appBecomeActive:) name:@"becomeActiveNotification" object:nil];
     
     
     [self firstViewSetUp];
@@ -124,11 +125,13 @@
 -(void) firstViewSetUp{
 
     self.rideSuggestionView.hidden = YES;
+    self.arriveView.hidden = YES;
     self.startTripView.hidden = YES;
     self.finishTripView.hidden = YES;
     self.collectMoneyView.hidden = YES;
     
     self.rideSuggestionView.layer.cornerRadius = 3.0;
+    self.arriveView.layer.cornerRadius = 3.0;
     self.startTripView.layer.cornerRadius = 3.0;
     self.finishTripView.layer.cornerRadius = 3.0;
     self.collectMoneyView.layer.cornerRadius = 3.0;
@@ -136,11 +139,13 @@
 
     
     [self circurelPhoto:self.passengerPhoto];
+    [self circurelPhoto:self.passengerPhotoInArriveView];
     [self circurelPhoto:self.passengerPhotoInStartTripView];
     [self circurelPhoto:self.passengerPhotoInFinishTripView];
     [self circurelPhoto:self.passengerPhotoIncollectMoneyView];
     
     [self circurelLabel:self.ratingLabelInRideSuggestionView];
+    [self circurelLabel:self.ratingLabelInArriveView];
     [self circurelLabel:self.ratingLabelInStartTripView];
     [self circurelLabel:self.ratingLabelInFinishTripView];
     [self circurelLabel:self.ratingLabelInCollectMoneyView];
@@ -403,6 +408,60 @@
         
         
         [self performSelector:@selector(showRideSuggestionView) withObject:self afterDelay:1.0 ];
+        
+    }else if (notificationType == 4){
+        
+       // self.rideSuggestionView.hidden = YES;
+        self.arriveView.hidden = YES;
+        self.startTripView.hidden = YES;
+        self.finishTripView.hidden = YES;
+        self.collectMoneyView.hidden = YES;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:@"User cancel the request"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+        
+        NSLog(@"Rider cancel the request");
+        
+        [UIView animateWithDuration:.5
+                              delay:0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             
+                             
+                             self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                             
+                             
+                         }
+                         completion:^(BOOL finished){
+                             
+                             
+                             self.rideSuggestionView.hidden = YES;
+                             
+                             
+                         }];
+        
+        [self.googleMapView clear];
+        
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+        
+        [self.googleMapView animateToCameraPosition:camera];
+        
+        
+    }else if (notificationType == 10){
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:@"generic"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+        
+        NSLog(@"generic");
+        
     }
 }
 
@@ -612,6 +671,51 @@
                                  
                                  
                                  self.rideSuggestionView.hidden = YES;
+                                 [self showArrivedView];
+                                 
+                             }];
+            
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
+        }
+        
+    }];
+}
+- (IBAction)arriveButtonAction:(id)sender {
+    
+    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    
+    [[ServerManager sharedManager] patchArrive:postData withCompletion:^(BOOL success){
+        
+        
+        if (success) {
+            
+            NSLog(@"arrive ride");
+            
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 
+                                 self.arriveView.hidden = YES;
                                  [self showStartTripView];
                                  
                              }];
@@ -707,6 +811,36 @@
                      }];
 
 
+}
+-(void) showArrivedView{
+    
+    self.pickupLabelInArriveView.text = self.picupLabel.text;
+    self.destinationLabelInArriveView.text = self.destinationLabel.text;
+    self.passengerNameInArriveView.text = self.passengerNameLabel.text;
+    
+    self.arriveView.hidden = NO;
+    self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+    
+    [UIView animateWithDuration:.5
+                          delay:0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         
+                         self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-49) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+                         
+                         
+                     }
+     
+                     completion:^(BOOL finished){
+                         
+                         
+                     }];
+    
+    
+    NSLog(@"[UserAccount sharedManager].isOnRide %d",[UserAccount sharedManager].isOnRide);
+    
+    
 }
 
 -(void) showStartTripView{
@@ -886,6 +1020,8 @@
     
     NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
+    
+    
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.locationShareModel.tripLocationArray options:NSJSONWritingPrettyPrinted error:&error];
     
@@ -898,6 +1034,63 @@
     }
     
 
+    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    //[postData setObject:@"188" forKey:@"ride_id"];
+    [postData setObject:jsonString forKey:@"waypoints"];
+    
+    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
+        
+        
+        if (responseObject!=nil) {
+            
+            self.finishTripView.hidden = YES;
+            
+//            [UIView animateWithDuration:.5
+//                                  delay:0
+//                                options: UIViewAnimationOptionCurveEaseIn
+//                             animations:^{
+//
+//
+//                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);  // ???????????????????????? why it is not working ??????
+//
+//
+//                             }
+//                             completion:^(BOOL finished){
+//
+//
+//                                 self.finishTripView.hidden = YES;
+//
+//                                 [self showCollectMoneyView];
+//
+//                             }];
+            
+            [self showCollectMoneyView];
+            
+            NSLog(@"finish ride");
+            
+            NSLog(@"responseObject in finish ride %@",responseObject);
+            
+            
+            
+            self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
+            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
+            
+             NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
+            
+
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
+        }
+        
+    }];
     
     //invalidate the timer
     if (self.locationShareModel.timer) {
@@ -932,64 +1125,7 @@
                                    selector:@selector(updateLocationfromMap)
                                    userInfo:nil
                                     repeats:YES];
-    
-    
 
-    
-    
-    
-    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-    
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    //[postData setObject:@"188" forKey:@"ride_id"];
-    [postData setObject:jsonString forKey:@"waypoints"];
-    
-    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
-        
-        
-        if (success) {
-            
-            NSLog(@"finish ride");
-            
-            NSLog(@"responseObject in finish ride %@",responseObject);
-            
-            self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
-            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
-            
-             NSLog(@"total_payable_fare %@",[[[[responseObject objectForKey:@"data"]objectAtIndex:0]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
-            
-            [UIView animateWithDuration:.5
-                                  delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
-                             animations:^{
-                                 
-                                 
-                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);
-                                 
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                                 
-                                 self.finishTripView.hidden = YES;
-                                 
-                                 [self showCollectMoneyView];
-                                 
-                             }];
-            
-            
-            
-        }
-        else{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
-                
-            });
-        }
-        
-    }];
     
 }
 
@@ -1087,6 +1223,12 @@
                                  
                                  self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, 0);
                                  
+                                 [self.googleMapView clear];
+                                 
+                                 GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+                                 
+                                 [self.googleMapView animateToCameraPosition:camera];
+                                 
                                  
                              }
                              completion:^(BOOL finished){
@@ -1156,6 +1298,135 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", phoneNo]]];
         
     }
+}
+
+-(void)appBecomeActive: (NSNotification *)notification
+{
+    
+    NSDictionary* info = [notification userInfo];
+    
+    NSLog(@"ride info in appbecome active %@",info);
+    
+    NSLog(@"app become active");
+    int status = [[info objectForKey:@"status"]intValue];
+    
+    if (status == 2) {
+        
+         NSLog(@"rider going to pickup");
+        
+        [self reSetViewWhenActive:info];
+
+        self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
+        self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+        self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        
+        phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+
+
+        if (self.arriveView.isHidden) {
+
+            [self performSelector:@selector(showArrivedView) withObject:self afterDelay:1.0 ];
+
+        }
+    }else if (status == 3){
+        
+         NSLog(@"rider on ride");
+        
+        
+       // [self reSetViewWhenActive:info];
+        
+        NSLog(@"[[[info objectForKey:objectForKey:objectForKey:] %@",[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"]);
+        
+        self.passengerNameInFinishTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+        // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
+        self.pickupLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+        self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        
+        phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+        
+        
+        if (self.finishTripView.isHidden) {
+            
+            [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
+            
+            
+        }
+        
+        
+    }else if (status == 4){
+        
+        if (self.collectMoneyView.isHidden) {
+            
+            [self performSelector:@selector(showCollectMoneyView) withObject:self afterDelay:1.0 ];
+            
+            
+        }
+            
+            
+        }
+        
+        
+        
+}
+    
+
+-(void)reSetViewWhenActive:(NSDictionary*)info{
+    
+    
+   
+
+    rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+
+   
+
+
+
+
+    pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_latitude"] floatValue] longitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_longitude"] floatValue]];
+    
+    destinationPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"] objectForKey:@"destination_latitude"] floatValue] longitude:[[[info objectForKey:@"data"] objectForKey:@"destination_longitude"] floatValue]];
+
+    NSLog(@"pickupPoint in reSetViewWhenActive %@",pickUpPoint);
+
+    //set picup marker
+
+    if (pickUpMarker) {
+
+        pickUpMarker.map = nil;
+    }
+    pickUpMarker = [[GMSMarker alloc] init];
+
+    pickUpMarker.position = CLLocationCoordinate2DMake(pickUpPoint.coordinate.latitude, pickUpPoint.coordinate.longitude);
+
+    pickUpMarker.title = [NSString stringWithFormat:@"%@",[[info objectForKey:@"data"] objectForKey:@"pickup_address"]];
+
+    pickUpMarker.icon = [UIImage imageNamed:@"Pickup.png"];
+
+    pickUpMarker.map = self.googleMapView;
+
+    // set destination pin
+    if (destinationMarker) {
+
+        destinationMarker.map = nil;
+    }
+
+    destinationMarker= [[GMSMarker alloc] init];
+
+    destinationMarker.position = CLLocationCoordinate2DMake(destinationPoint.coordinate.latitude, destinationPoint.coordinate.longitude);
+
+    destinationMarker.title = [NSString stringWithFormat:@"%@",[[info objectForKey:@"data"] objectForKey:@"destination_address"]];
+
+    destinationMarker.icon = [UIImage imageNamed:@"Destination.png"];
+
+    destinationMarker.map = self.googleMapView;
+
+
+
+    [self drawpoliline:pickUpPoint destination:destinationPoint];
+
+
+    
 }
 
 

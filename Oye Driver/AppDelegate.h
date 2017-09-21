@@ -15,6 +15,7 @@
 
 @property LocationTracker * locationTracker;
 @property (nonatomic) NSTimer* locationUpdateTimer;
+@property LocationShareModel * locationShareModel;
 
 -(void) askForNotificationPermission;
 

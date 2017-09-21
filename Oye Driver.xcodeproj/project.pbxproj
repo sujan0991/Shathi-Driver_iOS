@@ -845,7 +845,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowdigital.oye.rider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f159f94f-9d92-40bc-8c3c-63205fd15327";
+				PROVISIONING_PROFILE = "ffb10a0a-25f3-429e-bda2-ecee60ff1644";
 				PROVISIONING_PROFILE_SPECIFIER = "Oye Rider Development Provisioning Profile";
 			};
 			name = Debug;
@@ -867,7 +867,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowdigital.oye.rider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f159f94f-9d92-40bc-8c3c-63205fd15327";
+				PROVISIONING_PROFILE = "ffb10a0a-25f3-429e-bda2-ecee60ff1644";
 				PROVISIONING_PROFILE_SPECIFIER = "Oye Rider Development Provisioning Profile";
 			};
 			name = Release;
