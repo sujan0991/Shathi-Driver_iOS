@@ -226,7 +226,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
         dispatch_queue_t backgroundQueue = dispatch_queue_create("Background Queue", NULL);
         dispatch_async(backgroundQueue, ^{
             
-            [self getServerRequestForUrl:httpUrl withResponseCallback:^(NSDictionary *responseDictionary) {
+            [self getServerRequestForUrl:@"http://www.mocky.io/v2/59b7c9a5110000f703563958" withResponseCallback:^(NSDictionary *responseDictionary) {
                 
                 if ( responseDictionary!=nil) {
                     

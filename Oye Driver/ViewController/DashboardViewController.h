@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BEMSimpleLineGraphView.h"
 
-@interface DashboardViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-@property (weak, nonatomic) IBOutlet UIView *graphView;
+@interface DashboardViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+@property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView *lineGraphView;
 
 @property (weak, nonatomic) IBOutlet UIView *tripsView;
 @property (weak, nonatomic) IBOutlet UICollectionView *tripsCollectionView;
