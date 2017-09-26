@@ -67,11 +67,9 @@
     }else{
     
         self.driverStatusSwitch.userInteractionEnabled = YES;
-
     }
     
 }
-
 
 -(void) setUpView{
     

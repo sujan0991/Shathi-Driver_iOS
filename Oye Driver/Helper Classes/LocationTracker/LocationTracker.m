@@ -311,21 +311,17 @@
     
         //add locations in trip location array
     
-          NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
+          self.shareModel.tripLocationDictionary = [[NSMutableDictionary alloc]init];
 
-          [dict setObject:[NSString stringWithFormat:@"%f",self.myLocation.latitude] forKey:@"latitude"];
-          [dict setObject:[NSString stringWithFormat:@"%f",self.myLocation.longitude] forKey:@"longitude"];
+          [self.shareModel.tripLocationDictionary setObject:[NSString stringWithFormat:@"%f",self.myLocation.latitude] forKey:@"latitude"];
+          [self.shareModel.tripLocationDictionary setObject:[NSString stringWithFormat:@"%f",self.myLocation.longitude] forKey:@"longitude"];
     
-          [self.shareModel.tripLocationArray addObject:dict];
-        
+    
         NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
-        NSLog(@"self.shareModel.tripLocationArray  %@",self.shareModel.tripLocationArray);
+    
     
     if ([UserAccount sharedManager].isOnRide == 0) {
-        
-        [self.shareModel.tripLocationArray removeAllObjects];
-        self.shareModel.tripLocationArray = nil;
-        
+    
         // send driver current locaton to server when not riding
         
         [[GMSGeocoder geocoder] reverseGeocodeCoordinate:CLLocationCoordinate2DMake(self.myLocation.latitude,self.myLocation.longitude) completionHandler:^(GMSReverseGeocodeResponse* response, NSError* error) {
@@ -360,16 +356,11 @@
                 if (success) {
                     
                     NSLog(@"successfully");
-                    
-                    
                 }
                 else{
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        
-                        
-                    });
+                     });
                 }
                 
             }];
@@ -377,6 +368,13 @@
         }];
         
     }
+    else
+    {
+        
+        [self saveLocationsToPlist];
+        
+    }
+        
     
     
         //After sending the location to the server successful, remember to clear the current array with the following code. It is to make sure that you clear up old location in the array and add the new locations from locationManager
@@ -389,6 +387,63 @@
 
         
  //   }
+}
+
+- (void)saveLocationsToPlist {
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSMutableDictionary *savedProfile = [[NSMutableDictionary alloc] initWithContentsOfFile:fullPath];
+    
+    if (!savedProfile) {
+        savedProfile = [[NSMutableDictionary alloc] init];
+        self.shareModel.tripLocationArray = [[NSMutableArray alloc]init];
+    } else {
+        self.shareModel.tripLocationArray  = [savedProfile objectForKey:@"LocationArray"];
+    }
+    
+    if(self.shareModel.tripLocationDictionary) {
+        [self.shareModel.tripLocationArray  addObject:self.shareModel.tripLocationDictionary];
+        [savedProfile setObject:self.shareModel.tripLocationArray forKey:@"LocationArray"];
+        [savedProfile setObject:[NSNumber numberWithBool:[UserAccount sharedManager].isOnRide] forKey:@"RideStatus"];
+    }
+    
+    if (![savedProfile writeToFile:fullPath atomically:FALSE]) {
+        NSLog(@"Couldn't save LocationArray.plist" );
+    }
+}
+
+-(void)removePlistData
+{
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSError *error;
+    if(![[NSFileManager defaultManager] removeItemAtPath:fullPath error:&error])
+    {
+        //TODO: Handle/Log error
+    }
+}
+
+-(NSMutableDictionary*)loadPlistData
+{
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSMutableDictionary *savedProfile = [[NSMutableDictionary alloc] initWithContentsOfFile:fullPath];
+    
+    if (!savedProfile) {
+        return nil;
+    } else {
+        return savedProfile;
+    }
+    
 }
 
 

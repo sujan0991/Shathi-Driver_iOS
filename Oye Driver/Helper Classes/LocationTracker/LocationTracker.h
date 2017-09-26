@@ -29,5 +29,7 @@
 - (void)stopLocationTracking;
 - (void)updateLocationToServer;
 
+-(void)removePlistData;
+-(NSMutableDictionary*)loadPlistData;
 
 @end

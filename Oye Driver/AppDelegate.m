@@ -113,25 +113,51 @@
              [alert show];
              
          } else{
+             NSLog(@"UIApplicationLaunchOptionsLocationKey : %@" , [launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]);
+             if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+                 
+                 self.locationTracker = [[LocationTracker alloc]init];
+                 
+                 NSLog(@"self.locationTracker in appdelegate");
+                 [self.locationTracker startLocationTracking];
+                 
+                 NSMutableDictionary *tempDic= [self.locationTracker loadPlistData];
+                 
+                 if ([[tempDic objectForKey:@"RideStatus"] boolValue]) {
+                     
+                     
+                     [UserAccount sharedManager].riderStatus=1;
+                     [UserAccount sharedManager].isOnRide=1;
+                     [self.locationTracker startLocationTracking];
+                     [self.locationTracker updateLocationToServer];
+                     
+                     
+//                     NSTimeInterval time = 30;
+//                     self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
+//                                                                                 target:self
+//                                                                               selector:@selector(updateLocation)
+//                                                                               userInfo:nil
+//                                                                                repeats:YES];
+//
+                 }
+                 else
+                 {
+                     NSTimeInterval time = 60*5;
+                     self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
+                                                      target:self
+                                                    selector:@selector(updateLocation)
+                                                    userInfo:nil
+                                                     repeats:YES];
+                     
+                 }
+
+             }
              
              
-             
-             
-             self.locationTracker = [[LocationTracker alloc]init];
-             
-             NSLog(@"self.locationTracker in appdelegate");
-             
-             [self.locationTracker startLocationTracking];
              
              //Send the best location to server every 60 seconds
              //You may adjust the time interval depends on the need of your app.
-             NSTimeInterval time = 60*5;
-             self.locationUpdateTimer =
-             [NSTimer scheduledTimerWithTimeInterval:time
-                                              target:self
-                                            selector:@selector(updateLocation)
-                                            userInfo:nil
-                                             repeats:YES];
+         
              
     }
     }
@@ -142,10 +168,7 @@
 -(void)updateLocation {
     
     if ([UserAccount sharedManager].riderStatus == 2) {
-        
-        
         NSLog(@"status  in updateLocation %d",[UserAccount sharedManager].riderStatus);
-        
         NSLog(@"updateLocation in appdelegate");
         
         

@@ -888,7 +888,8 @@
 //    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
     //[dict setObject:@"start" forKey:@"start or stop"];
     
-    self.locationShareModel.tripLocationArray = [[NSMutableArray alloc]init];
+    
+    
 //
 //    [self.locationShareModel.tripLocationArray addObject:dict];
 //
@@ -911,6 +912,8 @@
     
     NSLog(@"self.locationTracker in start trip");
     
+    
+    [self.locationTracker removePlistData];
     [self.locationTracker startLocationTracking];
     
     //Send the best location to server every 60 seconds
@@ -981,6 +984,7 @@
 
 -(void)showFinishTripView{
 
+    NSLog(@"showFinishTripView");
     if (self.passengerNameInFinishTripView.text.length == 0) {
         
         self.pickupLabelInFinishTripView.text = self.picupLabel.text;
@@ -1022,8 +1026,11 @@
 //    
 //    [self.locationShareModel.tripLocationArray addObject:dict];
 //    
-    NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
+   // NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
+    
+    self.locationShareModel.tripLocationArray=[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"];
+     NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
     
     NSError *error = nil;
@@ -1376,7 +1383,7 @@
         }
             
             
-        }
+    }
         
         
         

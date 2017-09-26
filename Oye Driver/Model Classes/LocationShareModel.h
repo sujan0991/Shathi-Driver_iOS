@@ -18,6 +18,8 @@
 @property (nonatomic) NSMutableArray *myLocationArray;
 @property (nonatomic) NSMutableArray *tripLocationArray;
 
+@property (nonatomic) NSMutableDictionary *tripLocationDictionary;
+
 +(id)sharedModel;
 
 @end
