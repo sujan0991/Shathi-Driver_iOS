@@ -413,6 +413,8 @@
     if (![savedProfile writeToFile:fullPath atomically:FALSE]) {
         NSLog(@"Couldn't save LocationArray.plist" );
     }
+    
+    NSLog(@"plist savedProfile %@",savedProfile);
 }
 
 -(void)removePlistData

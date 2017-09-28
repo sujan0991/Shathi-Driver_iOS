@@ -1030,6 +1030,7 @@
     
     
     self.locationShareModel.tripLocationArray=[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"];
+    
      NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
     
@@ -1346,8 +1347,7 @@
     }else if (status == 3){
         
          NSLog(@"rider on ride");
-        
-        
+       
        // [self reSetViewWhenActive:info];
         
         NSLog(@"[[[info objectForKey:objectForKey:objectForKey:] %@",[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"]);
@@ -1365,6 +1365,18 @@
             self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
             
             [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
+            
+            [self.locationTracker startLocationTracking];
+            
+            //Send the best location to server every 30 seconds
+            
+            NSTimeInterval time = 30.0;
+            self.locationUpdateTimer =
+            [NSTimer scheduledTimerWithTimeInterval:time
+                                             target:self
+                                           selector:@selector(updateLocationfromMap)
+                                           userInfo:nil
+                                            repeats:YES];
             
             
         }

@@ -55,6 +55,8 @@
 		642818F11F36F1D6009B5326 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 642818F01F36F1D6009B5326 /* UIKit.framework */; };
 		642818F91F36F525009B5326 /* BackgroundTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 642818F61F36F525009B5326 /* BackgroundTaskManager.m */; };
 		642818FA1F36F525009B5326 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 642818F81F36F525009B5326 /* LocationTracker.m */; };
+		64549B381F7A30790028F82E /* LeaderBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64549B371F7A30780028F82E /* LeaderBoardViewController.m */; };
+		64549B3C1F7A558C0028F82E /* JTMaterialSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64549B3B1F7A558C0028F82E /* JTMaterialSpinner.m */; };
 		64615ED81F29E13F00984685 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64615ED71F29E13F00984685 /* GoogleService-Info.plist */; };
 		6472B7151F136A1900530F12 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6472B7141F136A1900530F12 /* TabBarViewController.m */; };
 		6479B8F51F4D56FD00CB3275 /* VerifyIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */; };
@@ -169,6 +171,10 @@
 		642818F61F36F525009B5326 /* BackgroundTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundTaskManager.m; sourceTree = "<group>"; };
 		642818F71F36F525009B5326 /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		642818F81F36F525009B5326 /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		64549B361F7A30780028F82E /* LeaderBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderBoardViewController.h; sourceTree = "<group>"; };
+		64549B371F7A30780028F82E /* LeaderBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderBoardViewController.m; sourceTree = "<group>"; };
+		64549B3A1F7A558C0028F82E /* JTMaterialSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTMaterialSpinner.h; sourceTree = "<group>"; };
+		64549B3B1F7A558C0028F82E /* JTMaterialSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTMaterialSpinner.m; sourceTree = "<group>"; };
 		64615ED71F29E13F00984685 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		64615ED91F29E55900984685 /* Oye Driver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Oye Driver.entitlements"; sourceTree = "<group>"; };
 		6472B7131F136A1900530F12 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
@@ -272,6 +278,8 @@
 				648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */,
 				0C4DBB291F67C69B00441B3A /* DashboardViewController.h */,
 				0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */,
+				64549B371F7A30780028F82E /* LeaderBoardViewController.m */,
+				64549B361F7A30780028F82E /* LeaderBoardViewController.h */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 		6407A6B71F0A30DB00C55FC6 /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				64549B391F7A558C0028F82E /* JTMaterialSpinner */,
 				642818E71F36EED8009B5326 /* LocationTracker */,
 				64905FF81F33447E008A096A /* RateView */,
 				6407A6B81F0A30DB00C55FC6 /* Constants.h */,
@@ -447,6 +456,15 @@
 				642818F81F36F525009B5326 /* LocationTracker.m */,
 			);
 			path = LocationTracker;
+			sourceTree = "<group>";
+		};
+		64549B391F7A558C0028F82E /* JTMaterialSpinner */ = {
+			isa = PBXGroup;
+			children = (
+				64549B3A1F7A558C0028F82E /* JTMaterialSpinner.h */,
+				64549B3B1F7A558C0028F82E /* JTMaterialSpinner.m */,
+			);
+			path = JTMaterialSpinner;
 			sourceTree = "<group>";
 		};
 		6472B70F1F13698C00530F12 /* CommonViewController */ = {
@@ -691,6 +709,8 @@
 				6407A7161F0A30DB00C55FC6 /* SDWebImageDownloader.m in Sources */,
 				642818E61F36EECD009B5326 /* LocationShareModel.m in Sources */,
 				6407A7191F0A30DB00C55FC6 /* SDWebImagePrefetcher.m in Sources */,
+				64549B3C1F7A558C0028F82E /* JTMaterialSpinner.m in Sources */,
+				64549B381F7A30790028F82E /* LeaderBoardViewController.m in Sources */,
 				6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */,
 				648677361F53E9890006CF86 /* EditPrifileViewController.m in Sources */,
 				6407A70A1F0A30DB00C55FC6 /* NSDictionary+NullReplacement.m in Sources */,
