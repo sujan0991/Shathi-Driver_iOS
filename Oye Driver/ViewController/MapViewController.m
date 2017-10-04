@@ -1045,6 +1045,7 @@
         NSLog(@"location JSON: %@", jsonString);
     }
     
+    NSLog(@"ride id %d",rideId);
 
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
@@ -1348,6 +1349,8 @@
         
          NSLog(@"rider on ride");
        
+        rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+        
        // [self reSetViewWhenActive:info];
         
         NSLog(@"[[[info objectForKey:objectForKey:objectForKey:] %@",[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"]);
@@ -1365,6 +1368,10 @@
             self.destinationLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
             
             [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
+            
+            [UserAccount sharedManager].isOnRide=1;
+            
+            self.locationTracker = [[LocationTracker alloc]init];
             
             [self.locationTracker startLocationTracking];
             
