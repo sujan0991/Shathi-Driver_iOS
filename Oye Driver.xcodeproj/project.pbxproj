@@ -68,6 +68,7 @@
 		648FE9C11F459D410035E618 /* RideHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9C01F459D410035E618 /* RideHistory.m */; };
 		648FE9C41F45B4FA0035E618 /* DetailHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */; };
 		64905FFB1F33447E008A096A /* RateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64905FFA1F33447E008A096A /* RateView.m */; };
+		6491525C1F84B68B0010B905 /* LegalDocumentUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6491525B1F84B68B0010B905 /* LegalDocumentUploadViewController.m */; };
 		6492A5581F4EB53800A977AA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A5571F4EB53800A977AA /* ProfileViewController.m */; };
 		6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A55A1F4EB55C00A977AA /* SettingViewController.m */; };
 		D3676E0DA83CBB0BF8ED8AC3 /* libPods-Oye Driver.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 318F2CBD8205F7E979ABD9F4 /* libPods-Oye Driver.a */; };
@@ -197,6 +198,8 @@
 		648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailHistoryViewController.m; path = AppServerController/DetailHistoryViewController.m; sourceTree = "<group>"; };
 		64905FF91F33447E008A096A /* RateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateView.h; sourceTree = "<group>"; };
 		64905FFA1F33447E008A096A /* RateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateView.m; sourceTree = "<group>"; };
+		6491525A1F84B68B0010B905 /* LegalDocumentUploadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LegalDocumentUploadViewController.h; sourceTree = "<group>"; };
+		6491525B1F84B68B0010B905 /* LegalDocumentUploadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegalDocumentUploadViewController.m; sourceTree = "<group>"; };
 		6492A5561F4EB53800A977AA /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		6492A5571F4EB53800A977AA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		6492A5591F4EB55C00A977AA /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -476,6 +479,8 @@
 				6472B7141F136A1900530F12 /* TabBarViewController.m */,
 				6479B8F31F4D56FD00CB3275 /* VerifyIdentityViewController.h */,
 				6479B8F41F4D56FD00CB3275 /* VerifyIdentityViewController.m */,
+				6491525A1F84B68B0010B905 /* LegalDocumentUploadViewController.h */,
+				6491525B1F84B68B0010B905 /* LegalDocumentUploadViewController.m */,
 			);
 			path = CommonViewController;
 			sourceTree = "<group>";
@@ -681,6 +686,7 @@
 				6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */,
 				648FE9BE1F4595830035E618 /* RideHistoryTableViewCell.m in Sources */,
 				6407A6B61F0A307100C55FC6 /* ServerManager.m in Sources */,
+				6491525C1F84B68B0010B905 /* LegalDocumentUploadViewController.m in Sources */,
 				6407A7121F0A30DB00C55FC6 /* SDImageCache.m in Sources */,
 				6407A7291F0A3B9700C55FC6 /* UserAccount.m in Sources */,
 				642818FA1F36F525009B5326 /* LocationTracker.m in Sources */,

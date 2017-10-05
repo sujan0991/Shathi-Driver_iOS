@@ -814,7 +814,48 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
         [self showAlertForNoInternet];
     }
 }
-
+-(void) postDocumentWithData:(NSDictionary*)dataDic andImage:(NSDictionary*)imageDic withCompletion:(api_Completion_Handler_Status)completion{
+    
+    if ([self checkForNetworkAvailability]) {
+        
+        
+        NSString *urlString=[NSString stringWithFormat:@"%@/api/update-rider-documents",BASE_API_URL];
+        
+        
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("Background Queue", NULL);
+        
+        dispatch_async(backgroundQueue, ^{
+            
+            
+            
+            [self postServerRequestForDocumentWithParams:dataDic andImage:(NSDictionary*)imageDic forUrl:urlString  withResponseCallback:^(NSDictionary *responseDictionary) {
+                
+                
+                if ( responseDictionary!=nil) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(TRUE);
+                    });
+                    
+                }else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(FALSE);
+                    });
+                    
+                }
+                
+            }];
+            
+            
+        });
+    }else{
+        [self showAlertForNoInternet];
+    }
+    
+    
+    
+}
 #pragma mark - Server Request
 -(void)postServerRequestWithParams:(NSDictionary*)params forUrl:(NSString*)url withResponseCallback:(void (^)(NSDictionary *responseDictionary))callback
 {
@@ -1023,6 +1064,51 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
         callback(nil);
     }];
         
+    
+}
+-(void)postServerRequestForDocumentWithParams:(NSDictionary*)params andImage:(NSDictionary*)imageDic forUrl:(NSString*)url  withResponseCallback:(void (^)(NSDictionary *responseDictionary))callback
+{
+    
+    NSLog(@"params %@",params);
+    NSLog(@"imageDic %@",imageDic);
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[UserAccount sharedManager].accessToken] forHTTPHeaderField:@"Authorization"];
+    
+//    [manager POST:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//
+//        [formData appendPartWithFileData:imageData
+//                                    name:keyName
+//                                fileName:[NSString stringWithFormat:@"%@.jpg",keyName ] mimeType:@"image/jpeg"];
+//
+//    } progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//
+//
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//
+//
+//        NSHTTPURLResponse *response = (NSHTTPURLResponse *) [task response];
+//
+//        NSLog(@"responseDictionary pro pic change %@",response);
+//
+//        if ([response statusCode] == 200) {
+//
+//            callback([responseObject dictionaryByReplacingNullsWithBlanks]);
+//
+//        }
+//        else{
+//            callback(nil);
+//        }
+//
+//
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"error %@ ",error);
+//        callback(nil);
+//    }];
+    
     
 }
 
