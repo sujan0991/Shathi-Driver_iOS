@@ -8,10 +8,11 @@
 
 #import "LegalDocumentUploadViewController.h"
 #import "ServerManager.h"
+#import "JTMaterialSpinner.h"
 
 @interface LegalDocumentUploadViewController (){
     
-    UIImage *chosenImage;
+    
     
     BOOL isSelectNIDFront;
     BOOL isSelectNIDBack;
@@ -19,6 +20,8 @@
     BOOL isSelectLicenseBack;
     BOOL isSelectRegistrationFront;
     BOOL isSelectRegistrationBack;
+    
+    JTMaterialSpinner *spinner;
 }
 
 @end
@@ -43,6 +46,14 @@
     [self.bikeModelTextField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.bikeEngineTextField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     
+    
+    spinner=[[JTMaterialSpinner alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 17, self.view.frame.size.height/2-17, 35, 35)];
+    [self.spinnerView bringSubviewToFront:spinner];
+    [self.spinnerView addSubview:spinner];
+    spinner.hidden =YES;
+    self.spinnerView.hidden = YES;
+    
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     
     // prevents the scroll view from swallowing up the touch event of child buttons
@@ -51,6 +62,8 @@
     [self.scrollView addGestureRecognizer:tapGesture];
     
     [self registerForKeyboardNotifications];
+    
+  
 
 }
 
@@ -210,102 +223,101 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
 
-if (isSelectNIDFront)
-{
-    NSLog(@"isSelectFront");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    
-    self.nIDFrontImageView.image = chosenImage;
-    
-    isSelectNIDFront = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
+    if (isSelectNIDFront)
+    {
+        NSLog(@"isSelectFront");
+        
+     
+        
+        self.nIDFrontImageView.image = info[UIImagePickerControllerOriginalImage];
+        
+        isSelectNIDFront = NO;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
+        
+    }else if (isSelectNIDBack)
+    {
+        NSLog(@"isSelectBack");
+        
+       
+        self.nIDBackImageView.image =  info[UIImagePickerControllerOriginalImage];
+        
+        isSelectNIDBack = NO;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
+        
+    }
+    else if (isSelectLicenseFront)
+    {
+        NSLog(@"isSelectLicenseFront");
+        
+       
+        self.licenseFrontImageView.image = info[UIImagePickerControllerOriginalImage];
+        
+        isSelectLicenseFront = NO;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
+        
+    }
+    else if (isSelectLicenseBack)
+    {
+        NSLog(@"isSelectLicenseBack");
+        
+       
+        self.licenSeBackImageView.image = info[UIImagePickerControllerOriginalImage];
+        
+        isSelectLicenseBack = NO;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
+        
+    }
+    else if (isSelectRegistrationFront)
+    {
+        NSLog(@"isSelectRegistrationFront");
+        
+       
+        self.registrationFrontImageView.image = info[UIImagePickerControllerOriginalImage];
+        
+        isSelectRegistrationFront = NO;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
+        
+    }
+    else if (isSelectRegistrationBack)
+    {
+        NSLog(@"isSelectRegistrationBack");
         
         
-    }];
-    
-}else if (isSelectNIDBack)
-{
-    NSLog(@"isSelectBack");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.nIDBackImageView.image = chosenImage;
-    
-    isSelectNIDBack = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
+        self.registrationBackImageView.image = info[UIImagePickerControllerOriginalImage];
         
+        isSelectRegistrationBack = NO;
         
-    }];
-    
-}
-else if (isSelectLicenseFront)
-{
-    NSLog(@"isSelectLicenseFront");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.licenseFrontImageView.image = chosenImage;
-    
-    isSelectLicenseFront = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+            
+        }];
         
-        
-    }];
-    
-}
-else if (isSelectLicenseBack)
-{
-    NSLog(@"isSelectLicenseBack");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.licenSeBackImageView.image = chosenImage;
-    
-    isSelectLicenseBack = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-        
-    }];
-    
-}
-else if (isSelectRegistrationFront)
-{
-    NSLog(@"isSelectRegistrationFront");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.registrationFrontImageView.image = chosenImage;
-    
-    isSelectRegistrationFront = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-        
-    }];
-    
-}
-else if (isSelectRegistrationBack)
-{
-    NSLog(@"isSelectRegistrationBack");
-    
-    chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.registrationBackImageView.image = chosenImage;
-    
-    isSelectRegistrationBack = NO;
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-        
-    }];
-    
-}
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
-   
-    chosenImage=nil;
+
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
     
@@ -313,7 +325,9 @@ else if (isSelectRegistrationBack)
 
 - (IBAction)submitButtonAction:(id)sender {
     
-    //NSData *imageData = UIImageJPEGRepresentation([imageArray objectAtIndex:i], 0.5);
+    self.spinnerView.hidden = NO;
+    spinner.hidden = NO;
+    [spinner beginRefreshing];
     
     NSMutableDictionary * documentDic = [[NSMutableDictionary alloc]init];
     
@@ -327,35 +341,46 @@ else if (isSelectRegistrationBack)
     
     NSMutableDictionary * imageDic = [[NSMutableDictionary alloc]init];
     
-    if (![self.nIDFrontImageView isEqual:nil]){
+    if (self.nIDFrontImageView.image !=nil){
+      
+        
       NSData *imageDataForNIDfront = UIImageJPEGRepresentation(self.nIDFrontImageView.image, 0.5);
       [imageDic setObject:imageDataForNIDfront forKey:@"nid_front"];
-    }else if (![self.nIDBackImageView isEqual:nil]){
+        
+    }
+    if (self.nIDBackImageView.image !=nil){
         
       NSData *imageDataForNIDback = UIImageJPEGRepresentation(self.nIDBackImageView.image, 0.5);
       [imageDic setObject:imageDataForNIDback forKey:@"nid_back"];
         
-    }else if (![self.licenseFrontImageView isEqual:nil]){
+    }
+    if (self.licenseFrontImageView.image !=nil){
 
       NSData *imageDataForLicensefront = UIImageJPEGRepresentation(self.licenseFrontImageView.image, 0.5);
       [imageDic setObject:imageDataForLicensefront forKey:@"license_front"];
     
-    }else if (![self.licenSeBackImageView isEqual:nil]){
-    NSData *imageDataForLicenseback = UIImageJPEGRepresentation(self.licenSeBackImageView.image, 0.5);
-    [imageDic setObject:imageDataForLicenseback forKey:@"license_back"];
+    }
+    if (self.licenSeBackImageView.image !=nil){
+        
+      NSData *imageDataForLicenseback = UIImageJPEGRepresentation(self.licenSeBackImageView.image, 0.5);
+      [imageDic setObject:imageDataForLicenseback forKey:@"license_back"];
    
-    }else if (![self.registrationFrontImageView isEqual:nil]){
+    }
+    if (self.registrationFrontImageView.image !=nil){
+        
       NSData *imageDataForRegistrationfront = UIImageJPEGRepresentation(self.registrationFrontImageView.image, 0.5);
       [imageDic setObject:imageDataForRegistrationfront forKey:@"bike_registration_front"];
     
-    }else if (![self.registrationBackImageView isEqual:nil]){
+    }
+    if (self.registrationBackImageView.image !=nil){
+        
       NSData *imageDataForRegistrationback = UIImageJPEGRepresentation(self.registrationBackImageView.image, 0.5);
       [imageDic setObject:imageDataForRegistrationback forKey:@"bike_registration_back"];
     }
 
     
 //    NSLog(@"documentDic %@",documentDic);
-//    NSLog(@"iamgeDic %@",imageDic);
+    NSLog(@"iamgeDic in viewcontroller %@",imageDic);
     
 
         
@@ -365,13 +390,19 @@ else if (isSelectRegistrationBack)
                 
                 NSLog(@"successfully update document");
                 
+                spinner.hidden = YES;
+                self.spinnerView.hidden = YES;
+                [spinner endRefreshing];
+                
             }
             else{
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     
-                    chosenImage = nil;
+                    spinner.hidden = YES;
+                    self.spinnerView.hidden = YES;
+                    [spinner endRefreshing];
                     
                     
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed!"

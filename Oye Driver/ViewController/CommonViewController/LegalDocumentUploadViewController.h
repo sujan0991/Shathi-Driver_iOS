@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *registrationFrontSideLabel;
 @property (weak, nonatomic) IBOutlet UILabel *registrationBackSideLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *spinnerView;
+
 @property BOOL isCrossHidden;
 
 @end

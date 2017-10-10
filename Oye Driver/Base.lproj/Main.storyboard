@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rAZ-Sx-qFD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="A6s-ay-U7a">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -3020,14 +3020,14 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Bike model" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ic9-Vp-jUh">
                                                 <rect key="frame" x="20" y="342.5" width="335" height="30"/>
                                                 <color key="backgroundColor" red="0.14901960780000001" green="0.17254901959999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Bike Engine(CC)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a0N-sd-F4X">
                                                 <rect key="frame" x="20" y="380.5" width="335" height="30"/>
                                                 <color key="backgroundColor" red="0.14901960780000001" green="0.17254901959999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -3161,15 +3161,23 @@
                                     <action selector="submitButtonAction:" destination="rAZ-Sx-qFD" eventType="touchUpInside" id="8Tg-0I-rqu"/>
                                 </connections>
                             </button>
+                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="exQ-zF-DMJ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1960784314" green="0.23137254900000001" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Z0Q-pD-0Oc" firstAttribute="top" secondItem="DRS-0D-Nmp" secondAttribute="top" id="9Dk-RL-aRZ"/>
                             <constraint firstItem="7Zs-LN-qbI" firstAttribute="width" secondItem="DRS-0D-Nmp" secondAttribute="width" id="KGd-SD-aa4"/>
+                            <constraint firstItem="exQ-zF-DMJ" firstAttribute="centerX" secondItem="DRS-0D-Nmp" secondAttribute="centerX" id="NeG-71-lgv"/>
                             <constraint firstItem="8z0-j6-Ibf" firstAttribute="top" secondItem="Z0Q-pD-0Oc" secondAttribute="bottom" constant="20" id="PVH-Rc-R4d"/>
                             <constraint firstAttribute="trailing" secondItem="8z0-j6-Ibf" secondAttribute="trailing" constant="20" id="PyA-nu-sRO"/>
                             <constraint firstItem="PFq-Qg-U5j" firstAttribute="top" secondItem="8z0-j6-Ibf" secondAttribute="bottom" constant="20" id="Ui8-K9-Lvd"/>
                             <constraint firstItem="Z0Q-pD-0Oc" firstAttribute="leading" secondItem="DRS-0D-Nmp" secondAttribute="leading" id="Xna-1X-2MZ"/>
+                            <constraint firstItem="exQ-zF-DMJ" firstAttribute="centerY" secondItem="DRS-0D-Nmp" secondAttribute="centerY" id="cMI-6v-X1z"/>
+                            <constraint firstItem="exQ-zF-DMJ" firstAttribute="height" secondItem="DRS-0D-Nmp" secondAttribute="height" id="rDa-u4-xPs"/>
+                            <constraint firstItem="exQ-zF-DMJ" firstAttribute="width" secondItem="DRS-0D-Nmp" secondAttribute="width" id="tMT-hM-vlK"/>
                             <constraint firstAttribute="trailing" secondItem="Z0Q-pD-0Oc" secondAttribute="trailing" id="uDl-4m-TAJ"/>
                             <constraint firstItem="8z0-j6-Ibf" firstAttribute="leading" secondItem="DRS-0D-Nmp" secondAttribute="leading" constant="20" id="v9k-WG-dib"/>
                         </constraints>
@@ -3197,6 +3205,7 @@
                         <outlet property="registrationFrontSideLabel" destination="j7K-IS-YVw" id="JdD-5F-dDy"/>
                         <outlet property="registrationNoTextField" destination="0ju-Pt-7EW" id="sL9-Dp-Tzw"/>
                         <outlet property="scrollView" destination="Z0Q-pD-0Oc" id="LuK-Aw-8i2"/>
+                        <outlet property="spinnerView" destination="exQ-zF-DMJ" id="ZZa-2y-vPs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1X-aK-OZM" userLabel="First Responder" sceneMemberID="firstResponder"/>

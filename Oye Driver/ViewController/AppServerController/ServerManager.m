@@ -1077,37 +1077,68 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[UserAccount sharedManager].accessToken] forHTTPHeaderField:@"Authorization"];
     
-//    [manager POST:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//
-//        [formData appendPartWithFileData:imageData
-//                                    name:keyName
-//                                fileName:[NSString stringWithFormat:@"%@.jpg",keyName ] mimeType:@"image/jpeg"];
-//
-//    } progress:^(NSProgress * _Nonnull uploadProgress) {
-//
-//
-//
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//
-//
-//        NSHTTPURLResponse *response = (NSHTTPURLResponse *) [task response];
-//
-//        NSLog(@"responseDictionary pro pic change %@",response);
-//
-//        if ([response statusCode] == 200) {
-//
-//            callback([responseObject dictionaryByReplacingNullsWithBlanks]);
-//
-//        }
-//        else{
-//            callback(nil);
-//        }
-//
-//
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error %@ ",error);
-//        callback(nil);
-//    }];
+    [manager POST:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+
+        if (imageDic[@"nid_front"]){
+            
+        
+                [formData appendPartWithFileData:[imageDic objectForKey:@"nid_front"]
+                                       name:@"nid_front"
+                                       fileName:[NSString stringWithFormat:@"nid_front.jpg" ] mimeType:@"image/jpeg"];
+        }
+         if (imageDic[@"nid_back"]){
+                [formData appendPartWithFileData:[imageDic objectForKey:@"nid_back"]
+                                    name:@"nid_back"
+                                fileName:[NSString stringWithFormat:@"nid_back.jpg" ] mimeType:@"image/jpeg"];
+         }
+         if (imageDic[@"license_front"]){
+                [formData appendPartWithFileData:[imageDic objectForKey:@"license_front"]
+                                    name:@"license_front"
+                                fileName:[NSString stringWithFormat:@"license_front.jpg" ] mimeType:@"image/jpeg"];
+         }
+         if (imageDic[@"license_back"]){
+                [formData appendPartWithFileData:[imageDic objectForKey:@"license_back"]
+                                    name:@"license_back"
+                                fileName:[NSString stringWithFormat:@"license_back.jpg" ] mimeType:@"image/jpeg"];
+         }
+         if (imageDic[@"bike_registration_front"]){
+                [formData appendPartWithFileData:[imageDic objectForKey:@"bike_registration_front"]
+                                    name:@"bike_registration_front"
+                                fileName:[NSString stringWithFormat:@"bike_registration_front.jpg" ] mimeType:@"image/jpeg"];
+         }
+         if (imageDic[@"bike_registration_back"]){
+             
+                 [formData appendPartWithFileData:[imageDic objectForKey:@"bike_registration_back"]
+                                    name:@"bike_registration_back"
+                                fileName:[NSString stringWithFormat:@"bike_registration_back.jpg" ] mimeType:@"image/jpeg"];
+         }
+        
+
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *) [task response];
+
+        NSLog(@"responseDictionary  change %@",response);
+
+        if ([response statusCode] == 200) {
+
+            callback([responseObject dictionaryByReplacingNullsWithBlanks]);
+
+        }
+        else{
+            callback(nil);
+        }
+
+
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error %@ ",error);
+        callback(nil);
+    }];
     
     
 }

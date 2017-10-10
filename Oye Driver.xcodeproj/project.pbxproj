@@ -281,8 +281,8 @@
 				648FE9C31F45B4FA0035E618 /* DetailHistoryViewController.m */,
 				0C4DBB291F67C69B00441B3A /* DashboardViewController.h */,
 				0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */,
-				64549B371F7A30780028F82E /* LeaderBoardViewController.m */,
 				64549B361F7A30780028F82E /* LeaderBoardViewController.h */,
+				64549B371F7A30780028F82E /* LeaderBoardViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
