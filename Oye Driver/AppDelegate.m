@@ -113,13 +113,14 @@
              [alert show];
              
          } else{
+             
              NSLog(@"UIApplicationLaunchOptionsLocationKey : %@" , [launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]);
              if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
                  
                  self.locationTracker = [[LocationTracker alloc]init];
                  
                  NSLog(@"self.locationTracker in appdelegate");
-                 [self.locationTracker startLocationTracking];
+                 
                  
                  NSMutableDictionary *tempDic= [self.locationTracker loadPlistData];
                  
@@ -143,6 +144,7 @@
                  }
                  else
                  {
+                     [self.locationTracker startLocationTracking];
                      NSTimeInterval time = 60*5;
                      self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
                                                       target:self
@@ -168,7 +170,7 @@
 
 -(void)updateLocation {
     
-    if ([UserAccount sharedManager].riderStatus == 2) {
+    if ([UserAccount sharedManager].riderStatus != 1) {
         NSLog(@"status  in updateLocation %d",[UserAccount sharedManager].riderStatus);
         NSLog(@"updateLocation in appdelegate");
         

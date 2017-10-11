@@ -1156,8 +1156,11 @@
 
 -(void)updateLocationfromMap {
     
+    NSLog(@"updateLocation in outside if");
+    
    [self.locationTracker startLocationTracking];
-    if ([UserAccount sharedManager].riderStatus == 2) {
+    
+    if ([UserAccount sharedManager].riderStatus != 1) {
     
         NSLog(@"ison ride  in map %d",[UserAccount sharedManager].isOnRide);
     
@@ -1379,10 +1382,13 @@
             
             [UserAccount sharedManager].isOnRide=1;
             
+            NSLog(@"[UserAccount sharedManager] riderStatus %d",[UserAccount sharedManager].riderStatus);
+            
             self.locationTracker = [[LocationTracker alloc]init];
             [self.locationTracker startLocationTracking];
             
             //Send the best location to server every 30 seconds
+         
             
             [self.locationUpdateTimer invalidate];
             NSTimeInterval time = 30.0;

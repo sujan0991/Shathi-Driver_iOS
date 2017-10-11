@@ -129,6 +129,7 @@
 }
 
 - (void)startMonitoringSignificantLocation {
+    
     NSLog(@"startMonitoringSignificantLocation");
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
     
@@ -196,11 +197,7 @@
         }
     }
     
-
-    
-
-    
-    if ([UserAccount sharedManager].riderStatus == 2) {
+    if ([UserAccount sharedManager].riderStatus != 1) {
         
         //If the timer still valid, return it (Will not run the code below)
         if (self.shareModel.timer) {
@@ -337,13 +334,13 @@
     
         //add locations in trip location array
     
-          self.shareModel.tripLocationDictionary = [[NSMutableDictionary alloc]init];
+           self.shareModel.tripLocationDictionary = [[NSMutableDictionary alloc]init];
 
           [self.shareModel.tripLocationDictionary setObject:[NSString stringWithFormat:@"%f",self.myLocation.latitude] forKey:@"latitude"];
           [self.shareModel.tripLocationDictionary setObject:[NSString stringWithFormat:@"%f",self.myLocation.longitude] forKey:@"longitude"];
     
     
-        NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
+         NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
     
     
     if ([UserAccount sharedManager].isOnRide == 0) {
@@ -430,28 +427,42 @@
         self.shareModel.tripLocationArray  = [savedProfile objectForKey:@"LocationArray"];
     }
     
-    if(self.shareModel.tripLocationDictionary) {
+    if ([[self.shareModel.tripLocationDictionary objectForKey:@"latitude"]floatValue] == 0.000000) {
+        
+        NSLog(@"do not save in plist");
+        
+    } else {
+        
+   
+      if(self.shareModel.tripLocationDictionary) {
 
         [self.shareModel.tripLocationDictionary setObject:[self appState] forKey:@"AppState"];
-        
+
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"dd/mm hh:mm:ss";
-        
+
         NSString *theDate = [dateFormatter stringFromDate:[NSDate date]];
-        
-        
+
+
         [self.shareModel.tripLocationDictionary setObject:theDate forKey:@"Time"];
         
         [self.shareModel.tripLocationArray  addObject:self.shareModel.tripLocationDictionary];
-        [savedProfile setObject:self.shareModel.tripLocationArray forKey:@"LocationArray"];
-        [savedProfile setObject:[NSNumber numberWithBool:[UserAccount sharedManager].isOnRide] forKey:@"RideStatus"];
-    }
+        
+       
+            
+            [savedProfile setObject:self.shareModel.tripLocationArray forKey:@"LocationArray"];
+            [savedProfile setObject:[NSNumber numberWithBool:[UserAccount sharedManager].isOnRide] forKey:@"RideStatus"];
+      
+        
+      }
     
-    if (![savedProfile writeToFile:fullPath atomically:FALSE]) {
+      if (![savedProfile writeToFile:fullPath atomically:FALSE]) {
         NSLog(@"Couldn't save LocationArray.plist" );
-    }
+      }
     
-    NSLog(@"plist savedProfile %@",savedProfile);
+      NSLog(@"plist savedProfile %@",savedProfile);
+        
+    }
 }
 
 -(void)removePlistData

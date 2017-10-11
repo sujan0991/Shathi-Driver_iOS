@@ -100,15 +100,15 @@
     
     NSLog(@"status  in profile %d",[UserAccount sharedManager].riderStatus);
     
-    if ([UserAccount sharedManager].riderStatus == 2) {
-        
-        [self.driverStatusSwitch setOn:YES];
-        self.statusLabel.text = @"Online";
-        
-    }else{
+    if ([UserAccount sharedManager].riderStatus == 1) {
         
         [self.driverStatusSwitch setOn:NO];
         self.statusLabel.text = @"Offline";
+        
+    }else{
+        
+        [self.driverStatusSwitch setOn:YES];
+        self.statusLabel.text = @"Online";
         
     }
     
@@ -322,7 +322,7 @@
 
 -(void)updateLocation {
     
-    if ([UserAccount sharedManager].riderStatus == 2) {
+    if ([UserAccount sharedManager].riderStatus != 1) {
         
         
         NSLog(@"status  in updateLocation %d",[UserAccount sharedManager].riderStatus);
