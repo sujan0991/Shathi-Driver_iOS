@@ -36,7 +36,6 @@
 - (id)init {
 	if (self==[super init]) {
         
-        NSLog(@"array init");
         
         //Get the share model and also initialize myLocationArray
         self.shareModel = [LocationShareModel sharedModel];
@@ -46,7 +45,7 @@
         
         //self.isStopUpdateLocation = 0;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	}
 	return self;
 }
@@ -69,7 +68,6 @@
 
 - (void) restartLocationUpdates
 {
-    NSLog(@"restartLocationUpdates");
     
     if (self.shareModel.timer) {
         [self.shareModel.timer invalidate];
@@ -130,6 +128,34 @@
 	[locationManager stopUpdatingLocation];
 }
 
+- (void)startMonitoringSignificantLocation {
+    NSLog(@"startMonitoringSignificantLocation");
+    CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
+    
+    if (locationManager)
+        [locationManager stopMonitoringSignificantLocationChanges];
+    
+    locationManager = [[CLLocationManager alloc]init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    locationManager.activityType = CLActivityTypeOtherNavigation;
+    
+    if(IS_OS_8_OR_LATER) {
+        [locationManager requestAlwaysAuthorization];
+    }
+    [locationManager startMonitoringSignificantLocationChanges];
+}
+
+- (void)stopMonitoringSignificantLocation {
+    NSLog(@"stopMonitoringSignificantLocation");
+    CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
+    
+    if (locationManager)
+        [locationManager stopMonitoringSignificantLocationChanges];
+}
+
+
+
 #pragma mark - CLLocationManagerDelegate Methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -186,22 +212,22 @@
         
          //Restart the locationMaanger after xx minute
         
-        if ([UserAccount sharedManager].isOnRide == 1) {
-            
-            NSLog(@"timer for 30 sec");
-            self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
-                                                                   selector:@selector(restartLocationUpdates)
-                                                                   userInfo:nil
-                                                                    repeats:NO];
-        }else{
-            
-            NSLog(@"timer for 5 min ");
-            
-           self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self
-                                                               selector:@selector(restartLocationUpdates)
-                                                               userInfo:nil
-                                                                repeats:NO];
-        }
+//        if ([UserAccount sharedManager].isOnRide == 1) {
+//
+//            NSLog(@"timer for 30 sec");
+//            self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
+//                                                                   selector:@selector(restartLocationUpdates)
+//                                                                   userInfo:nil
+//                                                                    repeats:NO];
+//        }else{
+//
+//            NSLog(@"timer for 5 min ");
+//
+//           self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self
+//                                                               selector:@selector(restartLocationUpdates)
+//                                                               userInfo:nil
+//                                                                repeats:NO];
+//        }
         
         //Will only stop the locationManager after 10 seconds, so that we can get some accurate locations
         //The location manager will only operate for 10 seconds to save battery
@@ -405,6 +431,17 @@
     }
     
     if(self.shareModel.tripLocationDictionary) {
+
+        [self.shareModel.tripLocationDictionary setObject:[self appState] forKey:@"AppState"];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"dd/mm hh:mm:ss";
+        
+        NSString *theDate = [dateFormatter stringFromDate:[NSDate date]];
+        
+        
+        [self.shareModel.tripLocationDictionary setObject:theDate forKey:@"Time"];
+        
         [self.shareModel.tripLocationArray  addObject:self.shareModel.tripLocationDictionary];
         [savedProfile setObject:self.shareModel.tripLocationArray forKey:@"LocationArray"];
         [savedProfile setObject:[NSNumber numberWithBool:[UserAccount sharedManager].isOnRide] forKey:@"RideStatus"];
@@ -419,6 +456,7 @@
 
 -(void)removePlistData
 {
+    NSLog(@"removePlistData");
     NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex:0];
@@ -447,7 +485,19 @@
     }
     
 }
-
+- (NSString *)appState {
+    UIApplication* application = [UIApplication sharedApplication];
+    
+    NSString * appState;
+    if([application applicationState]==UIApplicationStateActive)
+        appState = @"UIApplicationStateActive";
+    if([application applicationState]==UIApplicationStateBackground)
+        appState = @"UIApplicationStateBackground";
+    if([application applicationState]==UIApplicationStateInactive)
+        appState = @"UIApplicationStateInactive";
+    
+    return appState;
+}
 
 
 

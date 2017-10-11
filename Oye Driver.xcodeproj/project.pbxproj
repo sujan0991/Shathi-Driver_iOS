@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C4DBB2B1F67C69B00441B3A /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */; };
+		0CD5E9F41F84C68D00B2E37B /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD5E9F31F84C68D00B2E37B /* LocationViewController.m */; };
 		6407A6931F0A27A800C55FC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6407A6921F0A27A800C55FC6 /* main.m */; };
 		6407A6961F0A27A800C55FC6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6407A6951F0A27A800C55FC6 /* AppDelegate.m */; };
 		6407A69C1F0A27A800C55FC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6407A69A1F0A27A800C55FC6 /* Main.storyboard */; };
@@ -76,6 +77,8 @@
 /* Begin PBXFileReference section */
 		0C4DBB291F67C69B00441B3A /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
 		0C4DBB2A1F67C69B00441B3A /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
+		0CD5E9F21F84C68C00B2E37B /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		0CD5E9F31F84C68D00B2E37B /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		2C7779D6461A54F8729253E2 /* Pods-Oye Driver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oye Driver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Oye Driver/Pods-Oye Driver.debug.xcconfig"; sourceTree = "<group>"; };
 		318F2CBD8205F7E979ABD9F4 /* libPods-Oye Driver.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Oye Driver.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6407A68E1F0A27A800C55FC6 /* Oye Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Oye Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +275,8 @@
 				6407A6B31F0A307100C55FC6 /* AppServerController */,
 				6407A6AB1F0A2CC500C55FC6 /* MapViewController.h */,
 				6407A6AC1F0A2CC500C55FC6 /* MapViewController.m */,
+				0CD5E9F21F84C68C00B2E37B /* LocationViewController.h */,
+				0CD5E9F31F84C68D00B2E37B /* LocationViewController.m */,
 				648FE9B91F45955F0035E618 /* RideHistoryViewController.h */,
 				648FE9BA1F45955F0035E618 /* RideHistoryViewController.m */,
 				648FE9C21F45B4FA0035E618 /* DetailHistoryViewController.h */,
@@ -712,6 +717,7 @@
 				64549B3C1F7A558C0028F82E /* JTMaterialSpinner.m in Sources */,
 				64549B381F7A30790028F82E /* LeaderBoardViewController.m in Sources */,
 				6479B8F81F4D61B600CB3275 /* BikePaperCollectionViewCell.m in Sources */,
+				0CD5E9F41F84C68D00B2E37B /* LocationViewController.m in Sources */,
 				648677361F53E9890006CF86 /* EditPrifileViewController.m in Sources */,
 				6407A70A1F0A30DB00C55FC6 /* NSDictionary+NullReplacement.m in Sources */,
 				6407A70C1F0A30DB00C55FC6 /* FLAnimatedImage.m in Sources */,

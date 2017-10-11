@@ -7,8 +7,12 @@
 //
 
 #import "LocationViewController.h"
+#import "LocationTracker.h"
 
 @interface LocationViewController ()
+{
+     LocationTracker * locationTrack;
+}
 
 @end
 
@@ -17,7 +21,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+}
+-(void) viewDidAppear:(BOOL)animated
+{
     [self reloadData];
+    
 }
 
 -(void)reloadData
@@ -65,11 +74,11 @@
     NSDictionary *dic = [locationArray objectAtIndex:indexPath.row];
     
     NSString *appState = [NSString stringWithFormat:@"App State : %@",  [dic[@"AppState"] stringByReplacingOccurrencesOfString:@"UIApplicationState" withString:@""] ];
-    NSDate *date = dic[@"Time"];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy/MM/dd HH:mm";
-    NSString *time = [dateFormatter stringFromDate:date];
-    
+    NSString *time = dic[@"Time"];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.dateFormat = @"yyyy/MM/dd HH:mm";
+//    NSString *time = [dateFormatter stringFromDate:date];
+//
     if ([dic objectForKey:@"Accuracy"])
     {
         NSString *accuracy = [NSString stringWithFormat:@"Accuracy : %@",dic[@"Accuracy"]];
@@ -84,10 +93,22 @@
     }
     else
     {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@\n%@\n\n",appState,dic[@"applicationStatus"],time];
+        NSString *location = [NSString stringWithFormat:@"Location : %@ , %@",dic[@"latitude"],dic[@"longitude"]];
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@\n%@",appState,location,time];
+
     }
     
     return cell;
+}
+- (IBAction)clearDataAction:(id)sender {
+    
+   locationTrack = [[LocationTracker alloc]init];
+   [locationTrack removePlistData];
+
+    locationArray =nil;
+    [self.tableView reloadData];
+
 }
 
 @end

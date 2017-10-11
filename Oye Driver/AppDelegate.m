@@ -126,9 +126,10 @@
                  if ([[tempDic objectForKey:@"RideStatus"] boolValue]) {
                      
                      
-                     [UserAccount sharedManager].riderStatus=1;
+                     [UserAccount sharedManager].riderStatus=2;
                      [UserAccount sharedManager].isOnRide=1;
-                     [self.locationTracker startLocationTracking];
+                     
+                     [self.locationTracker startMonitoringSignificantLocation];
                      [self.locationTracker updateLocationToServer];
                      
                      
@@ -360,6 +361,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSLog(@"applicationWillTerminate");
+    
 }
 
 

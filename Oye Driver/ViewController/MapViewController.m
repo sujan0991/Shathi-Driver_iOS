@@ -888,8 +888,6 @@
 //    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
     //[dict setObject:@"start" forKey:@"start or stop"];
     
-    
-    
 //
 //    [self.locationShareModel.tripLocationArray addObject:dict];
 //
@@ -914,10 +912,11 @@
     
     
     [self.locationTracker removePlistData];
+    
+    [self.locationTracker startMonitoringSignificantLocation];
+    
     [self.locationTracker startLocationTracking];
     
-    //Send the best location to server every 60 seconds
-   
     NSTimeInterval time = 30.0;
     self.locationUpdateTimer =
     [NSTimer scheduledTimerWithTimeInterval:time
@@ -1105,6 +1104,9 @@
         
     }];
     
+    [self.locationTracker stopMonitoringSignificantLocation];
+
+    
     //invalidate the timer
     if (self.locationShareModel.timer) {
         
@@ -1144,27 +1146,21 @@
 
 -(void)updateLocationfromMap {
     
+   [self.locationTracker startLocationTracking];
     if ([UserAccount sharedManager].riderStatus == 2) {
     
         NSLog(@"ison ride  in map %d",[UserAccount sharedManager].isOnRide);
     
         NSLog(@"updateLocation in map");
+        [self.locationTracker updateLocationToServer];
     
-    
-       [self.locationTracker updateLocationToServer];
-    
-    }else{
+    }else if (self.locationUpdateTimer) {
     
     
         //invalidate locaton uptade timer
-        
-        if (self.locationUpdateTimer) {
-            
-            [self.locationUpdateTimer invalidate];
-            self.locationUpdateTimer = nil;
-            NSLog(@"self.locationUpdateTimer in updateLocationfromMap  = nil");
-        }
-    
+        [self.locationUpdateTimer invalidate];
+        self.locationUpdateTimer = nil;
+        NSLog(@"self.locationUpdateTimer in updateLocationfromMap  = nil");
     
     }
 }
@@ -1345,7 +1341,9 @@
 
             NSLog(@"bhdfhjnfgkmfhld");
         }
-    }else if (status == 3){
+    }
+    else if (status == 3)
+    {
         
          NSLog(@"rider on ride");
        
@@ -1360,8 +1358,8 @@
         phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
         
         
-        if (self.finishTripView.isHidden) {
-            
+        if (self.finishTripView.isHidden)
+        {
             self.passengerNameInFinishTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
             // self.ratingInDriverSuggestionView.text = [[[[jsonDict objectForKey:@"rider_info" ] objectForKey:@"user"] objectForKey:@"metadata"]objectForKey:@"rating_avg"];
             self.pickupLabelInFinishTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
@@ -1372,11 +1370,11 @@
             [UserAccount sharedManager].isOnRide=1;
             
             self.locationTracker = [[LocationTracker alloc]init];
-            
             [self.locationTracker startLocationTracking];
             
             //Send the best location to server every 30 seconds
             
+            [self.locationUpdateTimer invalidate];
             NSTimeInterval time = 30.0;
             self.locationUpdateTimer =
             [NSTimer scheduledTimerWithTimeInterval:time
@@ -1387,9 +1385,8 @@
             
             
         }
-        
-        
-    }else if (status == 4){
+    }
+    else if (status == 4){
         
         rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
         
@@ -1411,12 +1408,8 @@
 
 -(void)reSetViewWhenActive:(NSDictionary*)info{
     
-    
-   
-
     rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
 
-   
     pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_latitude"] floatValue] longitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_longitude"] floatValue]];
     
     destinationPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"] objectForKey:@"destination_latitude"] floatValue] longitude:[[[info objectForKey:@"data"] objectForKey:@"destination_longitude"] floatValue]];
@@ -1447,29 +1440,19 @@
     }
 
     destinationMarker= [[GMSMarker alloc] init];
-
     destinationMarker.position = CLLocationCoordinate2DMake(destinationPoint.coordinate.latitude, destinationPoint.coordinate.longitude);
 
     destinationMarker.title = [NSString stringWithFormat:@"%@",[[info objectForKey:@"data"] objectForKey:@"destination_address"]];
 
     destinationMarker.icon = [UIImage imageNamed:@"Destination.png"];
-
     destinationMarker.map = self.googleMapView;
 
-
-
     [self drawpoliline:pickUpPoint destination:destinationPoint];
-
-
-    
 }
-
-
 
 - (IBAction)backButtonAction:(id)sender {
     
 
-    
 }
 
 - (IBAction)settingButtonAction:(id)sender {
@@ -1479,10 +1462,5 @@
 //    [self.navigationController pushViewController:vc animated:YES];
     
 }
-
-
-
-
-
 
 @end
