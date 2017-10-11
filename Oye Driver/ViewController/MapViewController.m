@@ -14,6 +14,9 @@
 #import "ServerManager.h"
 #import "LocationShareModel.h"
 #import "VerifyIdentityViewController.h"
+
+#import "LegalDocumentUploadViewController.h"
+
 @import Firebase;
 
 @interface MapViewController (){
@@ -615,9 +618,16 @@
 
 - (IBAction)myLocationButtonAction:(id)sender {
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+//
+//    [self.googleMapView animateToCameraPosition:camera];
     
-    [self.googleMapView animateToCameraPosition:camera];
+    LegalDocumentUploadViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"LegalDocumentUploadViewController"];
+    
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    
 }
 
 

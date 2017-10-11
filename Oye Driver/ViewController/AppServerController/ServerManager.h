@@ -84,4 +84,8 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 //get top rides
 - (void)getTopRidesWithCompletion:(api_Completion_Handler_Data)completion;
 
+//update document
+-(void) postDocumentWithData:(NSDictionary*)dataDic andImage:(NSDictionary*)imageDic withCompletion:(api_Completion_Handler_Status)completion;
+
+
 @end
