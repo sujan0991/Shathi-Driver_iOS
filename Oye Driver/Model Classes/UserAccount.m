@@ -209,7 +209,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
 
 - (void)setIsOnRide:(int)value
 {
-    [self.userDefaults setBool:value forKey:@"isOnRide"];
+    [self.userDefaults setInteger:value forKey:@"isOnRide"];
     [self.userDefaults synchronize];
 }
 
@@ -237,7 +237,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
 
 -(float)rating
 {
-    return [[self.userDefaults valueForKey:@"userRating"]intValue];
+    return [[self.userDefaults valueForKey:@"userRating"]floatValue];
 }
 
 - (void)setRating:(float)value
@@ -247,7 +247,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
 }
 -(float)due
 {
-    return [[self.userDefaults valueForKey:@"dueToOffice"]intValue];
+    return [[self.userDefaults valueForKey:@"dueToOffice"]floatValue];
 }
 
 - (void)setDue:(float)value

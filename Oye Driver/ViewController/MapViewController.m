@@ -44,7 +44,7 @@
     
     int rideId;
     
-    NSString* totalRating;
+    float totalRating;
     
     
     GMSMarker *pickUpMarker;
@@ -155,6 +155,8 @@
     
 
     [UserAccount sharedManager].isOnRide = 0;
+    
+    totalRating = 0;
     
     self.locationShareModel= [LocationShareModel sharedModel];
     
@@ -927,7 +929,7 @@
     
     [self.locationTracker startLocationTracking];
     
-    NSTimeInterval time = 30.0;
+    NSTimeInterval time = 60.0;
     self.locationUpdateTimer =
     [NSTimer scheduledTimerWithTimeInterval:time
                                      target:self
@@ -1026,93 +1028,94 @@
 }
 - (IBAction)finishTripButtonAction:(id)sender {
     
-    [UserAccount sharedManager].isOnRide = 0;
     
-//    NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.latitude] forKey:@"latitude"];
-//    [dict setObject:[NSString stringWithFormat:@"%f",currentLocation.longitude] forKey:@"longitude"];
-//   // [dict setObject:@"stop" forKey:@"start or stop"];
-//    
-//    [self.locationShareModel.tripLocationArray addObject:dict];
-//    
-   // NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
-    
-    
+
     self.locationShareModel.tripLocationArray=[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"];
     
-     NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
     
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.locationShareModel.tripLocationArray options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSString *jsonString;
+  if(self.locationShareModel.tripLocationArray ==nil || self.locationShareModel.tripLocationArray == NULL){
+      
+      self.locationShareModel.tripLocationArray = [[NSMutableArray alloc]init];
+      
+  }
+      NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
     
-    if (jsonData && !error)
-    {
-        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"location JSON: %@", jsonString);
-    }
-    
-    NSLog(@"ride id %d",rideId);
-
-    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-    
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    //[postData setObject:@"188" forKey:@"ride_id"];
-    [postData setObject:jsonString forKey:@"waypoints"];
-    
-    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
+       NSError *error = nil;
+       NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.locationShareModel.tripLocationArray options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *jsonString;
         
-        
-        if (responseObject!=nil) {
-            
-            self.finishTripView.hidden = YES;
-            
-//            [UIView animateWithDuration:.5
-//                                  delay:0
-//                                options: UIViewAnimationOptionCurveEaseIn
-//                             animations:^{
-//
-//
-//                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);  // ???????????????????????? why it is not working ??????
-//
-//
-//                             }
-//                             completion:^(BOOL finished){
-//
-//
-//                                 self.finishTripView.hidden = YES;
-//
-//                                 [self showCollectMoneyView];
-//
-//                             }];
-            
-            [self showCollectMoneyView];
-            
-            NSLog(@"finish ride");
-            
-            NSLog(@"responseObject in finish ride %@",responseObject);
-            
-            
-            
-            self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
-            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
-            
-             NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
-            
-
-        }
-        else{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
-                
-            });
+        if (jsonData && !error)
+        {
+            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSLog(@"location JSON: %@", jsonString);
         }
         
-    }];
+        
+        NSLog(@"ride id %d",rideId);
+        
+        NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+        
+        [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+        //[postData setObject:@"188" forKey:@"ride_id"];
+        [postData setObject:jsonString forKey:@"waypoints"];
+        
+        [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
+            
+            
+            if (responseObject!=nil) {
+                
+                [UserAccount sharedManager].isOnRide = 0;
+                
+                self.finishTripView.hidden = YES;
+                
+                //            [UIView animateWithDuration:.5
+                //                                  delay:0
+                //                                options: UIViewAnimationOptionCurveEaseIn
+                //                             animations:^{
+                //
+                //
+                //                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);  // ???????????????????????? why it is not working ??????
+                //
+                //
+                //                             }
+                //                             completion:^(BOOL finished){
+                //
+                //
+                //                                 self.finishTripView.hidden = YES;
+                //
+                //                                 [self showCollectMoneyView];
+                //
+                //                             }];
+                
+                [self showCollectMoneyView];
+                
+                NSLog(@"finish ride");
+                
+                NSLog(@"responseObject in finish ride %@",responseObject);
+                
+                
+                
+                self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
+                self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
+                
+                NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
+                
+                
+            }
+            else{
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    
+                    
+                });
+            }
+            
+        }];
+  
+    
     
     [self.locationTracker stopMonitoringSignificantLocation];
 
@@ -1217,9 +1220,9 @@
     
     
     
-    totalRating =[NSString stringWithFormat:@"%.1f", rating];
+    totalRating = rating;
     
-    NSLog(@"RATING is :)%@",totalRating);
+    NSLog(@"RATING is :)%f",totalRating);
     
 }
 
@@ -1229,7 +1232,7 @@
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    [postData setObject:[NSString stringWithFormat:@"%@",totalRating] forKey:@"rating"];
+    [postData setObject:[NSString stringWithFormat:@"%.1f",totalRating] forKey:@"rating"];
     
     [[ServerManager sharedManager] patchRating:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
         
@@ -1370,6 +1373,9 @@
         
         phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
         
+        [UserAccount sharedManager].isOnRide = 1;
+        [UserAccount sharedManager].riderStatus = 4;
+         NSLog(@"rider on ride %d",[UserAccount sharedManager].isOnRide);
         
         if (self.finishTripView.isHidden)
         {
@@ -1380,18 +1386,21 @@
             
             [self performSelector:@selector(showFinishTripView) withObject:self afterDelay:1.0 ];
             
-            [UserAccount sharedManager].isOnRide=1;
-            
+        }
+
+            //[UserAccount sharedManager].riderStatus =
             NSLog(@"[UserAccount sharedManager] riderStatus %d",[UserAccount sharedManager].riderStatus);
             
             self.locationTracker = [[LocationTracker alloc]init];
+            [self.locationTracker startMonitoringSignificantLocation];
             [self.locationTracker startLocationTracking];
             
             //Send the best location to server every 30 seconds
          
             
             [self.locationUpdateTimer invalidate];
-            NSTimeInterval time = 30.0;
+        
+            NSTimeInterval time = 60.0;
             self.locationUpdateTimer =
             [NSTimer scheduledTimerWithTimeInterval:time
                                              target:self
@@ -1400,7 +1409,6 @@
                                             repeats:YES];
             
             
-        }
     }
     else if (status == 4){
         

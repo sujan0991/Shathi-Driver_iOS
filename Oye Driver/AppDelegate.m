@@ -133,27 +133,24 @@
                      [self.locationTracker startMonitoringSignificantLocation];
                      [self.locationTracker updateLocationToServer];
                      
-                     
-//                     NSTimeInterval time = 30;
-//                     self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
-//                                                                                 target:self
-//                                                                               selector:@selector(updateLocation)
-//                                                                               userInfo:nil
-//                                                                                repeats:YES];
-//
-                 }
-                 else
-                 {
-                     [self.locationTracker startLocationTracking];
-                     NSTimeInterval time = 60*5;
-                     self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
-                                                      target:self
-                                                    selector:@selector(updateLocation)
-                                                    userInfo:nil
-                                                     repeats:YES];
-                     
-                 }
 
+                 }
+               
+
+             }  else
+             {
+                 NSLog(@"self.locationTracker in appdelegate for 5 min");
+                 self.locationTracker = [[LocationTracker alloc]init];
+                 
+                 [self.locationTracker startLocationTracking];
+                 
+                 NSTimeInterval time = 60*5;
+                 self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:time
+                                                                             target:self
+                                                                           selector:@selector(updateLocation)
+                                                                           userInfo:nil
+                                                                            repeats:YES];
+                 
              }
              
              

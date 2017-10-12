@@ -228,6 +228,8 @@
 
 - (void)stateChanged:(UISwitch *)switchState
 {
+    self.locationTracker = [[LocationTracker alloc]init];
+    
     if ([switchState isOn]) {
 
         NSLog(@"ON");
@@ -260,7 +262,7 @@
                     NSLog(@"self.locationUpdateTimer in state on  = nil");
                 }
                 
-                self.locationTracker = [[LocationTracker alloc]init];
+                
                 
                 NSLog(@"self.locationTracker in state change ");
                 
