@@ -14,6 +14,7 @@
 #import "ServerManager.h"
 #import "LocationShareModel.h"
 #import "VerifyIdentityViewController.h"
+#import "CancelReasonTableViewCell.h"
 
 #import "LegalDocumentUploadViewController.h"
 
@@ -51,6 +52,9 @@
     GMSMarker *destinationMarker;
     
     NSString *phoneNo;
+    
+    NSMutableArray *cancelReasonArray;
+    NSString* cancelReasonId;
 }
 
 @property (nonatomic, strong) DDHTimerControl *timerControl;
@@ -133,6 +137,13 @@
     self.finishTripView.hidden = YES;
     self.collectMoneyView.hidden = YES;
     
+    self.cancelReasonView.hidden = YES;
+    self.shadeView.hidden = YES;
+    
+    self.cancelReasonTableView.delegate = self;
+    self.cancelReasonTableView.dataSource = self;
+    self.cancelReasonTextView.delegate = self;
+    
     self.rideSuggestionView.layer.cornerRadius = 3.0;
     self.arriveView.layer.cornerRadius = 3.0;
     self.startTripView.layer.cornerRadius = 3.0;
@@ -159,6 +170,16 @@
     totalRating = 0;
     
     self.locationShareModel= [LocationShareModel sharedModel];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
     
 }
 
@@ -297,12 +318,14 @@
         
         NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
         
-        if (firstaddressObj.thoroughfare == nil) {
+        if (firstaddressObj.thoroughfare != nil) {
             
-            [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.subLocality] forKey:@"current_address"];
+            //[postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.subLocality] forKey:@"current_address"];
+             [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.thoroughfare] forKey:@"current_address"];
+            
         }else{
         
-               [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.thoroughfare] forKey:@"current_address"];
+               [postData setObject:[NSString stringWithFormat:@""] forKey:@"current_address"];
         }
      
         [postData setObject:[NSString stringWithFormat:@"%f",firstaddressObj.coordinate.latitude]  forKey:@"current_latitude"];
@@ -310,7 +333,7 @@
         
         NSLog(@"post data %@",postData);
         
-        [[ServerManager sharedManager] patchRiderLocation:postData withCompletion:^(BOOL success) {
+        [[ServerManager sharedManager] patchRiderLocation:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
             
             
             if (success) {
@@ -662,7 +685,7 @@
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
     
-    [[ServerManager sharedManager] patchAcceptRide:postData withCompletion:^(BOOL success){
+    [[ServerManager sharedManager] patchAcceptRide:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
         
         if (success) {
@@ -683,7 +706,7 @@
                                  
                                  
                                  self.rideSuggestionView.hidden = YES;
-                                 [self showArrivedView];
+                                 [self showStartTripView];
                                  
                              }];
             
@@ -707,7 +730,7 @@
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
     
-    [[ServerManager sharedManager] patchArrive:postData withCompletion:^(BOOL success){
+    [[ServerManager sharedManager] patchArrive:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
         
         if (success) {
@@ -746,14 +769,13 @@
         
     }];
 }
-
-- (IBAction)cancelRideButtonAction:(id)sender {
+- (IBAction)cancelRideRequestButtonAction:(id)sender {
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
     
-    [[ServerManager sharedManager] patchCancelRide:postData withCompletion:^(BOOL success){
+    [[ServerManager sharedManager] patchCancelRideRequest:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
         
         if (success) {
@@ -766,7 +788,11 @@
                              animations:^{
                                  
                                  
-                                 self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                                     
+                                     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                                     
+                                 
+                                 
                                  
                                  
                              }
@@ -795,6 +821,217 @@
         
     }];
     
+}
+
+#pragma mark - UITableView DataSource
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+        return cancelReasonArray.count;
+    
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+        static NSString *CellIdentifier = @"reasonCell";
+    
+        CancelReasonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+        if (!cell)
+            cell = [[CancelReasonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
+    
+        cell.reasonLabel.text = [[cancelReasonArray objectAtIndex:indexPath.row] objectForKey:@"reason"];
+    
+    
+    
+        return cell;
+    
+    
+}
+
+#pragma mark - UITableView Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+        
+        //[tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
+        cancelReasonId = [[cancelReasonArray objectAtIndex:indexPath.row] objectForKey:@"id"];
+        
+        NSLog(@"cancelReasonId  %@",cancelReasonId);
+        NSLog(@"selected index  %lu",(cancelReasonArray.count - 1));
+        
+        if (indexPath.row == (cancelReasonArray.count - 1)) {
+            
+            [self.cancelReasonTextView becomeFirstResponder];
+            
+        }else{
+            
+            [self.cancelReasonTextView resignFirstResponder];
+        }
+        
+        
+    }
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (!self.cancelReasonView.isHidden) {
+        
+        [self.cancelReasonTextView resignFirstResponder];
+        
+        NSLog(@"Is it called");
+    }
+    
+}
+
+- (IBAction)cancelRideButtonAction:(id)sender {
+    
+    [[ServerManager sharedManager] getRideCancelReasosnsWithCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
+        
+        
+        if ( responseObject!=nil) {
+            
+            
+            cancelReasonArray = [responseObject objectForKey:@"data"];
+            NSLog(@"reasons in mapview  %@",cancelReasonArray);
+            
+            [self.cancelReasonTableView reloadData];
+            
+            [UIView animateWithDuration:.5
+                                  delay:0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 
+                                 
+                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, 0);
+                                 
+                                 
+                             }
+                             completion:^(BOOL finished){
+                                 
+                                 self.startTripView.hidden = YES;
+                                 
+                                 self.backButton.hidden = YES;
+                                 
+                                 
+                                 
+                                 
+                             }];
+
+            
+            
+            
+        }else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSLog(@"no user info");
+                
+                
+            });
+            
+        }
+    }];
+    
+    self.cancelReasonView.hidden = NO;
+    self.shadeView.hidden = NO;
+
+
+    
+}
+
+- (IBAction)cancelReasonSubmitButtonAction:(id)sender {
+    
+    self.cancelReasonView.hidden = YES;
+    self.shadeView.hidden = YES;
+    
+    [self.cancelReasonTextView resignFirstResponder];
+    
+    NSMutableDictionary* reasons=[[NSMutableDictionary alloc] init];
+    
+    [reasons setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [reasons setObject:cancelReasonId forKey:@"ride_cancel_reason_id"];
+    
+    if (self.cancelReasonTextView.text.length>0) {
+        
+        [reasons setObject:self.cancelReasonTextView.text forKey:@"other_cancel_reason"];
+        
+    }
+    
+    
+    NSLog(@"post data %@",reasons);
+    
+    [[ServerManager sharedManager] cancelRideWithReason:reasons withCompletion:^(BOOL success) {
+        
+        
+        if (success) {
+            
+            NSLog(@"successfully");
+
+               [self.googleMapView clear];
+            
+                GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+               [self.googleMapView animateToCameraPosition:camera];
+             
+             
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed!"
+                                                                message:@"Please try again"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                
+            });
+        }
+        
+    }];
+    
+
+    
+}
+
+- (void)keyboardDidShow: (NSNotification *) notif{
+    
+    if (!self.cancelReasonView.isHidden) {
+        
+
+        NSDictionary* info = [notif userInfo];
+        
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        NSLog(@"keyboard height %f",kbSize.height);
+        
+        //self.cancelReasonViewCenterConstraint.constant = -kbSize.height * 0.6;
+        
+        self.otherReasonsBottomConstraint.constant = kbSize.height * 0.6;
+        
+       
+        
+        
+    }
+}
+
+- (void)keyboardDidHide: (NSNotification *) notif{
+    
+    if (!self.cancelReasonView.isHidden) {
+        
+        //self.cancelReasonViewCenterConstraint.constant = 0;
+        self.otherReasonsBottomConstraint.constant = 0;
+        
+        
+    }
 }
 
 
@@ -929,6 +1166,8 @@
     
     [self.locationTracker startLocationTracking];
     
+    [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
+    
     NSTimeInterval time = 60.0;
     self.locationUpdateTimer =
     [NSTimer scheduledTimerWithTimeInterval:time
@@ -946,7 +1185,7 @@
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
     
     
-    [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success){
+    [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
         
         if (success) {
@@ -1026,99 +1265,107 @@
 
 
 }
+
+
 - (IBAction)finishTripButtonAction:(id)sender {
     
     
+    [self updateLocationfromMap];
+    [self performSelector:@selector(sendLocationDataOnFinishingTrip) withObject:self afterDelay:6.0 ];
+    
+}
 
+-(void)sendLocationDataOnFinishingTrip
+{
     self.locationShareModel.tripLocationArray=[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"];
     
     
     
     
-  if(self.locationShareModel.tripLocationArray ==nil || self.locationShareModel.tripLocationArray == NULL){
-      
-      self.locationShareModel.tripLocationArray = [[NSMutableArray alloc]init];
-      
-  }
-      NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
-    
-       NSError *error = nil;
-       NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.locationShareModel.tripLocationArray options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *jsonString;
+    if(self.locationShareModel.tripLocationArray ==nil || self.locationShareModel.tripLocationArray == NULL){
         
-        if (jsonData && !error)
-        {
-            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            NSLog(@"location JSON: %@", jsonString);
+        self.locationShareModel.tripLocationArray = [[NSMutableArray alloc]init];
+        
+    }
+    NSLog(@"tripLocationArray  %@",self.locationShareModel.tripLocationArray);
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.locationShareModel.tripLocationArray options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString;
+    
+    if (jsonData && !error)
+    {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"location JSON: %@", jsonString);
+    }
+    
+    
+    NSLog(@"ride id %d",rideId);
+    
+    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    //[postData setObject:@"188" forKey:@"ride_id"];
+    [postData setObject:jsonString forKey:@"waypoints"];
+    
+    [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
+        
+        
+        if (responseObject!=nil) {
+            
+            [UserAccount sharedManager].isOnRide = 0;
+            
+            self.finishTripView.hidden = YES;
+            
+            //            [UIView animateWithDuration:.5
+            //                                  delay:0
+            //                                options: UIViewAnimationOptionCurveEaseIn
+            //                             animations:^{
+            //
+            //
+            //                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);  // ???????????????????????? why it is not working ??????
+            //
+            //
+            //                             }
+            //                             completion:^(BOOL finished){
+            //
+            //
+            //                                 self.finishTripView.hidden = YES;
+            //
+            //                                 [self showCollectMoneyView];
+            //
+            //                             }];
+            
+            [self showCollectMoneyView];
+            
+            NSLog(@"finish ride");
+            
+            NSLog(@"responseObject in finish ride %@",responseObject);
+            
+            
+            
+            self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
+            self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
+            
+            NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
+            
+            
+        }
+        else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                
+            });
         }
         
-        
-        NSLog(@"ride id %d",rideId);
-        
-        NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-        
-        [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-        //[postData setObject:@"188" forKey:@"ride_id"];
-        [postData setObject:jsonString forKey:@"waypoints"];
-        
-        [[ServerManager sharedManager] patchFinishRide:postData withCompletion:^(BOOL success, NSMutableDictionary *responseObject){
-            
-            
-            if (responseObject!=nil) {
-                
-                [UserAccount sharedManager].isOnRide = 0;
-                
-                self.finishTripView.hidden = YES;
-                
-                //            [UIView animateWithDuration:.5
-                //                                  delay:0
-                //                                options: UIViewAnimationOptionCurveEaseIn
-                //                             animations:^{
-                //
-                //
-                //                                 self.finishTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.finishTripView.frame.size.width, 0);  // ???????????????????????? why it is not working ??????
-                //
-                //
-                //                             }
-                //                             completion:^(BOOL finished){
-                //
-                //
-                //                                 self.finishTripView.hidden = YES;
-                //
-                //                                 [self showCollectMoneyView];
-                //
-                //                             }];
-                
-                [self showCollectMoneyView];
-                
-                NSLog(@"finish ride");
-                
-                NSLog(@"responseObject in finish ride %@",responseObject);
-                
-                
-                
-                self.passengerNameIncollectMoneyView.text  = self.passengerNameLabel.text;
-                self.totalFareLabel.text = [NSString stringWithFormat:@"%@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]];
-                
-                NSLog(@"total_payable_fare %@",[[[responseObject objectForKey:@"data"]objectForKey:@"detail"]objectForKey:@"total_payable_fare"]);
-                
-                
-            }
-            else{
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    
-                    
-                });
-            }
-            
-        }];
-  
+    }];
+    
     
     
     [self.locationTracker stopMonitoringSignificantLocation];
-
+    
     
     //invalidate the timer
     if (self.locationShareModel.timer) {
@@ -1153,7 +1400,7 @@
                                    selector:@selector(updateLocationfromMap)
                                    userInfo:nil
                                     repeats:YES];
-
+    
     
 }
 

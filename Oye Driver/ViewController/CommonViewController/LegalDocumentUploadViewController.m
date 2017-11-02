@@ -384,7 +384,7 @@
     
 
         
-        [[ServerManager sharedManager] postDocumentWithData:documentDic andImage:imageDic withCompletion:^(BOOL success) {
+        [[ServerManager sharedManager] postDocumentWithData:documentDic andImage:imageDic withCompletion:^(BOOL success, NSMutableDictionary *responseObject) {
             
             if (success) {
                 

@@ -235,7 +235,7 @@
         NSLog(@"ON");
         self.statusLabel.text = @"Online";
         
-        [[ServerManager sharedManager] patchRiderStatus:@"2" withCompletion:^(BOOL success) {
+        [[ServerManager sharedManager] patchRiderStatus:@"2" withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
             
             if (success) {
                 
@@ -297,7 +297,7 @@
         
         self.statusLabel.text = @"Offline";
         
-        [[ServerManager sharedManager] patchRiderStatus:@"1" withCompletion:^(BOOL success) {
+        [[ServerManager sharedManager] patchRiderStatus:@"1" withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
             
             if (success) {
                 

@@ -23,6 +23,8 @@
 @property (nonatomic) CLLocationAccuracy myLocationAccuracy;
 //@property BOOL isStopUpdateLocation;
 
+
+
 + (CLLocationManager *)sharedLocationManager;
 
 - (void)startLocationTracking;

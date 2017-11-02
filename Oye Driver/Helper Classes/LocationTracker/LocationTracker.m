@@ -110,6 +110,9 @@
             if(IS_OS_8_OR_LATER) {
               [locationManager requestAlwaysAuthorization];
             }
+//           if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9) {
+//              locationManager.allowsBackgroundLocationUpdates = YES;
+//            }
             [locationManager startUpdatingLocation];
 //        }
 //    }
@@ -144,12 +147,17 @@
     if(IS_OS_8_OR_LATER) {
         [locationManager requestAlwaysAuthorization];
     }
+    
+   
+    
     [locationManager startMonitoringSignificantLocationChanges];
 }
 
 - (void)stopMonitoringSignificantLocation {
     NSLog(@"stopMonitoringSignificantLocation");
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
+    
+
     
     if (locationManager)
         [locationManager stopMonitoringSignificantLocationChanges];
@@ -344,57 +352,58 @@
     
     
     if ([UserAccount sharedManager].isOnRide == 0) {
-    
+
         // send driver current locaton to server when not riding
-        
+
         [[GMSGeocoder geocoder] reverseGeocodeCoordinate:CLLocationCoordinate2DMake(self.myLocation.latitude,self.myLocation.longitude) completionHandler:^(GMSReverseGeocodeResponse* response, NSError* error) {
-            
+
             GMSAddress* firstaddressObj = [response firstResult];
-            
+
             NSLog(@"address %@", firstaddressObj.thoroughfare);
             NSLog(@"coordinate.latitude=%f", firstaddressObj.coordinate.latitude);
             NSLog(@"coordinate.longitude=%f", firstaddressObj.coordinate.longitude);
-            
-            
-            
+
+
+
             NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
-            
-            if (firstaddressObj.thoroughfare == nil) {
+
+            if (firstaddressObj.thoroughfare != nil) {
                 
-                [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.subLocality] forKey:@"current_address"];
+                //[postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.subLocality] forKey:@"current_address"];
+                [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.thoroughfare] forKey:@"current_address"];
                 
             }else{
                 
-                [postData setObject:[NSString stringWithFormat:@"%@",firstaddressObj.thoroughfare] forKey:@"current_address"];
+                [postData setObject:[NSString stringWithFormat:@""] forKey:@"current_address"];
             }
-            
+
             [postData setObject:[NSString stringWithFormat:@"%f",firstaddressObj.coordinate.latitude]  forKey:@"current_latitude"];
             [postData setObject:[NSString stringWithFormat:@"%f",firstaddressObj.coordinate.longitude] forKey:@"current_longitude"];
-            
+
             NSLog(@"post data %@",postData);
-            
-            [[ServerManager sharedManager] patchRiderLocation:postData withCompletion:^(BOOL success) {
-                
-                
+
+            [[ServerManager sharedManager] patchRiderLocation:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+
+
                 if (success) {
-                    
+
                     NSLog(@"successfully");
                 }
                 else{
-                    
+
                     dispatch_async(dispatch_get_main_queue(), ^{
                      });
                 }
-                
+
             }];
-            
+
         }];
-        
+
     }
     else
     {
-        
-        [self saveLocationsToPlist];
+
+        [self saveLocationsToPlist:self.shareModel.afterResume];
         
     }
         
@@ -412,7 +421,8 @@
  //   }
 }
 
-- (void)saveLocationsToPlist {
+- (void)saveLocationsToPlist:(BOOL)fromResume
+{
     NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex:0];
@@ -445,6 +455,12 @@
 
 
         [self.shareModel.tripLocationDictionary setObject:theDate forKey:@"Time"];
+          
+          if (fromResume) {
+              [self.shareModel.tripLocationDictionary setObject:@"YES" forKey:@"AddFromResume"];
+          } else {
+              [self.shareModel.tripLocationDictionary setObject:@"NO" forKey:@"AddFromResume"];
+          }
         
         [self.shareModel.tripLocationArray  addObject:self.shareModel.tripLocationDictionary];
         

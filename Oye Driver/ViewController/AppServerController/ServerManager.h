@@ -28,9 +28,14 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 
 - (void)postLoginWithPhone:(NSString*)phone accessToken:(NSString*)accesstoken  completion:(api_Completion_Handler_Status)completion;
 
+//User Logout
+
+- (void)postLogOutWithCompletion:(api_Completion_Handler_Data)completion;
+
+
 //change profile picture
 
-- (void)postProfilePicture:(UIImage*)image completion:(api_Completion_Handler_Status)completion;
+- (void)postProfilePicture:(UIImage*)image completion:(api_Completion_Handler_Data)completion;
 
 //get current rider info
 - (void)getRiderInfoWithCompletion:(api_Completion_Handler_Data)completion;
@@ -39,31 +44,42 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 - (void)getBackgroundScenarioWithCompletion:(api_Completion_Handler_Data)completion;
 
 //get rider status
-- (void)getRiderStatusWithCompletion:(api_Completion_Handler_Status)completion;
+- (void)getRiderStatusWithCompletion:(api_Completion_Handler_Data)completion;
+
 //get rider statistics
 - (void)getRiderStatWithCompletion:(api_Completion_Handler_Data)completion;
 
 //update userInfo
 
--(void) updateUserDetailsWithData:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void) updateUserDetailsWithData:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 //update rider status
--(void)patchRiderStatus:(NSString*)status withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchRiderStatus:(NSString*)status withCompletion:(api_Completion_Handler_Data)completion;
 
 //update rider location
--(void)patchRiderLocation:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchRiderLocation:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 //accept ride
--(void)patchAcceptRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchAcceptRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 //accept ride
--(void)patchArrive:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchArrive:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 //cancel ride
--(void)patchCancelRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchCancelRideRequest:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
+
+////cancel ride
+//-(void)patchCancelRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+
+//cancel ride with rason
+
+-(void) cancelRideWithReason:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+
+//get cancel reasons
+- (void)getRideCancelReasosnsWithCompletion:(api_Completion_Handler_Data)completion;
 
 //start ride
--(void)patchStartRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void)patchStartRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
 //finish ride
 -(void)patchFinishRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
@@ -73,6 +89,9 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 
 //get history info
 - (void)getHistoryInfoWithCompletion:(api_Completion_Handler_Data)completion;
+
+//get single history info
+- (void)getSingleHistoryInfo:(NSDictionary*)dataDic  WithCompletion:(api_Completion_Handler_Data)completion;
 
 //patch rating
 
@@ -85,7 +104,7 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 - (void)getTopRidesWithCompletion:(api_Completion_Handler_Data)completion;
 
 //update document
--(void) postDocumentWithData:(NSDictionary*)dataDic andImage:(NSDictionary*)imageDic withCompletion:(api_Completion_Handler_Status)completion;
+-(void) postDocumentWithData:(NSDictionary*)dataDic andImage:(NSDictionary*)imageDic withCompletion:(api_Completion_Handler_Data)completion;
 
 
 @end

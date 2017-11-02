@@ -1,0 +1,318 @@
+
+/* Class = "UITextField"; placeholder = "Bike registration number"; ObjectID = "0ju-Pt-7EW"; */
+"0ju-Pt-7EW.placeholder" = "Bike registration number";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "0yf-eT-DoN"; */
+"0yf-eT-DoN.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "18c-dg-Jaq"; */
+"18c-dg-Jaq.text" = "Label";
+
+/* Class = "UILabel"; text = "23.05.2017"; ObjectID = "2XY-sK-8tX"; */
+"2XY-sK-8tX.text" = "23.05.2017";
+
+/* Class = "UILabel"; text = "Pickup"; ObjectID = "35h-Wg-TRS"; */
+"35h-Wg-TRS.text" = "Pickup";
+
+/* Class = "UILabel"; text = "Payment"; ObjectID = "3R9-g3-NZN"; */
+"3R9-g3-NZN.text" = "Payment";
+
+/* Class = "UILabel"; text = "Front side"; ObjectID = "4Fj-rg-mxv"; */
+"4Fj-rg-mxv.text" = "Front side";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4lh-MJ-7WO"; */
+"4lh-MJ-7WO.text" = "Label";
+
+/* Class = "UILabel"; text = "5"; ObjectID = "68P-kF-dxP"; */
+"68P-kF-dxP.text" = "5";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "6vy-zn-q36"; */
+"6vy-zn-q36.normalTitle" = "Cancel";
+
+/* Class = "UIButton"; normalTitle = "DAILY TOP RIDES"; ObjectID = "7AN-xX-sff"; */
+"7AN-xX-sff.normalTitle" = "DAILY TOP RIDES";
+
+/* Class = "UILabel"; text = "Rating"; ObjectID = "7yM-al-iy5"; */
+"7yM-al-iy5.text" = "Rating";
+
+/* Class = "UIButton"; normalTitle = "Submit Documents"; ObjectID = "8z0-j6-Ibf"; */
+"8z0-j6-Ibf.normalTitle" = "Submit Documents";
+
+/* Class = "UIButton"; normalTitle = "Collect Money"; ObjectID = "90i-7C-Cp7"; */
+"90i-7C-Cp7.normalTitle" = "Collect Money";
+
+/* Class = "UITextField"; placeholder = "Present address"; ObjectID = "9L3-KM-eXk"; */
+"9L3-KM-eXk.placeholder" = "Present address";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BM9-PW-z0H"; */
+"BM9-PW-z0H.text" = "Label";
+
+/* Class = "UILabel"; text = "Trip has been successful"; ObjectID = "BU8-EF-HdN"; */
+"BU8-EF-HdN.text" = "Trip has been successful";
+
+/* Class = "UITabBarItem"; title = "Earning"; ObjectID = "CXN-Gh-qbY"; */
+"CXN-Gh-qbY.title" = "Earning";
+
+/* Class = "UILabel"; text = "Verification identity"; ObjectID = "Cuw-n7-vGF"; */
+"Cuw-n7-vGF.text" = "Verification identity";
+
+/* Class = "UIButton"; normalTitle = "Remove"; ObjectID = "EgU-YA-yRx"; */
+"EgU-YA-yRx.normalTitle" = "Remove";
+
+/* Class = "UILabel"; text = "6"; ObjectID = "EuB-dh-gdF"; */
+"EuB-dh-gdF.text" = "6";
+
+/* Class = "UILabel"; text = "Total Due"; ObjectID = "FJm-2n-Ei3"; */
+"FJm-2n-Ei3.text" = "Total Due";
+
+/* Class = "UILabel"; text = "UPLOAD YOUR VALID DRIVING LICENSE"; ObjectID = "FbP-9F-Oxa"; */
+"FbP-9F-Oxa.text" = "UPLOAD YOUR VALID DRIVING LICENSE";
+
+/* Class = "UITextField"; placeholder = "Driving license"; ObjectID = "Fiw-xr-Gka"; */
+"Fiw-xr-Gka.placeholder" = "Driving license";
+
+/* Class = "UILabel"; text = "Edit Profile"; ObjectID = "G1h-gM-w0a"; */
+"G1h-gM-w0a.text" = "Edit Profile";
+
+/* Class = "UILabel"; text = "4.5"; ObjectID = "GpY-zZ-NQ9"; */
+"GpY-zZ-NQ9.text" = "4.5";
+
+/* Class = "UILabel"; text = "Back side"; ObjectID = "GsK-SF-S9Y"; */
+"GsK-SF-S9Y.text" = "Back side";
+
+/* Class = "UILabel"; text = "90"; ObjectID = "HcX-73-tv3"; */
+"HcX-73-tv3.text" = "90";
+
+/* Class = "UILabel"; text = "Profile"; ObjectID = "Jlh-dx-aj1"; */
+"Jlh-dx-aj1.text" = "Profile";
+
+/* Class = "UILabel"; text = "4.5"; ObjectID = "Jsr-FX-XaU"; */
+"Jsr-FX-XaU.text" = "4.5";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "K7J-53-4S9"; */
+"K7J-53-4S9.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Back side"; ObjectID = "KSD-vJ-mfs"; */
+"KSD-vJ-mfs.text" = "Back side";
+
+/* Class = "UIButton"; normalTitle = "Change Photo"; ObjectID = "LK1-Yv-mhz"; */
+"LK1-Yv-mhz.normalTitle" = "Change Photo";
+
+/* Class = "UILabel"; text = "Please provide the documents below so we can help you complete your registration"; ObjectID = "LUA-Fq-818"; */
+"LUA-Fq-818.text" = "Please provide the documents below so we can help you complete your registration";
+
+/* Class = "UILabel"; text = "Missed Ride Count"; ObjectID = "LYZ-m9-F57"; */
+"LYZ-m9-F57.text" = "Missed Ride Count";
+
+/* Class = "UILabel"; text = "UPLOAD YOUR LEGAL NID"; ObjectID = "LcD-WH-fJS"; */
+"LcD-WH-fJS.text" = "UPLOAD YOUR LEGAL NID";
+
+/* Class = "UILabel"; text = "TELL US ABOUT YOUR DETAILS"; ObjectID = "Lg2-fo-JJD"; */
+"Lg2-fo-JJD.text" = "TELL US ABOUT YOUR DETAILS";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "M5a-NA-HGR"; */
+"M5a-NA-HGR.text" = "Name";
+
+/* Class = "UILabel"; text = "4.5"; ObjectID = "MkT-W6-TbX"; */
+"MkT-W6-TbX.text" = "4.5";
+
+/* Class = "UILabel"; text = "450"; ObjectID = "PGo-N6-3DU"; */
+"PGo-N6-3DU.text" = "450";
+
+/* Class = "UILabel"; text = "Hafiz"; ObjectID = "Paj-Cg-lJy"; */
+"Paj-Cg-lJy.text" = "Hafiz";
+
+/* Class = "UITextField"; placeholder = "Permanent address"; ObjectID = "Plg-gh-SZd"; */
+"Plg-gh-SZd.placeholder" = "Permanent address";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Qof-KJ-EDm"; */
+"Qof-KJ-EDm.text" = "Label";
+
+/* Class = "UILabel"; text = "Front side"; ObjectID = "QqA-2i-QOv"; */
+"QqA-2i-QOv.text" = "Front side";
+
+/* Class = "UILabel"; text = "Hafiz"; ObjectID = "S3x-Vf-JaV"; */
+"S3x-Vf-JaV.text" = "Hafiz";
+
+/* Class = "UIButton"; normalTitle = "Arrive"; ObjectID = "T0K-l2-DZg"; */
+"T0K-l2-DZg.normalTitle" = "Arrive";
+
+/* Class = "UILabel"; text = "Upload Your Bike's Paper"; ObjectID = "TCf-gf-FxH"; */
+"TCf-gf-FxH.text" = "Upload Your Bike's Paper";
+
+/* Class = "UILabel"; text = "Ride Cost"; ObjectID = "TZX-yI-tjR"; */
+"TZX-yI-tjR.text" = "Ride Cost";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Tdv-bS-Zpd"; */
+"Tdv-bS-Zpd.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "LeaderBoard"; ObjectID = "Tgl-TQ-em3"; */
+"Tgl-TQ-em3.title" = "LeaderBoard";
+
+/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "UEV-vJ-750"; */
+"UEV-vJ-750.title" = "Profile";
+
+/* Class = "UILabel"; text = "No ride history yet"; ObjectID = "VQc-RC-Z3X"; */
+"VQc-RC-Z3X.text" = "No ride history yet";
+
+/* Class = "UILabel"; text = "History"; ObjectID = "Vhm-EV-LhI"; */
+"Vhm-EV-LhI.text" = "History";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "W3A-Qr-loR"; */
+"W3A-Qr-loR.title" = "Home";
+
+/* Class = "UIButton"; normalTitle = "Finish Your Trip"; ObjectID = "X10-Ri-7fz"; */
+"X10-Ri-7fz.normalTitle" = "Finish Your Trip";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "YlT-LP-L2T"; */
+"YlT-LP-L2T.normalTitle" = "Submit";
+
+/* Class = "UILabel"; text = "Back side"; ObjectID = "ZaN-xh-l2I"; */
+"ZaN-xh-l2I.text" = "Back side";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Zox-L3-u8f"; */
+"Zox-L3-u8f.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Bike Engine(CC)"; ObjectID = "a0N-sd-F4X"; */
+"a0N-sd-F4X.placeholder" = "Bike Engine(CC)";
+
+/* Class = "UILabel"; text = "Front side"; ObjectID = "apb-K4-yN4"; */
+"apb-K4-yN4.text" = "Front side";
+
+/* Class = "UILabel"; text = "Dropoff"; ObjectID = "arX-c9-5gd"; */
+"arX-c9-5gd.text" = "Dropoff";
+
+/* Class = "UILabel"; text = "256৳"; ObjectID = "b7m-xh-AmM"; */
+"b7m-xh-AmM.text" = "256৳";
+
+/* Class = "UILabel"; text = "Number of Trips"; ObjectID = "bpy-cN-bRU"; */
+"bpy-cN-bRU.text" = "Number of Trips";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "cBh-Xn-Poh"; */
+"cBh-Xn-Poh.normalTitle" = "Submit";
+
+/* Class = "UILabel"; text = "Pickup time"; ObjectID = "cNK-XU-WMZ"; */
+"cNK-XU-WMZ.text" = "Pickup time";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "e0D-bt-fsq"; */
+"e0D-bt-fsq.text" = "Label";
+
+/* Class = "UILabel"; text = "Ashif"; ObjectID = "fQn-Aa-wHL"; */
+"fQn-Aa-wHL.text" = "Ashif";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "fTY-47-Iv6"; */
+"fTY-47-Iv6.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Today"; ObjectID = "ffl-CC-CwV"; */
+"ffl-CC-CwV.text" = "Today";
+
+/* Class = "UIButton"; normalTitle = "Accept"; ObjectID = "g2X-p0-Gty"; */
+"g2X-p0-Gty.normalTitle" = "Accept";
+
+/* Class = "UILabel"; text = "Total Cost :"; ObjectID = "ghT-af-xOJ"; */
+"ghT-af-xOJ.text" = "Total Cost :";
+
+/* Class = "UILabel"; text = "Hafiz"; ObjectID = "ghr-1k-ade"; */
+"ghr-1k-ade.text" = "Hafiz";
+
+/* Class = "UILabel"; text = "150"; ObjectID = "hLP-yT-MwV"; */
+"hLP-yT-MwV.text" = "150";
+
+/* Class = "UILabel"; text = "History"; ObjectID = "hWg-sd-wTy"; */
+"hWg-sd-wTy.text" = "History";
+
+/* Class = "UILabel"; text = "4.5"; ObjectID = "hZK-JZ-W4c"; */
+"hZK-JZ-W4c.text" = "4.5";
+
+/* Class = "UILabel"; text = "4.5"; ObjectID = "hbd-3p-G1P"; */
+"hbd-3p-G1P.text" = "4.5";
+
+/* Class = "UILabel"; text = "UPLOAD YOUR BIKE REGISTRATION COPY"; ObjectID = "hz7-y5-VNo"; */
+"hz7-y5-VNo.text" = "UPLOAD YOUR BIKE REGISTRATION COPY";
+
+/* Class = "UILabel"; text = "Earning"; ObjectID = "hzJ-2e-xc8"; */
+"hzJ-2e-xc8.text" = "Earning";
+
+/* Class = "UITextField"; placeholder = "Bike model"; ObjectID = "ic9-Vp-jUh"; */
+"ic9-Vp-jUh.placeholder" = "Bike model";
+
+/* Class = "UILabel"; text = "Back side"; ObjectID = "ilC-Yy-huN"; */
+"ilC-Yy-huN.text" = "Back side";
+
+/* Class = "UILabel"; text = "Front side"; ObjectID = "j7K-IS-YVw"; */
+"j7K-IS-YVw.text" = "Front side";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "jFh-rG-96e"; */
+"jFh-rG-96e.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "DAILY TOP EARNERS"; ObjectID = "jQP-a6-gmT"; */
+"jQP-a6-gmT.normalTitle" = "DAILY TOP EARNERS";
+
+/* Class = "UIButton"; selectedTitle = "DAILY TOP EARNERS"; ObjectID = "jQP-a6-gmT"; */
+"jQP-a6-gmT.selectedTitle" = "DAILY TOP EARNERS";
+
+/* Class = "UILabel"; text = "Hero"; ObjectID = "jbN-eI-ZWX"; */
+"jbN-eI-ZWX.text" = "Hero";
+
+/* Class = "UILabel"; text = "Online"; ObjectID = "kfB-vD-Tef"; */
+"kfB-vD-Tef.text" = "Online";
+
+/* Class = "UILabel"; text = "Bike Model :"; ObjectID = "lLm-X1-HFX"; */
+"lLm-X1-HFX.text" = "Bike Model :";
+
+/* Class = "UILabel"; text = "Earnings"; ObjectID = "lh8-g3-ia0"; */
+"lh8-g3-ia0.text" = "Earnings";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "lle-5F-xKH"; */
+"lle-5F-xKH.text" = "Label";
+
+/* Class = "UILabel"; text = "9"; ObjectID = "mM5-Id-Efy"; */
+"mM5-Id-Efy.text" = "9";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "pI8-rl-tci"; */
+"pI8-rl-tci.text" = "Label";
+
+/* Class = "UILabel"; text = "$150.50"; ObjectID = "pc6-qx-7fr"; */
+"pc6-qx-7fr.text" = "$150.50";
+
+/* Class = "UILabel"; text = "01678452017"; ObjectID = "qsA-X5-qJl"; */
+"qsA-X5-qJl.text" = "01678452017";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "qvp-ST-hyH"; */
+"qvp-ST-hyH.text" = "Name";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rON-OS-ngC"; */
+"rON-OS-ngC.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rT5-NY-NXh"; */
+"rT5-NY-NXh.text" = "Label";
+
+/* Class = "UILabel"; text = "Commision Rate"; ObjectID = "shx-Vn-mJj"; */
+"shx-Vn-mJj.text" = "Commision Rate";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "uBS-KX-Yf4"; */
+"uBS-KX-Yf4.text" = "Label";
+
+/* Class = "UILabel"; text = "Setting"; ObjectID = "uaD-8b-Yel"; */
+"uaD-8b-Yel.text" = "Setting";
+
+/* Class = "UIButton"; normalTitle = "Pickup"; ObjectID = "vdR-gz-54w"; */
+"vdR-gz-54w.normalTitle" = "Pickup";
+
+/* Class = "UITextField"; placeholder = "NID number"; ObjectID = "wJj-Nw-Ldk"; */
+"wJj-Nw-Ldk.placeholder" = "NID number";
+
+/* Class = "UILabel"; text = "Today"; ObjectID = "xSi-bd-BFO"; */
+"xSi-bd-BFO.text" = "Today";
+
+/* Class = "UILabel"; text = "Driver"; ObjectID = "xZ6-3Y-VEa"; */
+"xZ6-3Y-VEa.text" = "Driver";
+
+/* Class = "UILabel"; text = "Other reasons"; ObjectID = "y6o-bk-t1d"; */
+"y6o-bk-t1d.text" = "Other reasons";
+
+/* Class = "UILabel"; text = "Upload Your Driving Lincese"; ObjectID = "yOY-bn-HUe"; */
+"yOY-bn-HUe.text" = "Upload Your Driving Lincese";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "z4G-vZ-JW2"; */
+"z4G-vZ-JW2.text" = "Label";

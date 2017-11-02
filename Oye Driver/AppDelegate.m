@@ -32,6 +32,9 @@
     // Override point for customization after application launch.
     
     NSLog(@"tripLocationArray in appdelegate %@",self.locationShareModel.tripLocationArray);
+    
+    self.locationShareModel.afterResume = NO;
+    
 
     [GMSServices provideAPIKey:@"AIzaSyDh0V-13fNhKpvJaMF-kvfTFEE-tpOZJJk"];
     
@@ -115,7 +118,10 @@
          } else{
              
              NSLog(@"UIApplicationLaunchOptionsLocationKey : %@" , [launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]);
+             
              if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+                 
+                 self.locationShareModel.afterResume = YES;
                  
                  self.locationTracker = [[LocationTracker alloc]init];
                  
@@ -140,6 +146,7 @@
              }  else
              {
                  NSLog(@"self.locationTracker in appdelegate for 5 min");
+                 
                  self.locationTracker = [[LocationTracker alloc]init];
                  
                  [self.locationTracker startLocationTracking];
@@ -245,7 +252,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 {
     NSLog(@"userInfo %@",userInfo);
     
-
+   
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"rideNotification" object:self userInfo:userInfo];
 
@@ -313,6 +320,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [self.locationTracker startMonitoringSignificantLocation];
+    
 }
 
 
@@ -324,6 +334,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
+    self.locationShareModel.afterResume = NO;
     
     NSLog(@"app become active applicationDidBecomeActive ");
     

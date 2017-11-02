@@ -251,7 +251,7 @@
     
     //self.profilePicture.image=chosenImage;
     
-    [[ServerManager sharedManager] postProfilePicture:chosenImage completion:^(BOOL success) {
+    [[ServerManager sharedManager] postProfilePicture:chosenImage completion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
         if (success) {
             
             NSLog(@"successfully changed pro pic");
@@ -296,7 +296,7 @@
 
     NSLog(@"post data %@",postData);
     
-    [[ServerManager sharedManager] updateUserDetailsWithData:postData withCompletion:^(BOOL success) {
+    [[ServerManager sharedManager] updateUserDetailsWithData:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
         
 
         if (success) {

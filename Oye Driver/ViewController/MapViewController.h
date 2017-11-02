@@ -13,7 +13,7 @@
 #import "RateView.h"
 #import "LocationTracker.h"
 
-@interface MapViewController : UIViewController<CLLocationManagerDelegate,GMSMapViewDelegate,UITextFieldDelegate,RateViewDelegate>
+@interface MapViewController : UIViewController<CLLocationManagerDelegate,GMSMapViewDelegate,UITextFieldDelegate,RateViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 
 
@@ -71,6 +71,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalFareLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectMoneyButton;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabelInCollectMoneyView;
+
+@property (weak, nonatomic) IBOutlet UIView *cancelReasonView;
+@property (weak, nonatomic) IBOutlet UITableView *cancelReasonTableView;
+@property (weak, nonatomic) IBOutlet UITextView *cancelReasonTextView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelReasonSubmitButton;
+@property (weak, nonatomic) IBOutlet UILabel *otherReasonLabel;
+@property (weak, nonatomic) IBOutlet UIView *shadeView;
+@property (weak, nonatomic) IBOutlet UIView *otherReasonsView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherReasonsBottomConstraint;
 
 
 @property (weak, nonatomic) IBOutlet RateView *rateView;

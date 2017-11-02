@@ -8,6 +8,7 @@
 
 #import "TabBarViewController.h"
 #import "HexColors.h"
+#import "AppDelegate.h"
 
 @interface TabBarViewController ()
 
@@ -28,6 +29,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)logOutFromTabbar
+{
+    
+   
+    AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+    
+    UIViewController* rootController = [self.storyboard  instantiateViewControllerWithIdentifier:@"LandingViewController"];
+    
+    UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+    
+    navigation.navigationBarHidden=YES;
+    appDelegateTemp.window.rootViewController = navigation;
+    
+   
+}
 
 @end

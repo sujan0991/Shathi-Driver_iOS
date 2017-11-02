@@ -140,7 +140,7 @@
 -(void)checkRiderStatus{
     
     
-    [[ServerManager sharedManager] getRiderStatusWithCompletion:^(BOOL success){
+    [[ServerManager sharedManager] getRiderStatusWithCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
         
         if (success) {

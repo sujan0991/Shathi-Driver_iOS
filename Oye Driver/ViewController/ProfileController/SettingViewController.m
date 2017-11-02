@@ -8,10 +8,15 @@
 
 #import "SettingViewController.h"
 #import "VerifyIdentityViewController.h"
+#import <AccountKit/AccountKit.h>
+#import "UserAccount.h"
+#import "ServerManager.h"
+#import "TabBarViewController.h"
 
 @interface SettingViewController (){
 
-
+    AKFAccountKit *accountKit;
+    
     NSArray *settingList;
 }
 
@@ -21,6 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (accountKit == nil) {
+        accountKit = [[AKFAccountKit alloc] initWithResponseType:AKFResponseTypeAccessToken];
+    }
     
     self.settingTable.delegate = self;
     self.settingTable.dataSource = self;
@@ -80,16 +89,41 @@
     }else if (indexPath.row == 4)
     {
         
-//        [accountKit logOut];
-//        
-//        
-//        [UserAccount sharedManager].accessToken= @"" ;
-//        
-//        [self.navigationController popToRootViewControllerAnimated:YES];
         
-        //        LandingViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"LandingViewController"];
-        //
-        //        [self.navigationController pushViewController:vc animated:YES];
+        [[ServerManager sharedManager] postLogOutWithCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+            
+            if (resultDataDictionary!=nil) {
+                
+                [accountKit logOut];
+                
+                [UserAccount sharedManager].accessToken= @"" ;
+                [UserAccount sharedManager].riderStatus = 1;
+                
+                TabBarViewController *tabBar = (TabBarViewController *) self.tabBarController;
+                [tabBar logOutFromTabbar];
+                
+                
+            }else{
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    NSLog(@"no user info");
+                    
+                    
+                });
+                
+            }
+            
+        }];
+        
+        
+        
+        
+       // [UserAccount sharedManager].accessToken= @"" ;
+        
+        
+        
+
         
     }
     
