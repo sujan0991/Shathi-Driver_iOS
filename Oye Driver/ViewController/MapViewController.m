@@ -15,6 +15,7 @@
 #import "LocationShareModel.h"
 #import "VerifyIdentityViewController.h"
 #import "CancelReasonTableViewCell.h"
+#import "JTMaterialSpinner.h"
 
 #import "LegalDocumentUploadViewController.h"
 
@@ -22,6 +23,8 @@
 
 @interface MapViewController (){
 
+    JTMaterialSpinner *spinner;
+    
     AKFAccountKit *_accountKit;
     
     CLLocationManager *locationManager;
@@ -103,6 +106,13 @@
         [self presentViewController:vc animated:YES completion:nil];
 
     }
+    
+    spinner=[[JTMaterialSpinner alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 17, self.view.frame.size.height/2 - 17, 35, 35)];
+    [self.shadeView bringSubviewToFront:spinner];
+    [self.shadeView addSubview:spinner];
+    spinner.hidden =YES;
+    
+    
 }
 
 -(void)dealloc{
@@ -681,6 +691,7 @@
 
 - (IBAction)acceptRideButtonAction:(id)sender {
     
+
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
     [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
@@ -691,6 +702,44 @@
         if (success) {
             
             NSLog(@"accept ride");
+            
+            
+            if (self.locationShareModel.timer) {
+                
+                [self.locationShareModel.timer invalidate];
+                self.locationShareModel.timer = nil;
+                NSLog(@"self.shareModel.timer in start trip  = nil");
+            }
+            
+            if (self.locationUpdateTimer) {
+                
+                [self.locationUpdateTimer invalidate];
+                self.locationUpdateTimer = nil;
+                NSLog(@"self.locationUpdateTimer in finish trip  = nil");
+            }
+            
+            self.locationTracker = [[LocationTracker alloc]init];
+            
+            NSLog(@"self.locationTracker in start trip");
+            
+            
+            [self.locationTracker removePlistData];
+            
+            [self.locationTracker startMonitoringSignificantLocation];
+            
+            [self.locationTracker startLocationTracking];
+            
+            [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
+            
+            NSTimeInterval time = 60.0;
+            self.locationUpdateTimer =
+            [NSTimer scheduledTimerWithTimeInterval:time
+                                             target:self
+                                           selector:@selector(updateLocationfromMap)
+                                           userInfo:nil
+                                            repeats:YES];
+            
+            
             
             [UIView animateWithDuration:.5
                                   delay:0
@@ -704,6 +753,7 @@
                              }
                              completion:^(BOOL finished){
                                  
+                                 NSLog(@"loadPlistData %@",[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"]);
                                  
                                  self.rideSuggestionView.hidden = YES;
                                  [self showStartTripView];
@@ -1141,40 +1191,40 @@
 //    [self.locationShareModel.tripLocationArray addObject:dict];
 //
 
-    if (self.locationShareModel.timer) {
-        
-        [self.locationShareModel.timer invalidate];
-        self.locationShareModel.timer = nil;
-        NSLog(@"self.shareModel.timer in start trip  = nil");
-    }
-    
-    if (self.locationUpdateTimer) {
-        
-        [self.locationUpdateTimer invalidate];
-        self.locationUpdateTimer = nil;
-        NSLog(@"self.locationUpdateTimer in finish trip  = nil");
-    }
-    
-    self.locationTracker = [[LocationTracker alloc]init];
-    
-    NSLog(@"self.locationTracker in start trip");
-    
-    
-    [self.locationTracker removePlistData];
-    
-    [self.locationTracker startMonitoringSignificantLocation];
-    
-    [self.locationTracker startLocationTracking];
-    
-    [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
-    
-    NSTimeInterval time = 60.0;
-    self.locationUpdateTimer =
-    [NSTimer scheduledTimerWithTimeInterval:time
-                                     target:self
-                                   selector:@selector(updateLocationfromMap)
-                                   userInfo:nil
-                                    repeats:YES];
+//    if (self.locationShareModel.timer) {
+//
+//        [self.locationShareModel.timer invalidate];
+//        self.locationShareModel.timer = nil;
+//        NSLog(@"self.shareModel.timer in start trip  = nil");
+//    }
+//
+//    if (self.locationUpdateTimer) {
+//
+//        [self.locationUpdateTimer invalidate];
+//        self.locationUpdateTimer = nil;
+//        NSLog(@"self.locationUpdateTimer in finish trip  = nil");
+//    }
+//
+//    self.locationTracker = [[LocationTracker alloc]init];
+//
+//    NSLog(@"self.locationTracker in start trip");
+//
+//
+//    [self.locationTracker removePlistData];
+//
+//    [self.locationTracker startMonitoringSignificantLocation];
+//
+//    [self.locationTracker startLocationTracking];
+//
+//    [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
+//
+//    NSTimeInterval time = 60.0;
+//    self.locationUpdateTimer =
+//    [NSTimer scheduledTimerWithTimeInterval:time
+//                                     target:self
+//                                   selector:@selector(updateLocationfromMap)
+//                                   userInfo:nil
+//                                    repeats:YES];
     
     
 
@@ -1269,9 +1319,12 @@
 
 - (IBAction)finishTripButtonAction:(id)sender {
     
+    self.shadeView.hidden = NO;
+    spinner.hidden = NO;
+    [spinner beginRefreshing];
     
     [self updateLocationfromMap];
-    [self performSelector:@selector(sendLocationDataOnFinishingTrip) withObject:self afterDelay:6.0 ];
+    [self performSelector:@selector(sendLocationDataOnFinishingTrip) withObject:self afterDelay:5.0 ];
     
 }
 
@@ -1312,6 +1365,9 @@
         
         
         if (responseObject!=nil) {
+            self.shadeView.hidden = YES;
+            spinner.hidden = YES;
+            [spinner endRefreshing];
             
             [UserAccount sharedManager].isOnRide = 0;
             
@@ -1355,7 +1411,9 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                
+                self.shadeView.hidden = YES;
+                spinner.hidden = YES;
+                [spinner endRefreshing];
                 
             });
         }
