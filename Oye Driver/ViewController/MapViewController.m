@@ -379,7 +379,7 @@
     
     NSDictionary* rideInfo = [notification userInfo];
     
-    NSLog(@"ride info %@",rideInfo);
+   // NSLog(@"ride info %@",rideInfo);
     
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
 //                                                    message:[NSString stringWithFormat:@"%@",rideInfo]
@@ -392,7 +392,7 @@
     
     NSError *error;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
-    NSLog(@"JSON DIct: %@", jsonDict);
+   // NSLog(@"JSON DIct: %@", jsonDict);
     
     int notificationType = [[jsonDict objectForKey:@"notification_type"]intValue];
     
@@ -474,7 +474,7 @@
                          animations:^{
                              
                              
-                             self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                             self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, self.rideSuggestionView.frame.size.height);
                              
                              
                          }
@@ -751,7 +751,7 @@
                              animations:^{
                                  
                                  
-                                 self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                                 self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, self.rideSuggestionView.frame.size.height);
                                  
                                  
                              }
@@ -797,7 +797,7 @@
                              animations:^{
                                  
                                  
-                                 self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width, 0);
+                                 self.arriveView.frame = CGRectMake(20,self.view.frame.size.height ,self.arriveView.frame.size.width, self.arriveView.frame.size.height);
                                  
                                  
                              }
@@ -843,7 +843,7 @@
                                  
                                  
                                      
-                                     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, 0);
+                                     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, self.rideSuggestionView.frame.size.height);
                                      
                                  
                                  
@@ -961,7 +961,7 @@
                              animations:^{
                                  
                                  
-                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, 0);
+                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, self.startTripView.frame.size.height);
                                  
                                  
                              }
@@ -1111,6 +1111,8 @@
                      completion:^(BOOL finished){
                          
                          
+                         NSLog(@"frame: %@", NSStringFromCGRect(self.rideSuggestionView.frame));
+                         
                      }];
 
 
@@ -1254,7 +1256,7 @@
                              animations:^{
                                  
                                  
-                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, 0);
+                                 self.startTripView.frame = CGRectMake(20,self.view.frame.size.height ,self.startTripView.frame.size.width, self.startTripView.frame.size.height);
                                  
                                  
                              }
@@ -1555,7 +1557,7 @@
                              animations:^{
                                  
                                  
-                                 self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, 0);
+                                 self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, self.collectMoneyView.frame.size.height);
                                  
                                  [self.googleMapView clear];
                                  
