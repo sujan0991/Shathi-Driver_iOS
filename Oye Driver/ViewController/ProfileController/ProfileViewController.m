@@ -43,7 +43,7 @@
     [self setUpView];
     [self drawShadow:self.navView];
     
-    [self getUserInfo];
+//    [self getUserInfo];
     
     
 
@@ -57,7 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+       [self getUserInfo];
     NSLog(@"[UserAccount sharedManager].isOnRide in profile  %d",[UserAccount sharedManager].isOnRide);
     
     if ([UserAccount sharedManager].isOnRide == 1) {

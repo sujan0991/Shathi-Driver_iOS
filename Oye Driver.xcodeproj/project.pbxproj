@@ -75,6 +75,7 @@
 		6491525C1F84B68B0010B905 /* LegalDocumentUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6491525B1F84B68B0010B905 /* LegalDocumentUploadViewController.m */; };
 		6492A5581F4EB53800A977AA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A5571F4EB53800A977AA /* ProfileViewController.m */; };
 		6492A55B1F4EB55C00A977AA /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6492A55A1F4EB55C00A977AA /* SettingViewController.m */; };
+		64EF55B420568DA00031A736 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EF55B320568D9F0031A736 /* UserNotifications.framework */; };
 		D3676E0DA83CBB0BF8ED8AC3 /* libPods-Oye Driver.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 318F2CBD8205F7E979ABD9F4 /* libPods-Oye Driver.a */; };
 /* End PBXBuildFile section */
 
@@ -217,6 +218,7 @@
 		6492A5571F4EB53800A977AA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		6492A5591F4EB55C00A977AA /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		6492A55A1F4EB55C00A977AA /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		64EF55B320568D9F0031A736 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		BA538AD9371EEEAB577832EB /* Pods-Oye Driver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oye Driver.release.xcconfig"; path = "Pods/Target Support Files/Pods-Oye Driver/Pods-Oye Driver.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,6 +227,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64EF55B420568DA00031A736 /* UserNotifications.framework in Frameworks */,
 				642818F11F36F1D6009B5326 /* UIKit.framework in Frameworks */,
 				D3676E0DA83CBB0BF8ED8AC3 /* libPods-Oye Driver.a in Frameworks */,
 				6407A6B01F0A2F8D00C55FC6 /* AccountKit.framework in Frameworks */,
@@ -551,6 +554,7 @@
 		AFF67BF068173AB93E1CEF16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64EF55B320568D9F0031A736 /* UserNotifications.framework */,
 				642818F01F36F1D6009B5326 /* UIKit.framework */,
 				642818EE1F36F18C009B5326 /* Foundation.framework */,
 				6407A6B11F0A2F9500C55FC6 /* AccountKitStrings.bundle */,

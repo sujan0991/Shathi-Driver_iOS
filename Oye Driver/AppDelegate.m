@@ -9,12 +9,15 @@
 #import "AppDelegate.h"
 @import GoogleMaps;
 @import Firebase;
+
+
 #import "UserAccount.h"
 #import "ServerManager.h"
-
+#import <UserNotifications/UserNotifications.h>
 
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 @import UserNotifications;
+
 #endif
 
 // Implement UNUserNotificationCenterDelegate to receive display notification via APNS for devices
@@ -57,6 +60,7 @@
         [application registerForRemoteNotificationTypes:allNotificationTypes];
 #pragma clang diagnostic pop
     } else {
+        
         // iOS 8 or later
         // [START register_for_notifications]
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
@@ -65,6 +69,7 @@
             UIUserNotificationSettings *settings =
             [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
             [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            
         } else {
             // iOS 10 or later
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -75,6 +80,18 @@
             | UNAuthorizationOptionSound
             | UNAuthorizationOptionBadge;
             [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                
+                            if (!granted) {
+                                
+                                //Show alert asking to go to settings and allow permission
+                               UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@""
+                                                                  message:@"The app doesn't receive any notification without notification enabled. To turn it on, go to Settings"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"Ok"
+                                                        otherButtonTitles:nil, nil];
+                                [alert show];
+                            }
+                
             }];
 #endif
         }
@@ -168,6 +185,18 @@
              
     }
     }
+    
+    //permission for notifi
+//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+//
+//        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//        [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound + UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//            if (!granted) {
+//                //Show alert asking to go to settings and allow permission
+//            }
+//        }];
+//    }
+//   application.applicationIconBadgeNumber = 0;
 
     return YES;
 }
@@ -251,13 +280,35 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     NSLog(@"userInfo %@",userInfo);
-    
-   
+
+    [self generateLocalNotification];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"rideNotification" object:self userInfo:userInfo];
+    
+    
 
     completionHandler(UIBackgroundFetchResultNoData);
 }
+
+- (void)generateLocalNotification {
+    
+    UNMutableNotificationContent *localNotification = [UNMutableNotificationContent new];
+    localNotification.title = [NSString localizedUserNotificationStringForKey:@"Ride Request" arguments:nil];
+    localNotification.body = [NSString localizedUserNotificationStringForKey:@"A ride request has found." arguments:nil];
+    localNotification.sound = [UNNotificationSound soundNamed:@"passenger_found_alarm.caf"];;
+    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:2.0f repeats:NO];
+    
+    //localNotification.badge = @([[UIApplication sharedApplication] applicationIconBadgeNumber] +1);
+    
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"Time for a run!" content:localNotification trigger:trigger];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        NSLog(@"Notification created");
+    }];
+}
+
+
 
 - (void)tokenRefreshNotification:(NSNotification *)notification {
     // Note that this callback will be fired everytime a new token is generated, including the first
@@ -288,7 +339,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         
         [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
             
-            
             NSLog(@"tokenRefreshNotification method");
             
         }];
@@ -308,9 +358,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 }
 
 
-
-
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -328,6 +375,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    application.applicationIconBadgeNumber=0;
 }
 
 

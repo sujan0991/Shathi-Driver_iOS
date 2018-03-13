@@ -76,6 +76,8 @@
     [super viewDidLoad];
 
 
+    
+    
 
    
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(rideInfo:) name:@"rideNotification" object:nil];
@@ -141,6 +143,8 @@
 
 -(void) firstViewSetUp{
 
+   
+    
     self.rideSuggestionView.hidden = YES;
     self.arriveView.hidden = YES;
     self.startTripView.hidden = YES;
@@ -384,7 +388,7 @@
 //                                          otherButtonTitles:nil];
 //    [alert show];
     
-    NSData *webData = [[rideInfo objectForKey:@"gcm.notification.data" ] dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *webData = [[rideInfo objectForKey:@"data" ] dataUsingEncoding:NSUTF8StringEncoding];
     
     NSError *error;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
@@ -466,7 +470,7 @@
         
         [UIView animateWithDuration:.5
                               delay:0
-                            options: UIViewAnimationOptionCurveEaseIn
+                            options: UIViewAnimationOptionTransitionNone
                          animations:^{
                              
                              
@@ -743,7 +747,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -789,7 +793,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -834,7 +838,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -953,7 +957,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -1095,7 +1099,7 @@
     
     [UIView animateWithDuration:.5
                           delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
+                        options: UIViewAnimationOptionTransitionNone
                      animations:^{
                          
                          
@@ -1128,7 +1132,7 @@
   
     [UIView animateWithDuration:.5
                           delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
+                        options: UIViewAnimationOptionTransitionNone
                      animations:^{
                         self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-49) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
                     
@@ -1157,7 +1161,7 @@
     
     [UIView animateWithDuration:.5
                           delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
+                        options: UIViewAnimationOptionTransitionNone
                      animations:^{
                          
                          
@@ -1246,7 +1250,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -1297,7 +1301,7 @@
     
     [UIView animateWithDuration:.5
                           delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
+                        options: UIViewAnimationOptionTransitionNone
                      animations:^{
                          
                          
@@ -1494,7 +1498,7 @@
     
     [UIView animateWithDuration:.5
                           delay:0
-                        options: UIViewAnimationOptionCurveEaseIn
+                        options: UIViewAnimationOptionTransitionNone
                      animations:^{
                          
                          
@@ -1547,7 +1551,7 @@
             
             [UIView animateWithDuration:.5
                                   delay:0
-                                options: UIViewAnimationOptionCurveEaseIn
+                                options: UIViewAnimationOptionTransitionNone
                              animations:^{
                                  
                                  
@@ -1636,6 +1640,7 @@
     NSDictionary* info = [notification userInfo];
     
     NSLog(@"ride info in appbecome active %@",info);
+    
     
     NSLog(@"app become active");
     int status = [[info objectForKey:@"status"]intValue];

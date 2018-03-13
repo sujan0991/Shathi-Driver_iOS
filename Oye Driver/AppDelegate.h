@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LocationTracker.h"
 
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -17,7 +18,7 @@
 @property (nonatomic) NSTimer* locationUpdateTimer;
 @property LocationShareModel * locationShareModel;
 
--(void) askForNotificationPermission;
+//-(void) askForNotificationPermission;
 
 @end
 
