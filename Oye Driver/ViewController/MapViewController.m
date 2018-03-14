@@ -706,72 +706,134 @@
         if (success) {
             
             NSLog(@"accept ride");
+            NSLog(@"resultDataDictionary in accept ride %@",resultDataDictionary);
             
+            int rideStatus = [[resultDataDictionary objectForKey:@"status"]intValue];
             
-            if (self.locationShareModel.timer) {
+            if (rideStatus == 0) {
                 
-                [self.locationShareModel.timer invalidate];
-                self.locationShareModel.timer = nil;
-                NSLog(@"self.shareModel.timer in start trip  = nil");
-            }
-            
-            if (self.locationUpdateTimer) {
+                NSLog(@"massage %@",[resultDataDictionary objectForKey:@"message"]);
                 
-                [self.locationUpdateTimer invalidate];
-                self.locationUpdateTimer = nil;
-                NSLog(@"self.locationUpdateTimer in finish trip  = nil");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                                message:[NSString stringWithFormat:@"%@",[resultDataDictionary objectForKey:@"message"]]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                
+                self.rideSuggestionView.hidden = YES;
+                
+                [self.googleMapView clear];
+                
+                GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.latitude longitude:currentLocation.longitude zoom:16];
+                
+                [self.googleMapView animateToCameraPosition:camera];
+                
+                
+                
+//                //invalidate the timer
+//                if (self.locationShareModel.timer) {
+//                    
+//                    [self.locationShareModel.timer invalidate];
+//                    self.locationShareModel.timer = nil;
+//                    NSLog(@"self.shareModel.timer");
+//                }
+//                
+//                //invalidate locaton uptade timer
+//                
+//                if (self.locationUpdateTimer) {
+//                    
+//                    [self.locationUpdateTimer invalidate];
+//                    self.locationUpdateTimer = nil;
+//                    NSLog(@"self.locationUpdateTimer ");
+//                }
+//                
+//                
+//                self.locationTracker = [[LocationTracker alloc]init];
+//                
+//                NSLog(@"self.locationTracker ");
+//                
+//                [self.locationTracker startLocationTracking];
+//                
+//                //Send the best location to server every 60 seconds
+//                //You may adjust the time interval depends on the need of your app.
+//                NSTimeInterval time = 60*5;
+//                self.locationUpdateTimer =
+//                [NSTimer scheduledTimerWithTimeInterval:time
+//                                                 target:self
+//                                               selector:@selector(updateLocationfromMap)
+//                                               userInfo:nil
+//                                                repeats:YES];
+                
+                
+            }else  {
+                
+                
+                if (self.locationShareModel.timer) {
+                    
+                    [self.locationShareModel.timer invalidate];
+                    self.locationShareModel.timer = nil;
+                    NSLog(@"self.shareModel.timer in start trip  = nil");
+                }
+                
+                if (self.locationUpdateTimer) {
+                    
+                    [self.locationUpdateTimer invalidate];
+                    self.locationUpdateTimer = nil;
+                    NSLog(@"self.locationUpdateTimer in start trip  = nil");
+                }
+                
+                self.locationTracker = [[LocationTracker alloc]init];
+                
+                NSLog(@"self.locationTracker in start trip");
+                
+                
+                [self.locationTracker removePlistData];
+                
+                [self.locationTracker startMonitoringSignificantLocation];
+                
+                [self.locationTracker startLocationTracking];
+                
+                [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
+                
+                NSTimeInterval time = 60.0;
+                self.locationUpdateTimer =
+                [NSTimer scheduledTimerWithTimeInterval:time
+                                                 target:self
+                                               selector:@selector(updateLocationfromMap)
+                                               userInfo:nil
+                                                repeats:YES];
+                
+                
+                
+                [UIView animateWithDuration:.5
+                                      delay:0
+                                    options: UIViewAnimationOptionTransitionNone
+                                 animations:^{
+                                     
+                                     
+                                     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, self.rideSuggestionView.frame.size.height);
+                                     
+                                     
+                                 }
+                                 completion:^(BOOL finished){
+                                     
+                                     NSLog(@"loadPlistData %@",[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"]);
+                                     
+                                     self.rideSuggestionView.hidden = YES;
+                                     [self showStartTripView];
+                                     
+                                 }];
+                
+                
+                
             }
-            
-            self.locationTracker = [[LocationTracker alloc]init];
-            
-            NSLog(@"self.locationTracker in start trip");
-            
-            
-            [self.locationTracker removePlistData];
-            
-            [self.locationTracker startMonitoringSignificantLocation];
-            
-            [self.locationTracker startLocationTracking];
-            
-            [self performSelector:@selector(updateLocationfromMap) withObject:self afterDelay:6.0 ];
-            
-            NSTimeInterval time = 60.0;
-            self.locationUpdateTimer =
-            [NSTimer scheduledTimerWithTimeInterval:time
-                                             target:self
-                                           selector:@selector(updateLocationfromMap)
-                                           userInfo:nil
-                                            repeats:YES];
-            
-            
-            
-            [UIView animateWithDuration:.5
-                                  delay:0
-                                options: UIViewAnimationOptionTransitionNone
-                             animations:^{
-                                 
-                                 
-                                 self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width, self.rideSuggestionView.frame.size.height);
-                                 
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                                 NSLog(@"loadPlistData %@",[[self.locationTracker loadPlistData] objectForKey:@"LocationArray"]);
-                                 
-                                 self.rideSuggestionView.hidden = YES;
-                                 [self showStartTripView];
-                                 
-                             }];
-            
-            
-            
         }
         else{
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                
+                NSLog(@" not accept ride");
                 
             });
         }

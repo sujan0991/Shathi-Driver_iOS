@@ -240,12 +240,15 @@
             [self.shareModel.delay10Seconds invalidate];
             self.shareModel.delay10Seconds = nil;
             NSLog(@"self.shareModel.delay10Seconds = nil");
+            
+            
         }
         
         self.shareModel.delay10Seconds = [NSTimer scheduledTimerWithTimeInterval:5 target:self
                                                                         selector:@selector(stopLocationDelayBy10Seconds)
                                                                         userInfo:nil
                                                                          repeats:NO];
+        
         
     }else{
     
