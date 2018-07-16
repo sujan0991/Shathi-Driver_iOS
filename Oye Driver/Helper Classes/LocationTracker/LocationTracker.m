@@ -215,37 +215,14 @@
         self.shareModel.bgTask = [BackgroundTaskManager sharedBackgroundTaskManager];
         [self.shareModel.bgTask beginNewBackgroundTask];
         
-         //Restart the locationMaanger after xx minute
-        
-//        if ([UserAccount sharedManager].isOnRide == 1) {
-//
-//            NSLog(@"timer for 30 sec");
-//            self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
-//                                                                   selector:@selector(restartLocationUpdates)
-//                                                                   userInfo:nil
-//                                                                    repeats:NO];
-//        }else{
-//
-//            NSLog(@"timer for 5 min ");
-//
-//           self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self
-//                                                               selector:@selector(restartLocationUpdates)
-//                                                               userInfo:nil
-//                                                                repeats:NO];
-//        }
+
         
         //Will only stop the locationManager after 10 seconds, so that we can get some accurate locations
         //The location manager will only operate for 10 seconds to save battery
-        if (self.shareModel.delay10Seconds) {
-            [self.shareModel.delay10Seconds invalidate];
-            self.shareModel.delay10Seconds = nil;
-            NSLog(@"self.shareModel.delay10Seconds = nil");
-            
-            
-        }
         
-        self.shareModel.delay10Seconds = [NSTimer scheduledTimerWithTimeInterval:5 target:self
-                                                                        selector:@selector(stopLocationDelayBy10Seconds)
+        
+        self.shareModel.delay5Seconds = [NSTimer scheduledTimerWithTimeInterval:5 target:self
+                                                                        selector:@selector(stopLocationDelayBy5Seconds)
                                                                         userInfo:nil
                                                                          repeats:NO];
         
@@ -262,7 +239,16 @@
 
 
 //Stop the locationManager
--(void)stopLocationDelayBy10Seconds{
+-(void)stopLocationDelayBy5Seconds{
+    
+    if (self.shareModel.delay5Seconds) {
+        [self.shareModel.delay5Seconds invalidate];
+        self.shareModel.delay5Seconds = nil;
+        NSLog(@"self.shareModel.delay5Seconds = nil");
+        
+        
+    }
+    
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
     [locationManager stopUpdatingLocation];
     

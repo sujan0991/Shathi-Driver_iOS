@@ -1715,22 +1715,32 @@
         
         [self reSetViewWhenActive:info];
 
-        
-
-        NSLog(@"arriveview %d",_arriveView.isHidden);
-        if (self.arriveView.isHidden) {
-
-            self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
-             self.ratingLabelInArriveView.text = [NSString stringWithFormat:@"%@",[[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"metadata"] objectForKey:@"rating_avg"]];;
-            self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
-            self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+        if (self.startTripView.isHidden) {
+            
+            self.passengerNameLabelInStartTripView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+            self.ratingLabelInStartTripView.text = [NSString stringWithFormat:@"%@",[[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"metadata"] objectForKey:@"rating_avg"]];;
+            self.pickupLabelInStartTripView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+            self.destinationLabelInStartTripView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
             
             phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
-            
-            [self performSelector:@selector(showArrivedView) withObject:self afterDelay:1.0 ];
 
-            NSLog(@"bhdfhjnfgkmfhld");
+            self.startTripView.hidden = NO;
         }
+
+//        NSLog(@"arriveview %d",_arriveView.isHidden);
+//        if (self.arriveView.isHidden) {
+//
+//            self.passengerNameInArriveView.text = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"name"];
+//             self.ratingLabelInArriveView.text = [NSString stringWithFormat:@"%@",[[[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"metadata"] objectForKey:@"rating_avg"]];;
+//            self.pickupLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"pickup_address"];
+//            self.destinationLabelInArriveView.text = [[info objectForKey:@"data"] objectForKey:@"destination_address"];
+//
+//            phoneNo = [[[info objectForKey:@"data" ]objectForKey:@"user"] objectForKey:@"phone"];
+//
+//            [self performSelector:@selector(showArrivedView) withObject:self afterDelay:1.0 ];
+//
+//            NSLog(@"bhdfhjnfgkmfhld");
+//        }
     }
     else if (status == 3)
     {
