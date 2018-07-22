@@ -457,6 +457,50 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
 }
 
+-(void)patchRiderLocationOnRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion{
+    
+    
+    
+    if ([self checkForNetworkAvailability]) {
+        
+        
+        NSString *urlString=[NSString stringWithFormat:@"%@/api/update-rider-current-location-onRide",BASE_API_URL];
+        
+        
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("Background Queue", NULL);
+        
+        dispatch_async(backgroundQueue, ^{
+            
+            [self patchServerRequestWithParams:dataDic forUrl:urlString withResponseCallback:^(NSDictionary *responseDictionary) {
+                
+                if ( responseDictionary!=nil) {
+                    //Valid Data From Server
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(TRUE,[responseDictionary mutableCopy]);
+                    });
+                    
+                }else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(FALSE,nil);
+                    });
+                    
+                }
+            }];
+            
+        });
+    }else{
+        [self showAlertForNoInternet];
+    }
+    
+    
+}
+
+
+
+
 -(void)patchAcceptRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion
 {
     
@@ -1230,8 +1274,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer=[AFJSONResponseSerializer serializer];
+ //   manager.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
     
 
+    //manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[UserAccount sharedManager].accessToken] forHTTPHeaderField:@"Authorization"];
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
@@ -1253,6 +1299,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ServerManager)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"error %@ ",error);
+        NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"ErrorResponse %@",ErrorResponse);
         callback(nil);
         
     }];

@@ -59,6 +59,9 @@ typedef void (^api_Completion_Handler_Status_String)(BOOL success, NSString* res
 //update rider location
 -(void)patchRiderLocation:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 
+//update rider location on ride
+-(void)patchRiderLocationOnRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
+
 //accept ride
 -(void)patchAcceptRide:(NSDictionary*)dataDic withCompletion:(api_Completion_Handler_Data)completion;
 

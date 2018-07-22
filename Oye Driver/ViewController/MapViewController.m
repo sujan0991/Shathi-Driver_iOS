@@ -46,9 +46,9 @@
     
     NSMutableArray *homeWorkArray;
     
-    int rideId;
+    //int rideId;
     
-    float totalRating;
+    int totalRating;
     
     
     GMSMarker *pickUpMarker;
@@ -58,6 +58,7 @@
     
     NSMutableArray *cancelReasonArray;
     NSString* cancelReasonId;
+    int bottomConstraint;
 }
 
 @property (nonatomic, strong) DDHTimerControl *timerControl;
@@ -75,7 +76,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-
+    
+    
+    if([[UIDevice currentDevice]userInterfaceIdiom]==UIUserInterfaceIdiomPhone) {
+        
+        switch ((int)[[UIScreen mainScreen] nativeBounds].size.height) {
+                
+            case 2436:
+                printf("iPhone X");
+                bottomConstraint = 80;
+                break;
+            default:
+                printf("unknown");
+                bottomConstraint = 49;
+        }
+    }
     
     
 
@@ -95,17 +110,35 @@
     
     NSLog(@"UserAccount sharedManager].riderIsApproved  %d",[UserAccount sharedManager].riderIsApproved);
     
+    //temporary
+    [UserAccount sharedManager].riderIsApproved = 1;
+    
+    NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+    
+    [postData setObject:[NSString stringWithFormat:@"%@",[UserAccount sharedManager].gcmRegKey] forKey:@"gcm_registration_key"];
+    
+    
+    [[ServerManager sharedManager] patchUpdateGcmKey:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+        
+        NSLog(@"tokenRefreshNotification method in map view");
+        
+    }];
+    ///
+   
     if ([UserAccount sharedManager].riderIsApproved == 1) {
         
         NSLog(@"approved");
         
+       
+        
+        
     }else{
     
-        VerifyIdentityViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VerifyIdentityViewController"];
-        
-        vc.isCrossHidden =YES;
-    
-        [self presentViewController:vc animated:YES completion:nil];
+//        VerifyIdentityViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VerifyIdentityViewController"];
+//        
+//        vc.isCrossHidden =YES;
+//    
+//        [self presentViewController:vc animated:YES completion:nil];
 
     }
     
@@ -446,7 +479,7 @@
         
         [self drawpoliline:pickUpPoint destination:destinationPoint];
         
-        rideId =[[[jsonDict objectForKey:@"ride_info"] objectForKey:@"id"]intValue];
+        [UserAccount sharedManager].rideId =[[[jsonDict objectForKey:@"ride_info"] objectForKey:@"id"]intValue];
         
         
         [self performSelector:@selector(showRideSuggestionView) withObject:self afterDelay:1.0 ];
@@ -661,11 +694,11 @@
 //
 //    [self.googleMapView animateToCameraPosition:camera];
     
-    LegalDocumentUploadViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"LegalDocumentUploadViewController"];
-    
-    
-    [self.navigationController pushViewController:controller animated:YES];
-    
+//    LegalDocumentUploadViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"LegalDocumentUploadViewController"];
+//
+//
+//    [self.navigationController pushViewController:controller animated:YES];
+//
     
 }
 
@@ -698,7 +731,7 @@
 
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     
     [[ServerManager sharedManager] patchAcceptRide:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
@@ -844,7 +877,7 @@
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     
     [[ServerManager sharedManager] patchArrive:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
@@ -889,7 +922,7 @@
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     
     [[ServerManager sharedManager] patchCancelRideRequest:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
         
@@ -1069,7 +1102,7 @@
     
     NSMutableDictionary* reasons=[[NSMutableDictionary alloc] init];
     
-    [reasons setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [reasons setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     [reasons setObject:cancelReasonId forKey:@"ride_cancel_reason_id"];
     
     if (self.cancelReasonTextView.text.length>0) {
@@ -1154,7 +1187,7 @@
 
 -(void) showRideSuggestionView{
 
-    NSLog(@"ride id in ride suggestion view %d",rideId);
+    NSLog(@"ride id in ride suggestion view %d",[UserAccount sharedManager].rideId);
     
     self.rideSuggestionView.hidden = NO;
     self.rideSuggestionView.frame = CGRectMake(20,self.view.frame.size.height ,self.rideSuggestionView.frame.size.width,self.rideSuggestionView.frame.size.height);
@@ -1164,8 +1197,9 @@
                         options: UIViewAnimationOptionTransitionNone
                      animations:^{
                          
+                        
                          
-                         self.rideSuggestionView.frame = CGRectMake(20,(self.view.frame.size.height - self.rideSuggestionView.frame.size.height-49) ,self.rideSuggestionView.frame.size.width,self.rideSuggestionView.frame.size.height);
+                         self.rideSuggestionView.frame = CGRectMake(20,(self.view.frame.size.height - self.rideSuggestionView.frame.size.height-bottomConstraint) ,self.rideSuggestionView.frame.size.width,self.rideSuggestionView.frame.size.height);
                          
                          
                      }
@@ -1198,7 +1232,7 @@
                           delay:0
                         options: UIViewAnimationOptionTransitionNone
                      animations:^{
-                        self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-49) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
+                        self.arriveView.frame = CGRectMake(20,(self.view.frame.size.height - self.arriveView.frame.size.height-bottomConstraint) ,self.arriveView.frame.size.width,self.arriveView.frame.size.height);
                     
 
                      }
@@ -1229,7 +1263,7 @@
                      animations:^{
                          
                          
-                         self.startTripView.frame = CGRectMake(20,(self.view.frame.size.height - self.startTripView.frame.size.height-49) ,self.startTripView.frame.size.width,self.startTripView.frame.size.height);
+                         self.startTripView.frame = CGRectMake(20,(self.view.frame.size.height - self.startTripView.frame.size.height-bottomConstraint) ,self.startTripView.frame.size.width,self.startTripView.frame.size.height);
                          
                          
                      }
@@ -1300,7 +1334,7 @@
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     
     
     [[ServerManager sharedManager] patchStartRide:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary){
@@ -1369,7 +1403,7 @@
                      animations:^{
                          
                          
-                         self.finishTripView.frame = CGRectMake(20,(self.view.frame.size.height - self.finishTripView.frame.size.height-49) ,self.finishTripView.frame.size.width,self.finishTripView.frame.size.height);
+                         self.finishTripView.frame = CGRectMake(20,(self.view.frame.size.height - self.finishTripView.frame.size.height-bottomConstraint) ,self.finishTripView.frame.size.width,self.finishTripView.frame.size.height);
                          
                          
                      }
@@ -1421,11 +1455,11 @@
     }
     
     
-    NSLog(@"ride id %d",rideId);
+    NSLog(@"ride id %d",[UserAccount sharedManager].rideId);
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
     //[postData setObject:@"188" forKey:@"ride_id"];
     [postData setObject:jsonString forKey:@"waypoints"];
     
@@ -1566,7 +1600,7 @@
                      animations:^{
                          
                          
-                         self.collectMoneyView.frame = CGRectMake(20,(self.view.frame.size.height - self.collectMoneyView.frame.size.height-49) ,self.collectMoneyView.frame.size.width,self.collectMoneyView.frame.size.height);
+                         self.collectMoneyView.frame = CGRectMake(20,(self.view.frame.size.height - self.collectMoneyView.frame.size.height-bottomConstraint) ,self.collectMoneyView.frame.size.width,self.collectMoneyView.frame.size.height);
                          
                          
                      }
@@ -1595,7 +1629,7 @@
     
     totalRating = rating;
     
-    NSLog(@"RATING is :)%f",totalRating);
+    NSLog(@"RATING is :)%d",totalRating);
     
 }
 
@@ -1604,8 +1638,8 @@
     
     NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
     
-    [postData setObject:[NSString stringWithFormat:@"%d",rideId] forKey:@"ride_id"];
-    [postData setObject:[NSString stringWithFormat:@"%.1f",totalRating] forKey:@"rating"];
+    [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
+    [postData setObject:[NSString stringWithFormat:@"%.1d",totalRating] forKey:@"rating"];
     
     [[ServerManager sharedManager] patchRating:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
         
@@ -1620,6 +1654,8 @@
                                  
                                  
                                  self.collectMoneyView.frame = CGRectMake(20,self.view.frame.size.height ,self.collectMoneyView.frame.size.width, self.collectMoneyView.frame.size.height);
+                                 
+                                 [UserAccount sharedManager].rideId = 0;
                                  
                                  [self.googleMapView clear];
                                  
@@ -1747,7 +1783,7 @@
         
          NSLog(@"rider on ride");
        
-        rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+        [UserAccount sharedManager].rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
         
        // [self reSetViewWhenActive:info];
         
@@ -1796,7 +1832,7 @@
     }
     else if (status == 4){
         
-        rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+        [UserAccount sharedManager].rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
         
         if (self.collectMoneyView.isHidden) {
             
@@ -1816,7 +1852,7 @@
 
 -(void)reSetViewWhenActive:(NSDictionary*)info{
     
-    rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
+    [UserAccount sharedManager].rideId = [[[info objectForKey:@"data"]objectForKey:@"id"]intValue];
 
     pickUpPoint = [[CLLocation alloc] initWithLatitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_latitude"] floatValue] longitude:[[[info objectForKey:@"data"]objectForKey:@"pickup_longitude"] floatValue]];
     

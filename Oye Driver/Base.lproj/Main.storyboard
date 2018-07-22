@@ -47,8 +47,8 @@
                                     <action selector="myLocationButtonAction:" destination="Fno-aK-HmG" eventType="touchUpInside" id="G6t-cA-KVy"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dEr-eb-aYY">
-                                <rect key="frame" x="1020" y="398" width="335" height="220"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEr-eb-aYY">
+                                <rect key="frame" x="20" y="299" width="280" height="220"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qgh-I9-F0D">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="150"/>
@@ -758,12 +758,12 @@
                                     <constraint firstAttribute="bottom" secondItem="Ecr-pp-d2f" secondAttribute="bottom" id="yIH-Es-dEY"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bW-WD-kT7">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view alpha="0.80000001192092896" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7bW-WD-kT7">
+                                <rect key="frame" x="1000" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAW-5u-LRu">
-                                <rect key="frame" x="46" y="105" width="228" height="358"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RAW-5u-LRu">
+                                <rect key="frame" x="1046" y="105" width="228" height="358"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="61" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xrj-zj-RbQ">
                                         <rect key="frame" x="0.0" y="0.0" width="228" height="253"/>
@@ -886,8 +886,8 @@
                                             <action selector="collectMoneyButtonAction:" destination="Fno-aK-HmG" eventType="touchUpInside" id="OrZ-N0-gfl"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$150.50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pc6-qx-7fr">
-                                        <rect key="frame" x="145" y="116" width="80" height="26"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tk 150.50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pc6-qx-7fr">
+                                        <rect key="frame" x="145" y="116" width="98.5" height="26"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -953,10 +953,10 @@
                             <constraint firstAttribute="trailing" secondItem="CZv-mC-8cc" secondAttribute="trailing" constant="20" id="Dwh-dz-VxX"/>
                             <constraint firstItem="pkE-Dk-YBL" firstAttribute="leading" secondItem="t4h-na-bhY" secondAttribute="leading" constant="20" id="ENH-I0-y4H"/>
                             <constraint firstAttribute="bottom" secondItem="7bW-WD-kT7" secondAttribute="bottom" id="Eg2-EW-22b"/>
+                            <constraint firstItem="wvv-t9-UMO" firstAttribute="top" secondItem="dEr-eb-aYY" secondAttribute="bottom" id="HAk-fc-YNo"/>
                             <constraint firstItem="7bW-WD-kT7" firstAttribute="top" secondItem="t4h-na-bhY" secondAttribute="top" id="Imt-3V-X3b"/>
                             <constraint firstItem="wvv-t9-UMO" firstAttribute="top" secondItem="pkE-Dk-YBL" secondAttribute="bottom" id="JDD-w6-bAz"/>
                             <constraint firstItem="wvv-t9-UMO" firstAttribute="top" secondItem="391-zY-W50" secondAttribute="bottom" id="NL1-DS-eT4"/>
-                            <constraint firstItem="wvv-t9-UMO" firstAttribute="top" secondItem="dEr-eb-aYY" secondAttribute="bottom" id="QUo-5L-DZO"/>
                             <constraint firstAttribute="trailing" secondItem="dEr-eb-aYY" secondAttribute="trailing" constant="20" id="Qh5-mC-hkv"/>
                             <constraint firstItem="wvv-t9-UMO" firstAttribute="top" secondItem="CZv-mC-8cc" secondAttribute="bottom" id="RSb-UG-Sjo"/>
                             <constraint firstItem="IZ5-3y-jDg" firstAttribute="leading" secondItem="t4h-na-bhY" secondAttribute="leading" constant="20" id="WfF-fW-ca7"/>

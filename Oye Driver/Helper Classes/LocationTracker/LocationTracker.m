@@ -391,7 +391,35 @@
     }
     else
     {
+        
+        //
+        NSMutableDictionary* postData=[[NSMutableDictionary alloc] init];
+        
+        [postData setObject:[NSString stringWithFormat:@"%@",[self.shareModel.tripLocationDictionary objectForKey:@"latitude"]]forKey:@"current_latitude"];
+        [postData setObject:[NSString stringWithFormat:@"%@",[self.shareModel.tripLocationDictionary objectForKey:@"longitude"]] forKey:@"current_longitude"];
+        [postData setObject:[NSString stringWithFormat:@"%d",[UserAccount sharedManager].rideId] forKey:@"ride_id"];
+        
+        
+       
+        NSLog(@"post data %@",postData);
+        
+        [[ServerManager sharedManager] patchRiderLocation:postData withCompletion:^(BOOL success, NSMutableDictionary *resultDataDictionary) {
+            
+            
+            if (success) {
+                
+                NSLog(@"successfully on ride");
+            }
+            else{
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                });
+            }
+            
+        }];
 
+        
+        
         [self saveLocationsToPlist:self.shareModel.afterResume];
         
     }
@@ -435,7 +463,7 @@
    
       if(self.shareModel.tripLocationDictionary) {
 
-        [self.shareModel.tripLocationDictionary setObject:[self appState] forKey:@"AppState"];
+       // [self.shareModel.tripLocationDictionary setObject:[self appState] forKey:@"AppState"];
 
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"dd/mm hh:mm:ss";
@@ -443,13 +471,13 @@
         NSString *theDate = [dateFormatter stringFromDate:[NSDate date]];
 
 
-        [self.shareModel.tripLocationDictionary setObject:theDate forKey:@"Time"];
+    //    [self.shareModel.tripLocationDictionary setObject:theDate forKey:@"Time"];
           
-          if (fromResume) {
-              [self.shareModel.tripLocationDictionary setObject:@"YES" forKey:@"AddFromResume"];
-          } else {
-              [self.shareModel.tripLocationDictionary setObject:@"NO" forKey:@"AddFromResume"];
-          }
+//          if (fromResume) {
+//              [self.shareModel.tripLocationDictionary setObject:@"YES" forKey:@"AddFromResume"];
+//          } else {
+//              [self.shareModel.tripLocationDictionary setObject:@"NO" forKey:@"AddFromResume"];
+//          }
         
         [self.shareModel.tripLocationArray  addObject:self.shareModel.tripLocationDictionary];
         

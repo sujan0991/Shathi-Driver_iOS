@@ -213,6 +213,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(UserAccount)
     [self.userDefaults synchronize];
 }
 
+-(int)rideId
+{
+    return [[self.userDefaults valueForKey:@"rideId"]intValue];
+}
+
+- (void)setRideId:(int)value
+{
+    [self.userDefaults setInteger:value forKey:@"rideId"];
+    [self.userDefaults synchronize];
+}
+
+
 
 -(float)commissionRate
 {

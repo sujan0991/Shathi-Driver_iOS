@@ -38,6 +38,7 @@
 @property (nonatomic) float due;
 
 @property int isOnRide;
+@property (nonatomic) int rideId;
 
 + (UserAccount *)sharedManager;
 
